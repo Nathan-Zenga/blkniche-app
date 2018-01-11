@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html class="<%= pageName %> page" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title><%= title %></title>
+	<link rel="stylesheet" type="text/css" href="/css/maincss.css">
+	<link rel="stylesheet" type="text/css" href="/css/logo-cube.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+	<script src="/js/mainjs.js"></script>
+</head>
+
+<body>
+
+<header>
+	<div class="inner-header fixed">
+		<a><div class="col-xs-6" id="header-logo">
+			<img src="/img/logo/logo 3.png"><p>Music Group</p>
+		</div></a>
+		
+		<nav class="col-xs-6">
+			<a><div id="menu"><p>Menu</p></div></a>
+			<div class="link-group">
+				<a><div class="col-sm-3 link" id="music"><p>Music</p></div></a>
+				<a><div class="col-sm-3 link" id="videos"><p>Videos</p></div></a>
+				<a><div class="col-sm-3 link" id="info"><p>Info</p></div></a>
+				<a><div class="col-sm-3 link" data-toggle="modal" data-target="#registration" id="sign-up"><p>Sign Up</p></div></a>
+			</div>
+		</nav>
+	</div>
+</header>
+
+<div id="toTop"><p><span class="glyphicon glyphicon-chevron-up"></span></p></div>
+
+
+<!-- including modals -->
+<% include modals/register %>
+
+<% include modals/update %>
+
+<!-- Main inner body of webpage -->
+<div class="container-fluid">

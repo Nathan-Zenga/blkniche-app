@@ -1,0 +1,72 @@
+<!-- Modal for sign-up form, for client data creation -->
+<div id="registration" class="modal fade" role="dialog">
+	<div id="SignUpDialog" class="modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<p class="modal-title" data-dismiss="modal"><img src="/img/logo/logo 3.png"></p>
+			</div>
+
+			<div class="modal-body">
+				<!-- FORM -->
+				<form class="form-group" method="post" action="/users/add">
+					<fieldset>
+						<legend>SIGN UP</legend>
+
+						<div id="result">
+							<% if(errors != undefined) { %>
+								Please fill in:
+								<ul>
+									<% errors.forEach(function(err) { %>
+										<li><%= err.msg %></li>
+									<% }) %>
+								</ul>
+							<% } %>							
+						</div>
+						
+						<label class="sr-only">First Name</label>
+						<input class="form-control details name" type="text" id="firstName" name="firstName" placeholder="First name" style>
+						
+						<label class="sr-only">Last Name</label>
+						<input class="form-control details name" type="text" id="lastName" name="lastName" placeholder="Last name" style>
+						
+						<label class="sr-only">Email Address</label>
+						<input class="form-control details" type="email" id="email" name="email" placeholder="Email" style>
+						
+						<!-- <input class="form-control details" type="text" id="DOB" name="DOB" placeholder="Date of birth" onfocus="(this.type='date')" onblur="(this.type='text')" style> -->
+						<div class="DOB-group">
+							<label>Date of Birth</label>
+							<input class="form-control details" type="number" id="day" name="day" placeholder="Day" min="01" max="31">
+							<input class="form-control details" type="number" id="month" name="month" placeholder="Month" min="01" max="12">
+							<input class="form-control details" type="number" id="year" name="year" placeholder="Year" value="2017" min="1930" max="2017">
+						</div>
+						
+						<label class="sr-only">Nationality</label>
+						<select class="form-control details" id="nationality" name="nationality" style>
+							<option value="">Nationality</option>
+							<option value="United Kingdom">United Kingdom</option>
+							<option value="United States of America">United States of America</option>
+							<option value="South America">South America</option>
+							<option value="Europe">Europe</option>
+							<option value="Asia">Asia</option>
+							<option value="Australia">Australia</option>
+						</select>
+						
+						<label class="sr-only">New Password</label>
+						<input class="form-control details" type="password" id="password" name="password" placeholder="New password">
+						
+						<label class="sr-only">Confirm Password</label>
+						<input class="form-control details" type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm password">
+						
+						<label class="sr-only">SUBMIT</label>
+						<input class="form-control submit" type="submit" id="signUpSubmit" value="Create Account">
+					</fieldset>
+				</form>
+			</div>
+
+			<div class="modal-footer"></div>
+
+		</div>
+	</div>
+</div>

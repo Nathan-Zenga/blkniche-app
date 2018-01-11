@@ -1,0 +1,56 @@
+<!-- Modal for sign-up form, for client data creation -->
+<div id="update-form" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<p class="modal-title" data-dismiss="modal"><img src="/img/logo/logo 3.png"></p>
+			</div>
+
+			<div class="modal-body">
+				<!-- FORM -->
+				<form class="form-group" method="post" action="/users/update">
+					<fieldset>
+						<legend>UPDATE DETAILS</legend>
+
+						<p style="padding-bottom:1em; font-style: italic;">Leave any fields blank to leave details unchanged.</p>
+
+						<label class="sr-only">First Name</label>
+						<input class="form-control details name" type="text" name="firstName_update" placeholder="First name" style>
+
+						<label class="sr-only">Last Name</label>
+						<input class="form-control details name" type="text" name="lastName_update" placeholder="Last name" style>
+
+						<label class="sr-only">Email Address</label>
+						<input class="form-control details" type="email" name="email_update" placeholder="Email" style>
+
+						<div class="DOB-group">
+							<label>Date of Birth</label>
+							<input class="form-control details" type="number" name="day_update" placeholder="Day" min="01" max="31">
+							<input class="form-control details" type="number" name="month_update" placeholder="Month" min="01" max="12">
+							<input class="form-control details" type="number" name="year_update" placeholder="Year" min="1930" max="2017">
+						</div>
+						
+						<label class="sr-only">Nationality</label>
+						<select class="form-control details" name="nationality_update" style>
+							<option value="">Nationality</option>
+							<option value="United Kingdom">United Kingdom</option>
+							<option value="United States of America">United States of America</option>
+							<option value="South America">South America</option>
+							<option value="Europe">Europe</option>
+							<option value="Asia">Asia</option>
+							<option value="Australia">Australia</option>
+						</select>
+
+						<label class="sr-only">SAVE</label>
+						<input class="form-control submit" type="submit" value="Save">
+					</fieldset>
+				</form>
+			</div>
+
+			<div class="modal-footer"></div>
+
+		</div>
+	</div>
+</div>

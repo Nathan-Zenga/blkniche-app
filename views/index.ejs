@@ -1,0 +1,207 @@
+<% include partials/header %>
+
+	<!-- HOME / TOP / MAIN section -->
+	<section class="index">
+		<!-- Background image slideshow (autoplaying with JS) -->
+		<div id="bgreel">
+			<div style="background-image: url('/img/bgreel/IMG_0576.JPG');"></div>
+			<div style="background-image: url('/img/bgreel/IMG_0650.JPG');"></div>
+			<div style="background-image: url('/img/bgreel/IMG_0670.JPG');"></div>
+			<div style="background-image: url('/img/bgreel/IMG_0688.JPG');"></div>
+			<div style="background-image: url('/img/bgreel/IMG_0750.JPG');"></div>
+			<div style="background-image: url('/img/bgreel/IMG_0485.JPG');"></div>
+			<div style="background-image: url('/img/bgreel/IMG_0506.JPG');"></div>
+			<div style="background-image: url('/img/bgreel/IMG_0550.JPG');"></div>
+			<div style="background-image: url('/img/bgreel/IMG_0785.JPG');"></div>
+			<div style="background-image: url('/img/bgreel/IMG_0786.JPG');"></div>
+			<div style="background-image: url('/img/bgreel/IMG_0792.JPG');"></div>
+		</div>
+		
+		<!-- Rotating cube containing logo -->
+		<div class="logo">
+			<div class="cube">
+				<div class="front"></div>
+				<div class="back"></div>
+				<div class="top"></div>
+				<div class="bottom"></div>
+				<div class="left"></div>
+				<div class="right"></div>
+			</div>
+		</div>
+	</section>
+
+	<!-- MUSIC section -->
+	<section class="music">
+
+		<!-- BS Carousel for music cover images -->
+		<div class="col-sm-6 carousel slide img-container" id="music-carousel">
+
+			<!-- Indicators -->
+			<ol class="carousel-indicators">
+				<li id="cover0" data-target="#music-carousel" data-slide-to="0" class="active"></li>
+				<li id="cover1" data-target="#music-carousel" data-slide-to="1"></li>
+				<li id="cover2" data-target="#music-carousel" data-slide-to="2"></li>
+				<li id="cover3" data-target="#music-carousel" data-slide-to="3"></li>
+			</ol>
+
+			<!-- Container for slides -->
+			<div class="carousel-inner">
+				<div class="item active">
+					<div class="img" style="background-image:url('/img/music-cover/cover1.jpg')"></div>
+					<div class="carousel-caption">
+						<h3 class="carousel-caption-title">Story Mode</h3>
+						<p class="carousel-caption-artist">Sorom</p>
+					</div>
+				</div>
+
+				<div class="item">
+					<div class="img" style="background-image:url('/img/music-cover/cover2.jpg')"></div>
+					<div class="carousel-caption">
+						<h3 class="carousel-caption-title">Up To No Good</h3>
+						<p class="carousel-caption-artist">AB</p>
+					</div>
+				</div>
+
+				<div class="item">
+					<div class="img" style="background-image:url('/img/music-cover/cover3.jpg')"></div>
+					<div class="carousel-caption">
+						<h3 class="carousel-caption-title">Experimental EP</h3>
+						<p class="carousel-caption-artist">Dede</p>
+					</div>
+				</div>
+
+				<div class="item">
+					<div class="img" style="background-image:url('/img/music-cover/cover4.jpg')"></div>
+					<div class="carousel-caption">
+						<h3 class="carousel-caption-title">Faded</h3>
+						<p class="carousel-caption-artist">Micah Starz</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Left + right arrow controls -->
+			<a class="left carousel-control" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="right carousel-control" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right"></span>
+				<span class="sr-only">Next</span>
+			</a>
+
+		</div>
+		
+		<div class="col-sm-6 textbox">
+			<table>
+				<tr>
+					<td>
+						<!-- follow two element text is extracted from carousel caption in JS -->
+						<h2 class="musicTitle"></h2>
+						<p class="musicArtist"></p><br>
+						<button type="button" class="btn btn-primary">BUY NOW</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+	</section>
+
+	<!-- VIDEOS section -->
+	<section class="videos">
+		<div class="col-sm-6 textbox">
+			<table>
+				<tr>
+					<td>
+						<h2 class="videoTitle"></h2>
+						<p class="videoArtist"></p><br>
+						<p class="videoInfo"></p>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<!-- BS Carousel for music cover images -->
+		<div class="col-sm-6 carousel slide img-container" id="videos-carousel">
+
+			<!-- Indicators -->
+			<ol class="carousel-indicators">
+				<li id="cover0" data-target="#videos-carousel" data-slide-to="0" class="active"></li>
+				<li id="cover1" data-target="#videos-carousel" data-slide-to="1"></li>
+			</ol>
+
+			<!-- Container for slides -->
+			<div class="carousel-inner">
+				<div class="item active">
+					<video class="img" loop><source src="/img/Suicidal_Thoughts.mp4"/></video>
+					<!-- <iframe class="img" src="https://www.youtube.com/embed/kwtI9d1UBdI?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe> -->
+					<div class="carousel-caption">
+						<h3 class="carousel-caption-title">SUICIDAL THOUGHTS</h3>
+						<p class="carousel-caption-artist">DEDE X SOROM</p>
+						<p class="carousel-caption-info">BLK.NICHE presents a musical film about internal turmoil enacted through symbolism. Every image and word holds significance. In each individual there are internal conflicts we struggle to settle. In extreme cases we kill aspects of ourselves in order to come to terms with our interest. Not feeling comfortable in our current states, changing aspects of ourselves or our surroundings, struggling with internal and external dilemmas.</p>
+					</div>
+				</div>
+
+				<div class="item">
+					<video class="img" loop><source src="/img/AB PROMO.mp4"/></video>
+					<div class="carousel-caption">
+						<h3 class="carousel-caption-title">UP TO NO GOOD</h3>
+						<p class="carousel-caption-artist">AB</p>
+						<p class="carousel-caption-info">OUT NOW on SoundCloud</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Left + right arrow controls -->
+			<a class="left carousel-control" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="right carousel-control" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right"></span>
+				<span class="sr-only">Next</span>
+			</a>
+
+		</div>
+
+		<div class="col-sm-6 textbox mobile">
+			<table>
+				<tr>
+					<td>
+						<!-- follow two element text is extracted from carousel caption in JS -->
+						<h2 class="videoTitle"></h2>
+						<p class="videoArtist"></p><br>
+						<p class="videoInfo"></p>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</section>
+
+	<!-- INFO section -->
+	<section class="info">
+		<div class="col-sm-6 img-container">
+			<div id="bgreel2">
+				<div style="background-image: url('/img/bgreel/IMG_0576.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0650.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0670.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0688.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0750.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0485.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0506.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0550.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0785.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0786.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0792.JPG');"></div>
+			</div>
+		</div>
+		
+		<div class="col-sm-6 textbox">
+			<table>
+				<tr>
+					<td><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum laboriosam omnis nisi cumque accusamus dolorem reiciendis modi, aliquid magnam quidem ipsam reprehenderit asperiores quos laudantium quas, eligendi aut numquam accusantium.</p></td>
+				</tr>
+			</table>
+		</div>
+	</section>
+	
+<% include partials/footer %>

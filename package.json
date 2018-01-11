@@ -1,0 +1,30 @@
+{
+  "name": "myapp",
+  "version": "1.0.0",
+  "description": "music website application",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app"
+  },
+  "dependencies": {
+    "SQL": "^9.0.0",
+    "bcrypt": "^1.0.3",
+    "body-parser": "*",
+    "ejs": "^2.5.7",
+    "express": "*",
+    "express-validator": "^4.3.0",
+    "mongojs": "^2.4.1",
+    "mongoose": "^5.0.0-rc0",
+    "nodemailer": "^4.4.1",
+    "nodemon": "^1.12.5",
+    "npm-watch": "^0.3.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "restify": "^6.3.4"
+  },
+  "engines": {
+    "node": "^8.7.0"
+  },
+  "author": "Nathan Zengamambu",
+  "license": "ISC"
+}
