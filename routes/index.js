@@ -11,24 +11,21 @@ var db = mongojs('myapp', ['customers']);
 
 // Load index page, with data passing in
 router.get('/', function(req, res) {
-	db.customers.find(function(err, docs){
 
-		// render the page, with data passed into templates
-		res.render('index', {
-			title: 'Home /// BLK.NICHÈ',
-			pageName: 'index home',
-			customers: docs
-		});
-
+	// render the page, with data passed into templates
+	res.render('index', {
+		title: 'Home /// BLK.NICHÈ',
+		pageName: 'index home'
 	});
+
 });
 
 // Logout
-router.get('/logout', function(req, res){
-	req.logout();
-	req.flash('success', 'You are logged out');
-	res.redirect('/users/login');
-});
+// router.get('/logout', function(req, res){
+// 	req.logout();
+// 	req.flash('success', 'You are logged out');
+// 	res.redirect('/users/login');
+// });
 
 
 module.exports = router;
