@@ -57,7 +57,7 @@ let index = require('./routes/index')/*,
 	profile = require('./routes/profile'),
 	mail = require('./routes/mail')*/;
 
-// app.use('/', index);
+app.use('/', index);
 // app.use('/users', users);
 // app.use('/profile', profile);
 // app.use('/mail', mail);
