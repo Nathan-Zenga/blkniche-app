@@ -12,7 +12,7 @@ router.post('/send', function(req, res) {
 		secure: true,
 		auth: {
 			user: 'nathanzenga@gmail.com',
-			pass: config.password
+			pass: config.pass
 		},
 		tls: {
 			rejectUnauthorized: false
@@ -27,13 +27,13 @@ router.post('/send', function(req, res) {
 	};
 
 
-
 	transporter.sendMail(mailOptions, function(error, info) {
 		if (error) {
 			return console.log(error);
 		}
 		console.log("The message was sent!");
 		console.log(info);
+		console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 	});
 
 	res.redirect(req.get('referer'));

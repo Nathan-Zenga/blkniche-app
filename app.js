@@ -1,6 +1,7 @@
 // import modules
 var express = require('express'),
 	bodyParser = require('body-parser'),
+	http = require('http'), // core module
 	path = require('path'), // core module
 	expressValidator = require('express-validator'),
 	mongojs = require('mongojs'),
