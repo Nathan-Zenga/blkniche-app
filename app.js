@@ -6,6 +6,7 @@ var express = require('express'),
 	mongojs = require('mongojs'),
 	mongoose = require('mongoose'),
 	passport = require('passport');
+var FACTORIAL = path.join(__dirname, 'build', 'factorial.min.js');
 
 
 var nodemailer = require('nodemailer');
