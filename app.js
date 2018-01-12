@@ -52,15 +52,15 @@ app.use(express.static(__dirname + '/public'));
 
 
 // preparing routes
-let index = require('./routes/index')/*,
+let index = require('./routes/index'),
 	users = require('./routes/users'),
 	profile = require('./routes/profile'),
-	mail = require('./routes/mail')*/;
+	mail = require('./routes/mail');
 
 app.use('/', index);
-// app.use('/users', users);
-// app.use('/profile', profile);
-// app.use('/mail', mail);
+app.use('/users', users);
+app.use('/profile', profile);
+app.use('/mail', mail);
 
 
 

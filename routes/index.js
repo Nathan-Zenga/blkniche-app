@@ -4,10 +4,6 @@ var express = require('express'),
 	bcrypt = require('bcrypt'),
 	passport = require('passport');
 
-// Connection string:
-// Paramaters ('db', ['collection'])
-var db = mongojs('myapp', ['customers']);
-
 
 // Load index page, with data passing in
 router.get('/', function(req, res) {

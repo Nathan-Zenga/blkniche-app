@@ -1,12 +1,14 @@
-var express = require('express'),
+var fs = require('fs'),
+	express = require('express'),
 	router = express.Router(),
 	mongojs = require('mongojs'),
 	bcrypt = require('bcrypt'),
-	passport = require('passport');
+	passport = require('passport'),
+	config = JSON.parse(fs.readFileSync('config/config.json'));
 
 // Connection string:
 // Paramaters ('db', ['collection'])
-var db = mongojs('myapp', ['customers']);
+var db = mongojs(config.dbUri, ['customers']);
 var ObjectId = mongojs.ObjectId;
 // import the model
 
