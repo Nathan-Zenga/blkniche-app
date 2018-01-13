@@ -213,19 +213,19 @@ nav .link {
 	width: 100%;
 }
 
-.modal .DOB-group > * {
+.modal .DOB-group > .group-item {
 	display: inline-block;
 	width: calc(25% - 18px);
+}
+
+.modal .DOB-group input.group-item {
+	margin-left: 20px;
 }
 
 .modal .DOB-group label {
 	font-weight: inherit;
 	font-size: 14px;
 	padding-left: 12px;
-}
-
-.modal .DOB-group input {
-	margin-left: 20px;
 }
 
 .modal .submit {

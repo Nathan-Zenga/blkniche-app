@@ -26,10 +26,8 @@
 						<input class="form-control details" type="email" name="email_update" placeholder="Email" style>
 
 						<div class="DOB-group">
-							<label>Date of Birth</label>
-							<input class="form-control details" type="number" name="day_update" placeholder="Day" min="01" max="31">
-							<input class="form-control details" type="number" name="month_update" placeholder="Month" min="01" max="12">
-							<input class="form-control details" type="number" name="year_update" placeholder="Year" min="1930" max="2017">
+							<label class="sr-only">Date of Birth</label>
+							<input class="form-control details" type="text" id="DOB_update" name="DOB_update" placeholder="Date of birth" onfocus="(this.type='date')" onblur="(this.type='text')" style>
 						</div>
 						
 						<label class="sr-only">Nationality</label>

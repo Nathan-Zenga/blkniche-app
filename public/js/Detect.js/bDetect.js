@@ -19,26 +19,20 @@ var browserDetect = {
 	detectJS: function () {
 		b = detect.parse(navigator.userAgent);
 		// Display the Detect.js parsed properties in the message area
-		browserDetect.showInfo(
-				'Your browser is ' + b.browser.name /*+ '</br>' +
-				'Your device type is ' + b.device.type + '</br>' +
-				'Your operating system is ' + b.os.name + '</br>'*/
-		);
+		browserDetect.showInfo(b.browser.name, b.device.type, b.os.name);
 	},
 	// Update message area with the string argument
-	showInfo: function (m) {
-		console.log(typeof m);
-		console.log( $(".DOB-group").length );
-		console.log(m);
+	showInfo: function (browser, device, os) {
+		console.log(typeof device);
+		console.log(device);
 
-		if ( m.indexOf('Mobile') > -1 || m.indexOf('Tablet') > -1 || !(m.indexOf('Chrome') > -1) ) {
+		if ( device == 'Mobile' || device == 'Tablet' || !(browser.indexOf('Chrome') > -1) ) {
 			$("video").attr("controls", "true");
-			$(".DOB-group").html('<label class="sr-only">Date of Birth</label> <input class="form-control details" type="text" id="DOB" name="DOB" placeholder="Date of birth" onfocus="(this.type="date")" onblur="(this.type="text")" style>');
-		} else {
-			$(".DOB-group").html('<label>Date of Birth</label> <input class="form-control details" type="number" id="day" name="day" placeholder="Day" min="01" max="31"> <input class="form-control details" type="number" id="month" name="month" placeholder="Month" min="01" max="12"> <input class="form-control details" type="number" id="year" name="year" placeholder="Year" value="2017" min="1930" max="2017">');
+			$("#registration .DOB-group").html('<label class="group-item">Date of Birth</label> <input class="form-control details group-item" type="number" id="day" name="day" placeholder="Day" min="01" max="31"> <input class="form-control details group-item" type="number" id="month" name="month" placeholder="Month" min="01" max="12"> <input class="form-control details group-item" type="number" id="year" name="year" placeholder="Year" value="2017" min="1930" max="2017">');
+			$("#update-form .DOB-group").html('<label class="group-item">Date of Birth</label> <input class="form-control details group-item" type="number" id="day_update" name="day_update" placeholder="Day" min="01" max="31"> <input class="form-control details group-item" type="number" id="month_update" name="month_update" placeholder="Month" min="01" max="12"> <input class="form-control details group-item" type="number" id="year_update" name="year_update" placeholder="Year" value="2017" min="1930" max="2017">');
 		}
 
-		// return m;
+		return 0;
 	}
 }
 // Call browserDetect object when DOM is ready 
