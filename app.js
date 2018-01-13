@@ -24,11 +24,6 @@ app.use( function(req, res, next) {
 	next();
 });
 
-// app.get('*', function(req, res, next){
-// 	res.locals.user = req.user || null;
-// 	next();
-// });
-
 // Body Parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -46,18 +41,11 @@ app.use(passport.session());
 // set static path (joined with 'views')
 app.use(express.static(__dirname + '/public'));
 
-
 // preparing routes
-let index = require('./routes/index'),
-	users = require('./routes/users'),
-	profile = require('./routes/profile'),
-	mail = require('./routes/mail');
-
-app.use('/', index);
-app.use('/users', users);
-app.use('/profile', profile);
-app.use('/mail', mail);
-
+app.use('/', require('./routes/index'));
+app.use('/users', require('./routes/users'));
+app.use('/profile', require('./routes/profile'));
+app.use('/mail', require('./routes/mail'));
 
 
 // listen for requests on specified port
