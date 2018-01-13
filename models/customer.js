@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
-// create schema
+// create schema and modal
 const CustomerSchema = new Schema({
 	firstName: { type: String },
 	lastName: { type: String },
@@ -11,7 +11,6 @@ const CustomerSchema = new Schema({
 	password: { type: String }
 });
 
-// create model
-const Customer = mongoose.model('Customer', CustomerSchema);
+const Model = mongoose.model('Customer', CustomerSchema);
 
-module.exports = Customer;
+module.exports = Model;

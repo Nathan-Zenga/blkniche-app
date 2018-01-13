@@ -21,9 +21,15 @@ router.post('/add', function(req, res) {
 	req.checkBody('firstName', 'First name').notEmpty();
 	req.checkBody('lastName', 'Last name').notEmpty();
 	req.checkBody('email', 'Email').notEmpty();
-	req.checkBody('day', 'Day').notEmpty();
-	req.checkBody('month', 'Month').notEmpty();
-	req.checkBody('year', 'Year').notEmpty();
+
+	if (req.body.DOB) {
+		req.checkBody('DOB', 'Date of birth').notEmpty();
+	} else {
+		req.checkBody('day', 'Day').notEmpty();
+		req.checkBody('month', 'Month').notEmpty();
+		req.checkBody('year', 'Year').notEmpty();
+	}
+	
 	req.checkBody('nationality', 'Nationality').notEmpty();
 	req.checkBody('password', 'Password').notEmpty();
 	req.checkBody('passwordConfirm', 'Confirmed password not the same').equals(req.body.password);
@@ -45,12 +51,14 @@ router.post('/add', function(req, res) {
 			firstName: req.body.firstName,
 			lastName: req.body.lastName,
 			email: req.body.email,
-			DOB: req.body.year + "-" + req.body.month + "-" + req.body.day,
+			DOB: req.body.DOB,
 			nationality: req.body.nationality,
 			password: req.body.password
 		});
 
-		console.log(req.body);
+		if (req.body.DOB === undefined) {
+			newUser.DOB = req.body.year + "-" + req.body.month + "-" + req.body.day;
+		}
 
 		const salt = 10;
 
@@ -108,6 +116,14 @@ router.post('/update/:id', function(req, res) {
 	if (req.body.email_update)			updates.email = req.body.email_update;
 	if (req.body.nationality_update)	updates.nationality = req.body.nationality_update;
 
+	if (req.body.DOB_update !== undefined) { // check if field exists
+		updates.DOB = req.body.DOB_update
+	} else if (req.body.year_update && req.body.month_update && req.body.day_update) { // assuming these fields exist, check for no empty strings
+		updates.DOB = req.body.year_update + "-" + req.body.month_update + "-" + req.body.day_update
+	}
+
+	console.log(req.body);
+
 	// update document fields
 	db.customers.update({
 		_id: ObjectId(req.params.id)
@@ -119,6 +135,7 @@ router.post('/update/:id', function(req, res) {
 		if (err) { 
 			console.log(err);
 		} else {
+			// log latest update
 			db.customers.find({ _id: ObjectId(req.params.id) }, function(err, docs){
 				console.log(docs)
 			});
