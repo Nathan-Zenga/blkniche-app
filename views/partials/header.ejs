@@ -11,6 +11,9 @@
 	<script src="/js/Detect.js/detect.min.js"></script>
 	<script src="/js/Detect.js/bDetect.js"></script>
 	<script src="/js/mainjs.js"></script>
+	<% if(errors != undefined) { %>
+		<script> $(function(){ $("#sign-up").click() }) </script>
+	<% } %>
 </head>
 
 <body>
@@ -27,7 +30,7 @@
 				<a><div class="col-sm-3 link" id="music"><p>Music</p></div></a>
 				<a><div class="col-sm-3 link" id="videos"><p>Videos</p></div></a>
 				<a><div class="col-sm-3 link" id="info"><p>Info</p></div></a>
-				<a><div class="col-sm-3 link" data-toggle="modal" data-target="#registration" id="sign-up"><p>Sign Up</p></div></a>
+				<a><div class="col-sm-3 link" id="sign-up" data-toggle="modal" data-target="#registration"><p>Sign Up</p></div></a>
 			</div>
 		</nav>
 	</div>
