@@ -9,11 +9,6 @@ var express = require('express'),
 	passport = require('passport');
 var FACTORIAL = path.join(__dirname, 'build', 'factorial.min.js');
 
-
-var nodemailer = require('nodemailer');
-
-
-
 // initialise express
 var app = express();
 
