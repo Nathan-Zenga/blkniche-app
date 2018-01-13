@@ -235,7 +235,6 @@ $(function() {
 	var isPlaying = true;
 
 	$("video")
-	.attr({oncontextmenu: "return false"})
 	.css({cursor: "pointer"})
 	.click(function(){
 		if ( isPlaying ) {

@@ -34,12 +34,16 @@
 						<label class="sr-only">Email Address</label>
 						<input class="form-control details" type="email" id="email" name="email" placeholder="Email" style>
 						
-						<!-- <input class="form-control details" type="text" id="DOB" name="DOB" placeholder="Date of birth" onfocus="(this.type='date')" onblur="(this.type='text')" style> -->
 						<div class="DOB-group">
-							<label>Date of Birth</label>
-							<input class="form-control details" type="number" id="day" name="day" placeholder="Day" min="01" max="31">
-							<input class="form-control details" type="number" id="month" name="month" placeholder="Month" min="01" max="12">
-							<input class="form-control details" type="number" id="year" name="year" placeholder="Year" value="2017" min="1930" max="2017">
+							<span class="chrome">
+								<input class="form-control details" type="text" id="DOB" name="DOB" placeholder="Date of birth" onfocus="(this.type='date')" onblur="(this.type='text')" style>
+							</span>
+							<span class="firefox">
+								<label>Date of Birth</label>
+								<input class="form-control details" type="number" id="day" name="day" placeholder="Day" min="01" max="31">
+								<input class="form-control details" type="number" id="month" name="month" placeholder="Month" min="01" max="12">
+								<input class="form-control details" type="number" id="year" name="year" placeholder="Year" value="2017" min="1930" max="2017">
+							</span>
 						</div>
 						
 						<label class="sr-only">Nationality</label>
