@@ -27,13 +27,7 @@ router.post('/add/:title/:pageName', function(req, res) {
 	req.checkBody('firstName', 'First name').notEmpty();
 	req.checkBody('lastName', 'Last name').notEmpty();
 	req.checkBody('email', 'Email').notEmpty();
-
-	if (req.body.DOB) {
-		req.checkBody('DOB', 'Date of birth').notEmpty();
-	} else {
-		req.checkBody(['day', 'month', 'year'], 'Date of birth').notEmpty();
-	}
-	
+	req.body.DOB ? req.checkBody('DOB', 'Date of birth').notEmpty() : req.checkBody(['day', 'month', 'year'], 'Date of birth').notEmpty();
 	req.checkBody('nationality', 'Nationality').notEmpty();
 	req.checkBody('password', 'Password').notEmpty();
 	req.checkBody('passwordConfirm', 'Confirmed password not the same').equals(req.body.password);
