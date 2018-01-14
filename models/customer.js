@@ -6,7 +6,7 @@ const CustomerSchema = new Schema({
 	firstName: { type: String },
 	lastName: { type: String },
 	email: { type: String },
-	DOB: { type: Date },
+	DOB: { type: String },
 	nationality: { type: String },
 	password: { type: String }
 });

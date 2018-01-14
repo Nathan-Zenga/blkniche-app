@@ -57,7 +57,7 @@ router.post('/add', function(req, res) {
 		});
 
 		if (req.body.DOB === undefined) {
-			newUser.DOB = req.body.year + "-" + req.body.month + "-" + req.body.day;
+			newUser.DOB = req.body.day + "/" + req.body.month + "/" + req.body.year;
 		}
 
 		const salt = 10;
@@ -119,7 +119,7 @@ router.post('/update/:id', function(req, res) {
 	if (req.body.DOB_update !== '' && req.body.DOB_update !== undefined) { // check if field exists
 		updates.DOB = req.body.DOB_update
 	} else if (req.body.year_update && req.body.month_update && req.body.day_update) { // assuming these fields exist, check for no empty strings
-		updates.DOB = req.body.year_update + "-" + req.body.month_update + "-" + req.body.day_update
+		updates.DOB = req.body.day_update + "/" + req.body.month_update + "/" + req.body.year_update
 	}
 
 	console.log(req.body);
