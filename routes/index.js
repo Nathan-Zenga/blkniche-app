@@ -10,8 +10,8 @@ router.get('/', function(req, res) {
 
 	// render the page, with data passed into templates
 	res.render('index', {
-		title: 'Home /// BLK.NICHÈ',
-		pageName: 'index home'
+		title: 'Home',
+		pageName: 'index'
 	});
 
 });

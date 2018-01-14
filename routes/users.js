@@ -15,8 +15,19 @@ let Customer = require('../models/customer');
 
 
 // sending new customer data to server
-router.post('/add', function(req, res) {
+router.post('/add/:title/:pageName', function(req, res) {
+
+	var title = req.params.title.toUpperCase(),
+		pageName = req.params.pageName;
+
+	if (title === 'Home') {
+		pageName = 'index'
+	}
 	
+	console.log("REQ PARAMS");
+	console.log(req.params);
+	console.log();
+
 	// Signify required input; checking if any of them is not empty
 	req.checkBody('firstName', 'First name').notEmpty();
 	req.checkBody('lastName', 'Last name').notEmpty();
@@ -39,9 +50,9 @@ router.post('/add', function(req, res) {
 	// Check if errors present, else create object from user's input + insert to database
 	if (errors) {
 		db.customers.find(function(err, docs){
-			res.render('index', {
-				title: 'Home /// BLK.NICHÈ',
-				pageName: 'index home',
+			res.render(pageName, {
+				title: title,
+				pageName: pageName,
 				customers: docs,
 				errors: errors
 			});

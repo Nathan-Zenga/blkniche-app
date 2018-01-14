@@ -19,7 +19,7 @@ router.get('/', function(req, res) {
 
 		// render the page, with data passed into templates
 		res.render('profile', {
-			title: 'Profile /// BLK.NICHÈ',
+			title: 'Profile',
 			pageName: 'profile',
 			customers: docs
 		});
