@@ -300,6 +300,17 @@ $(function() {
 
 	});
 
+	var formAction = $("#registration form").attr("action"),
+		title = $("title").text(),
+		pageClassName = $("html").attr("class");
+
+	title = title.slice(0, title.indexOf(" ///"));
+	pageClassName = pageClassName.slice(0, pageClassName.indexOf("page"));
+
+
+	$("#registration form").attr("action", formAction + "/" + title + "/" + pageClassName);
+
+
 /*	$("#update-form .submit").click(function(){
 
 		var confirmation = confirm("Definitely save updates?");
