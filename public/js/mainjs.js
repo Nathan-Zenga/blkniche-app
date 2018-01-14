@@ -300,6 +300,7 @@ $(function() {
 
 	});
 
+	// setting up for page re-direction error detection
 	var formAction = $("#registration form").attr("action"),
 		title = $("title").text(),
 		pageClassName = $("html").attr("class");

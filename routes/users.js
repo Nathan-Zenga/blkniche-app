@@ -20,10 +20,6 @@ router.post('/add/:title/:pageName', function(req, res) {
 	var title = req.params.title.toUpperCase(),
 		pageName = req.params.pageName;
 
-	if (title === 'Home') {
-		pageName = 'index'
-	}
-	
 	console.log("REQ PARAMS");
 	console.log(req.params);
 	console.log();
