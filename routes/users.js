@@ -17,7 +17,7 @@ let Customer = require('../models/customer');
 // sending new customer data to server
 router.post('/add/:title/:pageName', function(req, res) {
 
-	var title = req.params.title.toUpperCase(),
+	var title = req.params.title,
 		pageName = req.params.pageName;
 
 	console.log("REQ PARAMS");
