@@ -20,9 +20,8 @@ router.post('/add/:title/:pageName', function(req, res) {
 	var title = req.params.title,
 		pageName = req.params.pageName;
 
-	console.log("REQ PARAMS");
-	console.log(req.params);
 	console.log();
+	console.log("REQ PARAMS:", req.params);
 
 	// Signify required input; checking if any of them is not empty
 	req.checkBody('firstName', 'First name').notEmpty();
