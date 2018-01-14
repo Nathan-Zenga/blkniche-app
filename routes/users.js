@@ -25,9 +25,9 @@ router.post('/add', function(req, res) {
 	if (req.body.DOB) {
 		req.checkBody('DOB', 'Date of birth').notEmpty();
 	} else {
-		req.checkBody('day', 'Day').notEmpty();
-		req.checkBody('month', 'Month').notEmpty();
-		req.checkBody('year', 'Year').notEmpty();
+		req.checkBody('day', 'Birth day').notEmpty();
+		req.checkBody('month', 'Birth month').notEmpty();
+		req.checkBody('year', 'Birth year').notEmpty();
 	}
 	
 	req.checkBody('nationality', 'Nationality').notEmpty();
