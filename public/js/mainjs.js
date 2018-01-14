@@ -180,7 +180,7 @@ $(function() {
 				scrollTop: $("section." + page).offset().top
 			}, 700)
 		} catch(err) {
-			console.log(`Section doesn't exist OR registration modal is now open`)
+			console.log("Section doesn't exist OR registration modal is now open")
 		}
 	});
 	
@@ -292,7 +292,7 @@ $(function() {
 
 		// adding object id to path as parameter for update req + name field to form legend (title)
 		var withId = action + "/" + $(this).data('id');
-		var name = ` - ${$(this).closest("li").find("span.first-name").text()}`;
+		var name = " - " + $(this).closest("li").find("span.first-name").text();
 
 		// modifying attr + appending name to legend
 		$("#update-form form").attr('action', withId);
