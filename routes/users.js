@@ -41,7 +41,7 @@ router.post('/add', function(req, res) {
 		db.customers.find(function(err, docs){
 			res.render('index', {
 				title: 'Home /// BLK.NICHÈ',
-				pageName: 'index home'
+				pageName: 'index home',
 				customers: docs,
 				errors: errors
 			});
@@ -137,7 +137,6 @@ router.post('/update/:id', function(req, res) {
 		} else {
 			// log latest update
 			db.customers.find({ _id: ObjectId(req.params.id) }, function(err, docs){
-				console.log(result);
 				console.log(docs)
 			});
 		}
