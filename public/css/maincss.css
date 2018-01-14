@@ -93,7 +93,7 @@ header #header-logo p {
 
 @media (min-width: 768px) {
 	header > .inner-header {
-		box-shadow: 0 0 10px 5px rgba(0,0,0,.5);
+		box-shadow: 0 0 10px 7px rgba(0,0,0,.5);
 	}
 
 	header #header-logo p {
