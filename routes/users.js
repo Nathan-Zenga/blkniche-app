@@ -117,7 +117,7 @@ router.post('/update/:id', function(req, res) {
 	if (req.body.nationality_update)	updates.nationality = req.body.nationality_update;
 
 	if (req.body.DOB_update !== '' && req.body.DOB_update !== undefined) { // check if field exists
-		updates.DOB = req.body.DOB_update
+		updates.DOB = new Date(req.body.DOB_update)
 	} else if (req.body.year_update && req.body.month_update && req.body.day_update) { // assuming these fields exist, check for no empty strings
 		updates.DOB = new Date(req.body.year_update + "-" + req.body.month_update + "-" + req.body.day_update)
 	}
