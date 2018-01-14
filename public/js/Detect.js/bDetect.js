@@ -26,7 +26,7 @@ var browserDetect = {
 		console.log(typeof device);
 		console.log(device);
 
-		if ( device == 'Mobile' || device == 'Tablet' || !(browser.indexOf('Chrome') > -1) ) {
+		if ( device == 'Mobile' || device == 'Tablet' || browser.indexOf('Chrome') == -1 ) {
 			$("video").attr("controls", "true");
 			$("#registration .DOB-group").html('<label class="group-item">Date of Birth</label> <input class="form-control details group-item" type="number" id="day" name="day" placeholder="Day" min="01" max="31"> <input class="form-control details group-item" type="number" id="month" name="month" placeholder="Month" min="01" max="12"> <input class="form-control details group-item" type="number" id="year" name="year" placeholder="Year" min="1930" max="2017">');
 			$("#update-form .DOB-group").html('<label class="group-item">Date of Birth</label> <input class="form-control details group-item" type="number" id="day_update" name="day_update" placeholder="Day" min="01" max="31"> <input class="form-control details group-item" type="number" id="month_update" name="month_update" placeholder="Month" min="01" max="12"> <input class="form-control details group-item" type="number" id="year_update" name="year_update" placeholder="Year" min="1930" max="2017">');
