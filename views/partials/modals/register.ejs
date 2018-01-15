@@ -16,12 +16,13 @@
 
 						<div id="result">
 							<% if(errors != undefined) { %>
-								Please fill in:
+								Please fill in: <% errors.forEach(function(err, i) { if(i == errors.length-1 && errors.length > 1) {%> & <% } %><%= err.msg %><% if(i < errors.length-2){ %>, <% } }) %>
+								<!-- Please fill in:
 								<ul>
 									<% errors.forEach(function(err) { %>
 										<li><%= err.msg %></li>
 									<% }) %>
-								</ul>
+								</ul> -->
 							<% } %>
 						</div>
 						
