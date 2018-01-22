@@ -86,7 +86,6 @@ router.post('/add/:title/:pageName', function(req, res) {
 				}
 				// reload current page
 				res.redirect(req.get('referer'));
-				// res.send(newUser);
 			});
 		});
 	}
