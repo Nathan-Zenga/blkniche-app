@@ -1,13 +1,14 @@
 // import modules
 var express = require('express'),
+	session = require('express-session'),
 	bodyParser = require('body-parser'),
 	http = require('http'), // core module
 	path = require('path'), // core module
 	expressValidator = require('express-validator'),
 	mongojs = require('mongojs'),
 	mongoose = require('mongoose'),
-	passport = require('passport');
-var FACTORIAL = path.join(__dirname, 'build', 'factorial.min.js');
+	passport = require('passport'),
+	FACTORIAL = path.join(__dirname, 'build', 'factorial.min.js');
 
 // initialise express
 var app = express();
@@ -24,9 +25,29 @@ app.use( function(req, res, next) {
 	next();
 });
 
+app.get('*', function(req, res, next){
+	res.locals.customer = req.customer || null;
+	next();
+});
+
 // Body Parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+
+
+// Express Session Middleware
+app.use(session({
+	secret: 'test secret',
+	resave: true,
+	saveUninitialized: true
+}));
+
+// Express Messages Middleware
+app.use(require('connect-flash')());
+// app.use(function (req, res, next) {
+// 	res.locals.messages = require('express-messages')(req, res);
+// 	next();
+// });
 
 // Express Validator middleware
 app.use(expressValidator());

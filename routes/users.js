@@ -4,6 +4,7 @@ var fs = require('fs'),
 	mongojs = require('mongojs'),
 	bcrypt = require('bcrypt'),
 	passport = require('passport'),
+	flash = require('connect-flash'),
 	config = JSON.parse(fs.readFileSync('config/config.json'));
 
 // Connection string:
@@ -139,6 +140,21 @@ router.post('/update/:id', function(req, res) {
 		}
 		res.redirect(req.get('referer'));
 	});
+});
+
+// Login process
+router.post('/login', function(req, res, next) {
+	passport.authenticate('local', {
+		successRedirect: '/',
+		failureRedirect: req.get('referer'),
+		failureFlash: true
+	})(req, res, next);
+});
+
+router.get('/logout', function(){
+	req.logout();
+	req.flash('success', 'You are logged out');
+	res.redirect('/');
 });
 
 
