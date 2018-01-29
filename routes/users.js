@@ -10,9 +10,18 @@ var fs = require('fs'),
 // Connection string:
 // Paramaters ('db', ['collection'])
 var db = mongojs(config.db, ['customers']);
+
+db.on('error', function (err) {
+	console.log('database error', err)
+});
+
+db.on('connect', function () {
+	console.log('database connected')
+});
+
 var ObjectId = mongojs.ObjectId;
-// import the model
-let Customer = require('../models/customer');
+
+let Customer = require('../models/customer'); // import the model
 
 
 // sending new customer data to server
@@ -66,15 +75,15 @@ router.post('/add/:title/:pageName', function(req, res) {
 				console.log(err);
 			}
 			newUser.password = hash;
-			// newUser.save(function(err){
-			// 	if (err) {
-			// 		console.log(err);
-			// 		return;
-			// 	} else {
-			// 		req.flash('success', 'Now registered!');
-			//		res.redirect(req.get('referer'));
-			// 	}
-			// });
+			newUser.save(function(err){
+				if (err) {
+					console.log(err);
+					return;
+				// } else {
+				// 	req.flash('success', 'Now registered!');
+				// 	res.redirect(req.get('referer'));
+				}
+			});
 
 			// insert new user to db collection
 			db.customers.insert(newUser, function(err, result){
