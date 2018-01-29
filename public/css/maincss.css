@@ -341,6 +341,12 @@ section .img {
 	background-position: center;
 }
 
+@media (min-width: 768px) {
+	#bgreel > div {
+		background-attachment: fixed;
+	}
+}
+
 section.music button {
 	background-color: gold;
 	color: black;
