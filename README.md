@@ -1,4 +1,4 @@
-# Test web application in Node.js
+# Test web application (in Node.js)
 
 (For a creative collective)
 
@@ -11,6 +11,6 @@
 - [Bcrypt](https://www.npmjs.com/package/bcrypt) (hashing and de-hashing)
 - [Grunt](https://www.npmjs.com/package/grunt) (CLI and Uglify)
 
-Live deployement on [Heroku](http://blackniche-demo.herokuapp.com)
+Live deployment on [Heroku](http://blackniche-demo.herokuapp.com)
 
 © Nathan Zengamambu 2018 | All Rights Reserved
