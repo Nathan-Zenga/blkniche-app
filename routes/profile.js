@@ -10,8 +10,6 @@ var fs = require('fs'),
 // Paramaters ('db', ['collection'])
 var db = mongojs(config.db, ['customers']);
 var ObjectId = mongojs.ObjectId;
-// import the model
-
 
 // Load profile page
 router.get('/', function(req, res) {

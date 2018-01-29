@@ -8,7 +8,9 @@ var express = require('express'),
 	mongojs = require('mongojs'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
+	config = require('./config/db'),
 	FACTORIAL = path.join(__dirname, 'build', 'factorial.min.js');
+
 
 // initialise express
 var app = express();
