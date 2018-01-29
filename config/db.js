@@ -1,4 +1,8 @@
+var fs = require('fs'),
+	express = require('express'),
+	config = JSON.parse(fs.readFileSync('config/config.json'));
+
 module.exports = {
-	database: 'mongodb://localhost:27017/myapp',
+	database: config.db,
 	secret: 'testsecret1'
 }
