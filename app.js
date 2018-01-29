@@ -67,8 +67,8 @@ app.use('/users', require('./routes/users'));
 app.use('/profile', require('./routes/profile'));
 app.use('/mail', require('./routes/mail'));
 
-
 // listen for requests on specified port
-app.listen(process.env.PORT || 5111, function() {
-	console.log(`Good to go on port ${process.env.PORT || 5111}`);
+var port = process.env.PORT || 5111;
+app.listen(port, function() {
+	console.log(`Good to go on port ${port}`);
 });
