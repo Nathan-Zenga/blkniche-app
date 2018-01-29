@@ -9,7 +9,7 @@ var fs = require('fs'),
 
 // Connection string:
 // Paramaters ('db', ['collection'])
-var db = mongojs(config.dbUri, ['customers']);
+var db = mongojs(config.db, ['customers']);
 var ObjectId = mongojs.ObjectId;
 // import the model
 let Customer = require('../models/customer');
