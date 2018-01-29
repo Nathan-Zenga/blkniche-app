@@ -22,13 +22,14 @@ app.use( function(req, res, next) {
 	res.locals.db = null;
 	res.locals.ObjectId = null;
 	res.locals.errors = null;
-	res.locals.customer = req.customer || null;
+	res.locals.messages = require('express-messages')(req, res);
 	next();
 });
 
-// app.get('*', function(req, res, next){
-// 	next();
-// });
+app.get('*', function(req, res, next){
+	res.locals.customer = req.customer || null;
+	next();
+});
 
 // Body Parser middleware
 app.use(bodyParser.json());
@@ -44,10 +45,6 @@ app.use(session({
 
 // Express Messages Middleware
 app.use(require('connect-flash')());
-app.use(function (req, res, next) {
-	res.locals.messages = require('express-messages')(req, res);
-	next();
-});
 
 // Express Validator middleware
 app.use(expressValidator());
