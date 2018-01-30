@@ -7,17 +7,8 @@ var fs = require('fs'),
 	flash = require('connect-flash'),
 	config = JSON.parse(fs.readFileSync('config/config.json'));
 
-// Connection string:
-// Paramaters ('db', ['collection'])
+// Connection string - paramaters ('db', ['collection'])
 var db = mongojs(config.db, ['customers']);
-
-db.on('error', function (err) {
-	console.log('database error', err)
-});
-
-db.on('connect', function () {
-	console.log('database connected')
-});
 
 var ObjectId = mongojs.ObjectId;
 
@@ -79,9 +70,8 @@ router.post('/add/:title/:pageName', function(req, res) {
 				if (err) {
 					console.log(err);
 					return;
-				// } else {
-				// 	req.flash('success', 'Now registered!');
-				// 	res.redirect(req.get('referer'));
+				} else {
+					req.flash('success', 'Now registered!');
 				}
 			});
 

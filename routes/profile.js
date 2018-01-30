@@ -6,8 +6,7 @@ var fs = require('fs'),
 	passport = require('passport'),
 	config = JSON.parse(fs.readFileSync('config/config.json'));
 
-// Connection string:
-// Paramaters ('db', ['collection'])
+// Connection string - paramaters ('db', ['collection'])
 var db = mongojs(config.db, ['customers']);
 var ObjectId = mongojs.ObjectId;
 

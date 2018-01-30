@@ -8,9 +8,21 @@ var express = require('express'),
 	mongojs = require('mongojs'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
-	config = require('./config/db'),
+	database = require('./config/database'),
 	FACTORIAL = path.join(__dirname, 'build', 'factorial.min.js');
 
+mongoose.connect(database.database);
+let db = mongoose.connection;
+
+// Check connection
+db.once('open', function(){
+	console.log('Connected to database');
+});
+
+// Check for DB errors
+db.on('error', function(err){
+	console.log(err);
+});
 
 // initialise express
 var app = express();
