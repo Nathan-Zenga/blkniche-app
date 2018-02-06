@@ -8,10 +8,8 @@ var fs = require('fs'),
 	config = JSON.parse(fs.readFileSync('config/config.json'));
 
 // Connection string - paramaters ('db', ['collection'])
-var db = mongojs(config.db, ['customers']);
-
+// var db = mongojs(config.db, ['customers']);
 var ObjectId = mongojs.ObjectId;
-
 let Customer = require('../models/customer'); // import the model
 
 
@@ -37,7 +35,7 @@ router.post('/add/:title/:pageName', function(req, res) {
 	
 	// Check if errors present, else create object from user's input + insert to database
 	if (errors) {
-		db.customers.find(function(err, docs){
+		Customer.find(function(err, docs){
 			res.render(pageName, {
 				title: title,
 				pageName: pageName,
@@ -72,21 +70,25 @@ router.post('/add/:title/:pageName', function(req, res) {
 					return;
 				} else {
 					req.flash('success', 'Now registered!');
-				}
-			});
-
-			// insert new user to db collection
-			db.customers.insert(newUser, function(err, result){
-				if(err) {
-					console.log("ERROR: " + err);
-				} else {
-					db.customers.find(function(err, docs){
+					Customer.find(function(err, docs){
 						console.log(docs)
 					});
 				}
-				// reload current page
 				res.redirect(req.get('referer'));
 			});
+
+			// // insert new user to db collection
+			// db.customers.insert(newUser, function(err, result){
+			// 	if(err) {
+			// 		console.log("ERROR: " + err);
+			// 	} else {
+			// 		db.customers.find(function(err, docs){
+			// 			console.log(docs)
+			// 		});
+			// 	}
+			// 	// reload current page
+			// 	res.redirect(req.get('referer'));
+			// });
 		});
 	}
 });
@@ -122,7 +124,7 @@ router.post('/update/:id', function(req, res) {
 	console.log(req.body);
 
 	// update document fields
-	db.customers.update({
+	Customer.update({
 		_id: ObjectId(req.params.id)
 	},
 	{
@@ -133,7 +135,7 @@ router.post('/update/:id', function(req, res) {
 			console.log(err);
 		} else {
 			// log latest update
-			db.customers.find({ _id: ObjectId(req.params.id) }, function(err, docs){
+			Customer.find({ _id: ObjectId(req.params.id) }, function(err, docs){
 				console.log(docs)
 			});
 		}
