@@ -1,6 +1,5 @@
 var express = require('express'),
 	router = express.Router(),
-	mongojs = require('mongojs'),
 	bcrypt = require('bcrypt'),
 	passport = require('passport');
 

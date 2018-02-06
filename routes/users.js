@@ -69,8 +69,8 @@ router.post('/add/:title/:pageName', function(req, res) {
 					console.log(err);
 					return;
 				} else {
-					req.flash('success', 'Now registered!');
 					Customer.find(function(err, docs){
+						req.flash('success', 'Now registered!');
 						console.log(docs)
 					});
 				}
