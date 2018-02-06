@@ -26,6 +26,21 @@ var app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Express Session Middleware
+app.use(session({
+	secret: 'test secret',
+	resave: true,
+	saveUninitialized: true
+}));
+// Express Messages Middleware
+app.use(require('connect-flash')());
+
+// Passport config + initializing (middleware)
+require('./config/passport')(passport);
+app.use(require('cookie-parser')());
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Global variables (in middleware)
 app.use( function(req, res, next) {
 	res.locals.db = null;
@@ -45,25 +60,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 
-// Express Session Middleware
-app.use(session({
-	secret: 'test secret',
-	resave: true,
-	saveUninitialized: true
-}));
-
-// Express Messages Middleware
-app.use(require('connect-flash')());
-
 // Express Validator middleware
 app.use(expressValidator());
-
-// Passport config
-require('./config/passport')(passport);
-
-// Initialize Passport (middleware)
-app.use(passport.initialize());
-app.use(passport.session());
 
 // set static path (joined with 'views')
 app.use(express.static(__dirname + '/public'));
