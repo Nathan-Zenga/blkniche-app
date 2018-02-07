@@ -128,8 +128,6 @@ router.post('/update/:id', function(req, res) {
 	});
 });
 
-require('../config/passport')(passport);
-
 // Login process
 router.post('/login',
 	passport.authenticate('local', {

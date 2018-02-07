@@ -43,6 +43,7 @@ app.use(session({
 app.use(require('connect-flash')());
 
 // Passport config + initializing (middleware)
+require('./config/passport')(passport);
 app.use(require('cookie-parser')());
 app.use(passport.initialize());
 app.use(passport.session());
