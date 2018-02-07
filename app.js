@@ -43,7 +43,6 @@ app.use(session({
 app.use(require('connect-flash')());
 
 // Passport config + initializing (middleware)
-require('./config/passport')(passport);
 app.use(require('cookie-parser')());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -53,7 +52,10 @@ app.use( function(req, res, next) {
 	res.locals.db = null;
 	res.locals.ObjectId = null;
 	res.locals.errors = null;
-	res.locals.messages = require('express-messages')(req, res);
+	// res.locals.messages = require('express-messages')(req, res);
+	res.locals.success_msg = req.flash('success_msg');
+	res.locals.error_msg = req.flash('error_msg');
+	res.locals.error = req.flash('error');
 	next();
 });
 
