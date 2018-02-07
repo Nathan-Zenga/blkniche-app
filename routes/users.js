@@ -128,14 +128,19 @@ router.post('/update/:id', function(req, res) {
 	});
 });
 
+require('../config/passport')(passport);
+
 // Login process
-router.post('/login', function(req, res, next) {
+router.post('/login',
 	passport.authenticate('local', {
-		successRedirect: '/',
-		failureRedirect: req.get('referer'),
+		successRedirect: '/profile',
+		failureRedirect: '/',
 		failureFlash: true
-	})(req, res, next);
-});
+	}),
+	function(req, res) {
+		res.redirect('/')
+	}
+);
 
 router.get('/logout', function(){
 	req.logout();
