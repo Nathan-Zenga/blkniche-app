@@ -13,6 +13,7 @@ module.exports = function(passport) {
 				throw err
 			}
 			if (!customer) {
+				console.log('User does not exist');
 				return done(null, false, {message: 'User does not exist.'});
 			}
 
@@ -21,11 +22,11 @@ module.exports = function(passport) {
 				if (err) {
 					throw err
 				}
-				if (isMatch) {
-					return done(null, customer);
-				} else {
+				if (!isMatch) {
+					console.log('Wrong password');
 					return done(null, false, {message: 'Wrong password.'});
 				}
+				return done(null, customer);
 			});
 		});
 	}));
