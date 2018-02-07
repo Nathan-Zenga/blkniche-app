@@ -1,15 +1,12 @@
-var fs = require('fs'),
-	express = require('express'),
+var express = require('express'),
 	router = express.Router(),
-	mongojs = require('mongojs'),
 	bcrypt = require('bcrypt'),
 	passport = require('passport'),
-	flash = require('connect-flash'),
-	config = JSON.parse(fs.readFileSync('config/config.json'));
+	flash = require('connect-flash');
 
 // Connection string - paramaters ('db', ['collection'])
 // var db = mongojs(config.db, ['customers']);
-var ObjectId = mongojs.ObjectId;
+var ObjectId = require('mongojs').ObjectId;
 let Customer = require('../models/customer'); // import the model
 
 
@@ -59,6 +56,7 @@ router.post('/add/:title/:pageName', function(req, res) {
 
 		const salt = 10;
 
+		// hashing the password
 		bcrypt.hash(newUser.password, salt, function(err, hash){
 			if (err) {
 				console.log(err);
@@ -73,22 +71,9 @@ router.post('/add/:title/:pageName', function(req, res) {
 						req.flash('success', 'Now registered!');
 						console.log(docs)
 					});
+					res.redirect(req.get('referer'));
 				}
-				res.redirect(req.get('referer'));
 			});
-
-			// // insert new user to db collection
-			// db.customers.insert(newUser, function(err, result){
-			// 	if(err) {
-			// 		console.log("ERROR: " + err);
-			// 	} else {
-			// 		db.customers.find(function(err, docs){
-			// 			console.log(docs)
-			// 		});
-			// 	}
-			// 	// reload current page
-			// 	res.redirect(req.get('referer'));
-			// });
 		});
 	}
 });

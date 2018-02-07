@@ -8,10 +8,10 @@ var express = require('express'),
 	// mongojs = require('mongojs'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
-	database = require('./config/database'),
+	config = require('./config/database'),
 	FACTORIAL = path.join(__dirname, 'build', 'factorial.min.js');
 
-mongoose.connect(database.database);
+mongoose.connect(config.database);
 let db = mongoose.connection;
 
 // Check connection
@@ -25,6 +25,13 @@ var app = express();
 // View engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+// Body Parser middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+
+// set static path (joined with 'views')
+app.use(express.static(__dirname + '/public'));
 
 // Express Session Middleware
 app.use(session({
@@ -55,16 +62,8 @@ app.get('*', function(req, res, next){
 	next();
 });
 
-// Body Parser middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-
-
 // Express Validator middleware
 app.use(expressValidator());
-
-// set static path (joined with 'views')
-app.use(express.static(__dirname + '/public'));
 
 // preparing routes
 app.use('/', require('./routes/index'));
