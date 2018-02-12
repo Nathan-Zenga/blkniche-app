@@ -1,43 +1,24 @@
-const LocalStrategy = require('passport-local').Strategy,
-	  Customer = require('../models/customer'),
-	  config = require('../config/database'),
-	  bcrypt = require('bcrypt');
+var	LocalStrategy = require('passport-local').Strategy,
+	bcrypt = require('bcrypt'),
+	Customer = require('../models/customer');
 
 module.exports = function(passport) {
-	passport.use(new LocalStrategy(function(email, password, done){
-		
-		// match email
-		let query = {email: email};
-		Customer.findOne(query, function(err, customer){
-			if (err) {
-				throw err
-			}
-			if (!customer) {
-				console.log('User does not exist');
-				return done(null, false, {message: 'User does not exist.'});
+	passport.use(new LocalStrategy(
+	function(email, password, done) {
+		Customer.getUserByEmail(email, function(err, user) {
+			if(err) throw err;
+			if(!user) {
+				return done(null, false, {message: 'Unknown User'});
 			}
 
-			// match password
-			bcrypt.compare(password, customer.password, function(err, isMatch){
-				if (err) {
-					throw err
+			Customer.comparePassword(password, user.password, function(err, isMatch) {
+				if(err) throw err;
+				if(isMatch) {
+					return done(null, user);
+				} else {
+					return done(null, false, {message: 'Invalid password'});
 				}
-				if (!isMatch) {
-					console.log('Wrong password');
-					return done(null, false, {message: 'Wrong password.'});
-				}
-				return done(null, customer);
 			});
 		});
 	}));
-
-	passport.serializeUser(function(customer, done) {
-		done(null, customer.id);
-	});
-
-	passport.deserializeUser(function(id, done) {
-		Customer.findById(id, function(err, customer) {
-			done(err, customer);
-		})
-	});
 }
