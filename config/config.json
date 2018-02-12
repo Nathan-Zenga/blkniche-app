@@ -1,5 +1,4 @@
 {
 	"pass": "BigBangTheory96.",
-	"db": "mongodb://nathanzen:thomas96@ds251737.mlab.com:51737/blacknichedb",
-	"dbl": "mongodb://localhost/blacknichedb"
+	"db": "mongodb://nathanzen:thomas96@ds251737.mlab.com:51737/blacknichedb"
 }

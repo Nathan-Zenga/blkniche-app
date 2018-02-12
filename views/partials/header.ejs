@@ -28,11 +28,11 @@
 				<a><div class="col-sm-3 link" id="music"><p>Music</p></div></a>
 				<a><div class="col-sm-3 link" id="videos"><p>Videos</p></div></a>
 				<a><div class="col-sm-3 link" id="info"><p>Info</p></div></a>
-				<%_ if (customer) { _%>
-				<a><div class="col-sm-3 link" id="logout"><p>Logout</p></div></a>
-				<%_ } else { _%>
-				<a><div class="col-sm-3 link" id="sign-up" data-toggle="modal" data-target="#registration"><p>Sign Up</p></div></a>
-				<%_ } _%>
+				<% if (customer) { %>
+					<a><div class="col-sm-3 link" id="logout"><p>Logout</p></div></a>
+				<% } else { %>
+					<a><div class="col-sm-3 link" id="sign-up" data-toggle="modal" data-target="#registration"><p>Sign Up</p></div></a>
+				<% } %>
 			</div>
 		</nav>
 	</div>

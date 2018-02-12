@@ -1,18 +1,17 @@
 // import modules
 var express = require('express'),
-	path = require('path'),
-	bodyParser = require('body-parser'),
-	cookieParser = require('cookie-parser'),
-	mongoose = require('mongoose'),
-	expressValidator = require('express-validator'),
-	passport = require('passport'),
-	LocalStrategy = require('passport-local').Strategy,
 	session = require('express-session'),
-	flash = require('connect-flash'),
-	config = require('./config/database'),
+	bodyParser = require('body-parser'),
+	http = require('http'), // core module
+	path = require('path'), // core module
+	expressValidator = require('express-validator'),
+	// mongojs = require('mongojs'),
+	mongoose = require('mongoose'),
+	passport = require('passport'),
+	database = require('./config/database'),
 	FACTORIAL = path.join(__dirname, 'build', 'factorial.min.js');
 
-mongoose.connect(config.database);
+mongoose.connect(database.database);
 let db = mongoose.connection;
 
 // Check connection
@@ -27,13 +26,24 @@ var app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Global variables (in middleware)
+app.use( function(req, res, next) {
+	res.locals.db = null;
+	res.locals.ObjectId = null;
+	res.locals.errors = null;
+	res.locals.messages = require('express-messages')(req, res);
+	next();
+});
+
+app.get('*', function(req, res, next){
+	res.locals.customer = req.customer || null;
+	next();
+});
+
 // Body Parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
 
-// set static path (joined with 'views')
-app.use(express.static(__dirname + '/public'));
 
 // Express Session Middleware
 app.use(session({
@@ -42,29 +52,21 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-// connect flash
-app.use(flash());
-
-// Passport config + initializing (middleware)
-// require('./config/passport')(passport);
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Global variables (in middleware)
-app.use( function(req, res, next) {
-	res.locals.db = null;
-	res.locals.ObjectId = null;
-	res.locals.errors = null;
-	// res.locals.messages = require('express-messages')(req, res);
-	res.locals.success_msg = req.flash('success_msg');
-	res.locals.error_msg = req.flash('error_msg');
-	res.locals.error = req.flash('error');
-	res.locals.customer = req.customer || null;
-	next();
-});
+// Express Messages Middleware
+app.use(require('connect-flash')());
 
 // Express Validator middleware
 app.use(expressValidator());
+
+// Passport config
+require('./config/passport')(passport);
+
+// Initialize Passport (middleware)
+app.use(passport.initialize());
+app.use(passport.session());
+
+// set static path (joined with 'views')
+app.use(express.static(__dirname + '/public'));
 
 // preparing routes
 app.use('/', require('./routes/index'));
