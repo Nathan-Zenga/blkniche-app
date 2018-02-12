@@ -1,13 +1,14 @@
 // import modules
 var express = require('express'),
-	session = require('express-session'),
+	path = require('path'),
 	bodyParser = require('body-parser'),
-	http = require('http'), // core module
-	path = require('path'), // core module
-	expressValidator = require('express-validator'),
-	// mongojs = require('mongojs'),
+	cookieParser = require('cookie-parser'),
 	mongoose = require('mongoose'),
+	expressValidator = require('express-validator'),
 	passport = require('passport'),
+	LocalStrategy = require('passport-local').Strategy,
+	session = require('express-session'),
+	flash = require('connect-flash'),
 	config = require('./config/database'),
 	FACTORIAL = path.join(__dirname, 'build', 'factorial.min.js');
 
@@ -29,6 +30,7 @@ app.set('views', path.join(__dirname, 'views'));
 // Body Parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(cookieParser());
 
 // set static path (joined with 'views')
 app.use(express.static(__dirname + '/public'));
@@ -39,12 +41,12 @@ app.use(session({
 	resave: true,
 	saveUninitialized: true
 }));
-// Express Messages Middleware
-app.use(require('connect-flash')());
+
+// connect flash
+app.use(flash());
 
 // Passport config + initializing (middleware)
-require('./config/passport')(passport);
-app.use(require('cookie-parser')());
+// require('./config/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
