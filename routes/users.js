@@ -1,12 +1,13 @@
 var express = require('express'),
 	router = express.Router(),
+	mongojs = require('mongojs'),
 	bcrypt = require('bcrypt'),
 	passport = require('passport'),
-	flash = require('connect-flash');
+	LocalStrategy = require('passport-local').Strategy;
 
 // Connection string - paramaters ('db', ['collection'])
 // var db = mongojs(config.db, ['customers']);
-var ObjectId = require('mongojs').ObjectId;
+var ObjectId = mongojs.ObjectId;
 let Customer = require('../models/customer'); // import the model
 
 
@@ -15,9 +16,6 @@ router.post('/add/:title/:pageName', function(req, res) {
 
 	var title = req.params.title,
 		pageName = req.params.pageName;
-
-	console.log();
-	console.log("REQ PARAMS:", req.params);
 
 	// Signify required input; checking if any of them is not empty
 	req.checkBody('firstName', 'First name').notEmpty();
@@ -127,6 +125,9 @@ router.post('/update/:id', function(req, res) {
 		res.redirect(req.get('referer'));
 	});
 });
+
+// import Passport config
+require('../config/passport')(passport);
 
 // Login process
 router.post('/login',
