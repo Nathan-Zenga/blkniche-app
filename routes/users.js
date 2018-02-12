@@ -1,9 +1,11 @@
-var express = require('express'),
+var fs = require('fs'),
+	express = require('express'),
 	router = express.Router(),
 	mongojs = require('mongojs'),
 	bcrypt = require('bcrypt'),
 	passport = require('passport'),
-	LocalStrategy = require('passport-local').Strategy;
+	flash = require('connect-flash'),
+	config = JSON.parse(fs.readFileSync('config/config.json'));
 
 // Connection string - paramaters ('db', ['collection'])
 // var db = mongojs(config.db, ['customers']);
@@ -16,6 +18,9 @@ router.post('/add/:title/:pageName', function(req, res) {
 
 	var title = req.params.title,
 		pageName = req.params.pageName;
+
+	console.log();
+	console.log("REQ PARAMS:", req.params);
 
 	// Signify required input; checking if any of them is not empty
 	req.checkBody('firstName', 'First name').notEmpty();
@@ -54,7 +59,6 @@ router.post('/add/:title/:pageName', function(req, res) {
 
 		const salt = 10;
 
-		// hashing the password
 		bcrypt.hash(newUser.password, salt, function(err, hash){
 			if (err) {
 				console.log(err);
@@ -69,19 +73,32 @@ router.post('/add/:title/:pageName', function(req, res) {
 						req.flash('success', 'Now registered!');
 						console.log(docs)
 					});
-					res.redirect(req.get('referer'));
 				}
+				res.redirect(req.get('referer'));
 			});
+
+			// // insert new user to db collection
+			// db.customers.insert(newUser, function(err, result){
+			// 	if(err) {
+			// 		console.log("ERROR: " + err);
+			// 	} else {
+			// 		db.customers.find(function(err, docs){
+			// 			console.log(docs)
+			// 		});
+			// 	}
+			// 	// reload current page
+			// 	res.redirect(req.get('referer'));
+			// });
 		});
 	}
 });
 
 router.delete('/delete/:id', function(req, res) {
 	// console.log(req.params.id);
-	Customer.remove({
+	db.customers.remove({
 		_id: ObjectId(req.params.id)
 	}, function(err, result) {
-		if (err) {
+		if (err) { 
 			console.log(err);
 		}
 	});
@@ -126,20 +143,14 @@ router.post('/update/:id', function(req, res) {
 	});
 });
 
-// import Passport config
-require('../config/passport')(passport);
-
 // Login process
-router.post('/login',
+router.post('/login', function(req, res, next) {
 	passport.authenticate('local', {
-		successRedirect: '/profile',
-		failureRedirect: '/',
+		successRedirect: '/',
+		failureRedirect: req.get('referer'),
 		failureFlash: true
-	}),
-	function(req, res) {
-		res.redirect('/')
-	}
-);
+	})(req, res, next);
+});
 
 router.get('/logout', function(){
 	req.logout();
