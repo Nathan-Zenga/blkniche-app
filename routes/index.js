@@ -6,13 +6,11 @@ var express = require('express'),
 
 // Load index page, with data passing in
 router.get('/', function(req, res) {
-
 	// render the page, with data passed into templates
 	res.render('index', {
 		title: 'Home',
 		pageName: 'index'
 	});
-
 });
 
 // Logout
