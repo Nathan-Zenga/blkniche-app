@@ -8,21 +8,21 @@ module.exports = function(passport) {
 		
 		// match email
 		let query = {email: email};
-		Customer.findOne(query, function(err, customer){
+		Customer.findOne(query, function(err, user){
 			if (err) {
 				throw err
 			}
-			if (!customer) {
+			if (!user) {
 				return done(null, false, {message: 'User does not exist.'});
 			}
 
 			// match password
-			bcrypt.compare(password, customer.password, function(err, isMatch){
+			bcrypt.compare(password, user.password, function(err, isMatch){
 				if (err) {
 					throw err
 				}
 				if (isMatch) {
-					return done(null, customer);
+					return done(null, user);
 				} else {
 					return done(null, false, {message: 'Wrong password.'});
 				}
@@ -30,13 +30,13 @@ module.exports = function(passport) {
 		});
 	}));
 
-	passport.serializeUser(function(customer, done) {
-		done(null, customer.id);
+	passport.serializeUser(function(user, done) {
+		done(null, user.id);
 	});
 
 	passport.deserializeUser(function(id, done) {
-		Customer.findById(id, function(err, customer) {
-			done(err, customer);
+		Customer.findById(id, function(err, user) {
+			done(err, user);
 		})
 	});
 }

@@ -32,11 +32,7 @@ app.use( function(req, res, next) {
 	res.locals.ObjectId = null;
 	res.locals.errors = null;
 	res.locals.messages = require('express-messages')(req, res);
-	next();
-});
-
-app.get('*', function(req, res, next){
-	res.locals.customer = req.customer || null;
+	res.locals.user = req.user || null;
 	next();
 });
 
@@ -57,9 +53,6 @@ app.use(require('connect-flash')());
 
 // Express Validator middleware
 app.use(expressValidator());
-
-// Passport config
-require('./config/passport')(passport);
 
 // Initialize Passport (middleware)
 app.use(passport.initialize());
