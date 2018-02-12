@@ -20,9 +20,9 @@
     "grunt-cli": "1.2.0",
     "grunt-contrib-uglify": "3.3.0",
     "mongojs": "^2.4.1",
-    "mongoose": "^5.0.2",
+    "mongoose": "^5.0.4",
     "nodemailer": "^4.4.2",
-    "nodemon": "^1.14.11",
+    "nodemon": "^1.14.12",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "restify": "^6.3.4"
