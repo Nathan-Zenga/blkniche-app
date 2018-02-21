@@ -271,7 +271,7 @@ $(function() {
 		if(confirmation){
 			$.ajax({
 				type: 'DELETE',
-				url: '/users/delete/' + $(this).data('id'),
+				url: '/users/delete/' + $(this).data('id')
 			});
 			$(this).parent("li").remove();
 		} else {
