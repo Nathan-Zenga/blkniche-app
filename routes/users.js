@@ -59,36 +59,10 @@ router.post('/add/:title/:pageName', function(req, res) {
 
 		const salt = 10;
 
-		bcrypt.hash(newUser.password, salt, function(err, hash){
-			if (err) {
-				console.log(err);
-			}
-			newUser.password = hash;
-			newUser.save(function(err){
-				if (err) {
-					console.log(err);
-					return;
-				} else {
-					Customer.find(function(err, docs){
-						req.flash('success', 'Now registered!');
-						console.log(docs)
-					});
-				}
-				res.redirect(req.get('referer'));
-			});
-
-			// // insert new user to db collection
-			// db.customers.insert(newUser, function(err, result){
-			// 	if(err) {
-			// 		console.log("ERROR: " + err);
-			// 	} else {
-			// 		db.customers.find(function(err, docs){
-			// 			console.log(docs)
-			// 		});
-			// 	}
-			// 	// reload current page
-			// 	res.redirect(req.get('referer'));
-			// });
+		Customer.createUser(newUser, function(err, user){
+			if(err) throw err;
+			console.log(user);
+			res.redirect(req.get('referer'));
 		});
 	}
 });
