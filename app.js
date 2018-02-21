@@ -5,9 +5,10 @@ var express = require('express'),
 	http = require('http'), // core module
 	path = require('path'), // core module
 	expressValidator = require('express-validator'),
-	// mongojs = require('mongojs'),
+	flash = require('connect-flash'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
+	LocalStrategy = require('passport-local').Strategy,
 	database = require('./config/database'),
 	FACTORIAL = path.join(__dirname, 'build', 'factorial.min.js');
 
@@ -26,12 +27,28 @@ var app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Initialize Passport (middleware)
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Express Session
+app.use(session({
+	secret: 'secret',
+	saveUninitialized: true,
+	resave: true
+}));
+
+// Connect Flash
+app.use(flash());
+
 // Global variables (in middleware)
 app.use( function(req, res, next) {
 	res.locals.db = null;
 	res.locals.ObjectId = null;
 	res.locals.errors = null;
-	res.locals.messages = require('express-messages')(req, res);
+	res.locals.success_msg = req.flash('success_msg');
+	res.locals.error_msg = req.flash('error_msg');
+	res.locals.error = req.flash('error');
 	res.locals.user = req.user || null;
 	next();
 });
@@ -48,15 +65,8 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-// Express Messages Middleware
-app.use(require('connect-flash')());
-
 // Express Validator middleware
 app.use(expressValidator());
-
-// Initialize Passport (middleware)
-app.use(passport.initialize());
-app.use(passport.session());
 
 // set static path (joined with 'views')
 app.use(express.static(__dirname + '/public'));
