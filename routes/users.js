@@ -69,7 +69,7 @@ router.post('/add/:title/:pageName', function(req, res) {
 
 router.delete('/delete/:id', function(req, res) {
 	// console.log(req.params.id);
-	db.customers.remove({
+	Customer.remove({
 		_id: ObjectId(req.params.id)
 	}, function(err, result) {
 		if (err) { 
