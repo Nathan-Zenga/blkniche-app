@@ -50,19 +50,17 @@
 
 
 <div class="row" style="position: fixed; top: 50px; right: 20px; margin: 0; z-index: 1000">
-	<div class="col-lg-12">
-		<% if (success_msg) { %>
+		<%_ if (success_msg) { _%>
 			<div class="alert alert-success"><%= success_msg %></div>
-		<% } %>
+		<%_ } _%>
 
-		<% if (error_msg) { %>
+		<%_ if (error_msg) { _%>
 			<div class="alert alert-danger"><%= error_msg %></div>
-		<% } %>
+		<%_ } _%>
 
-		<% if (error) { %>
+		<%_ if (error) { _%>
 			<div class="alert alert-danger"><%= error %></div>
-		<% } %>
-	</div>
+		<%_ } _%>
 </div>
 
 
