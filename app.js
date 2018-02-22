@@ -9,7 +9,7 @@ var express = require('express');
 	flash = require('connect-flash'),
 	session = require('express-session'),
 	passport = require('passport'),
-	LocalStrategy = require('passport-local').Strategy;
+	LocalStrategy = require('passport-local').Strategy,
 	mongoose = require('mongoose'),
 	config = require('./config/config'),
 	FACTORIAL = path.join(__dirname, 'build', 'factorial.min.js');
@@ -22,25 +22,21 @@ db.once('open', function() { console.log('Connected to db'); });
 // Check for DB errors
 db.on('error', function(err) { console.log(err); });
 
-// Init App
+// Initialise express app
 var app = express();
 
 // View Engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-// app.set('views', path.join(__dirname, 'views'));
-// app.engine('handlebars', exphbs({defaultLayout:'layout'}));
-// app.set('view engine', 'handlebars');
 
-// BodyParser Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// Set Static Folder
+// Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Express Session
+// Express session middleware
 app.use(session({
 		secret: 'secret',
 		saveUninitialized: true,
@@ -57,7 +53,7 @@ app.use(expressValidator());
 // Connect Flash
 app.use(flash());
 
-// Global Vars
+// Global variables
 app.use(function (req, res, next) {
 	res.locals.success_msg = req.flash('success_msg');
 	res.locals.error_msg = req.flash('error_msg');
@@ -71,10 +67,10 @@ app.use(function (req, res, next) {
 
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
+app.use('/mail', require('./routes/mail'));
 
-// Set Port
+// Set port + listen for requests
 app.set('port', (process.env.PORT || 5111));
-
 app.listen(app.get('port'), function(){
 	console.log('Server started on port '+app.get('port'));
 });
