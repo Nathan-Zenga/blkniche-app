@@ -51,6 +51,10 @@ router.post('/register', function(req, res){
 			password: req.body.password
 		});
 
+		if (req.body.DOB === undefined) {
+			newUser.DOB = req.body.year + "-" + req.body.month + "-" + req.body.day;
+		}
+
 		User.createUser(newUser, function(err, user){
 			if(err) throw err;
 			console.log(user);
