@@ -1,8 +1,7 @@
 var express = require('express'),
 	router = express.Router(),
-	fs = require('fs'),
 	nodemailer = require('nodemailer'),
-	config = JSON.parse(fs.readFileSync('config/config.json'));
+	config = require('../config/config');
 
 router.post('/send', function(req, res) {
 
