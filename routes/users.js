@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+var express = require('express'),
+	router = express.Router(),
+	passport = require('passport'),
+	LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
 
@@ -31,7 +31,7 @@ router.post('/register', function(req, res){
 
 	var errors = req.validationErrors();
 
-	if(errors){
+	if(errors) {
 		User.find(function(err, docs){
 			res.render('profile', {
 				title: 'Profile',
