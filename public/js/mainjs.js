@@ -292,7 +292,7 @@ $(function() {
 
 		// adding object id to path as parameter for update req + name field to form legend (title)
 		var withId = action + "/" + $(this).data('id');
-		var name = " - " + $(this).closest("li").find("span.first-name").text();
+		var name = " - " + $(this).closest("li").find("span.username").text();
 
 		// modifying attr + appending name to legend
 		$("#update-form form").attr('action', withId);
@@ -301,15 +301,15 @@ $(function() {
 	});
 
 	// setting up for page re-direction error detection
-	var formAction = $("#registration form").attr("action"),
-		title = $("title").text(),
-		pageClassName = $("html").attr("class");
+	// var formAction = $("#registration form").attr("action"),
+	// 	title = $("title").text(),
+	// 	pageClassName = $("html").attr("class");
 
-	title = title.slice(0, title.indexOf(" ///"));
-	pageClassName = pageClassName.slice(0, pageClassName.indexOf("page"));
+	// title = title.slice(0, title.indexOf(" ///"));
+	// pageClassName = pageClassName.slice(0, pageClassName.indexOf("page"));
 
 
-	$("#registration form").attr("action", formAction + "/" + title + "/" + pageClassName);
+	// $("#registration form").attr("action", formAction + "/" + title + "/" + pageClassName);
 
 
 /*	$("#update-form .submit").click(function(){

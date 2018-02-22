@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="<%= pageName %> page" lang="en">
+<html class="<%= pageClass %> page" lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,7 +29,7 @@
 				<a><div class="col-sm-3 link" id="videos"><p>Videos</p></div></a>
 				<a><div class="col-sm-3 link" id="info"><p>Info</p></div></a>
 				<% if (user) { %>
-					<a><div class="col-sm-3 link" id="logout"><p>Logout</p></div></a>
+					<a href="/users/logout"><div class="col-sm-3 link" id="logout"><p>Logout</p></div></a>
 				<% } else { %>
 					<a><div class="col-sm-3 link" id="sign-up" data-toggle="modal" data-target="#registration"><p>Sign Up</p></div></a>
 				<% } %>
@@ -47,6 +47,26 @@
 <% include modals/login %>
 
 <% include modals/update %>
+
+
+<div class="row" style="position: fixed; top: 50px; right: 20px; margin: 0; z-index: 1000">
+	<div class="col-lg-12">
+		<% if (success_msg) { %>
+			<div class="alert alert-success"><%= success_msg %></div>
+		<% } %>
+
+		<% if (error_msg) { %>
+			<div class="alert alert-danger"><%= error_msg %></div>
+		<% } %>
+
+		<% if (error) { %>
+			<div class="alert alert-danger"><%= error %></div>
+		<% } %>
+	</div>
+</div>
+
+
+
 
 <!-- Main inner body of webpage -->
 <div class="container-fluid">

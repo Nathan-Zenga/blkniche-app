@@ -19,8 +19,7 @@
 			<ul class="customerList" style="position: absolute; top: 100px; left: 0px; width: 100%; padding-top: 20px; padding-bottom: 20px; background-color: rgba(0, 0, 0, .5); color: white">
 				<% customers.forEach(function(doc){ %>
 					<li>
-						<span class="first-name"><%= doc.firstName %></span> 
-						<span class="last-name"><%= doc.lastName %></span> (<%= doc.email %>) - 
+						<span class="username"><%= doc.username %></span> (<%= doc.email %>) - 
 						<a class="deleteCustomer" data-id="<%= doc._id %>">DELETE</a> / 
 						<a class="updateCustomer" data-id="<%= doc._id %>" data-toggle="modal" data-target="#update-form">UPDATE</a> 
 					</li>

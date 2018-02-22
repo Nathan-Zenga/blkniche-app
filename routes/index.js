@@ -1,26 +1,21 @@
-var express = require('express'),
-	router = express.Router(),
-	bcrypt = require('bcrypt'),
-	passport = require('passport');
+var express = require('express');
+var router = express.Router();
 
-
-// Load index page, with data passing in
-router.get('/', function(req, res) {
-
-	// render the page, with data passed into templates
+// Get Homepage
+router.get('/', ensureAuthenticated, function(req, res){
 	res.render('index', {
 		title: 'Home',
-		pageName: 'index'
+		pageClass: 'home'
 	});
-
 });
 
-// Logout
-// router.get('/logout', function(req, res){
-// 	req.logout();
-// 	req.flash('success', 'You are logged out');
-// 	res.redirect('/users/login');
-// });
-
+function ensureAuthenticated(req, res, next){
+	if(req.isAuthenticated()){
+		return next();
+	} else {
+		//req.flash('error_msg','You are not logged in');
+		res.redirect('/users/login');
+	}
+}
 
 module.exports = router;
