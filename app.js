@@ -11,7 +11,7 @@ var express = require('express');
 	passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy;
 	mongoose = require('mongoose'),
-	config = require('./config/database'),
+	config = require('./config/config'),
 	FACTORIAL = path.join(__dirname, 'build', 'factorial.min.js');
 
 mongoose.connect(config.db);
