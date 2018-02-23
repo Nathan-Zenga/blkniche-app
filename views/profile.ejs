@@ -1,4 +1,4 @@
-<% include partials/header %>
+<%_ include partials/header _%>
 
 	<section>
 		<div id="bgreel">
@@ -15,24 +15,24 @@
 			<div style="background-image: url('/img/bgreel/IMG_0792.JPG');"></div>
 		</div>
 
-		<% if (customers.length) { %>
+		<%_ if (customers.length) { _%>
 			<ul class="customerList" style="position: absolute; top: 100px; left: 0px; width: 100%; padding-top: 20px; padding-bottom: 20px; background-color: rgba(0, 0, 0, .5); color: white">
-				<% if (user) { %>
+				<%_ if (user) { _%>
 					<li>Name: <%= user.firstName %> <%= user.lastName %></li>
 					<li>Email: <%= user.email %></li>
 					<li>Date of birth: <%= user.DOB.getDate() + "/" + user.DOB.getMonth() + "/" + user.DOB.getFullYear() %></li>
 					<li>Nationality: <%= user.nationality %></li>
-				<% } else { %>
-					<% customers.forEach(function(doc){ %>
+				<%_ } else { _%>
+					<%_ customers.forEach(function(doc){ _%>
 						<li>
 							<span class="username"><%= doc.username %></span> (<%= doc.email %>) - 
 							<a class="deleteCustomer" data-id="<%= doc._id %>">DELETE</a> / 
 							<a class="updateCustomer" data-id="<%= doc._id %>" data-toggle="modal" data-target="#update-form">UPDATE</a> 
 						</li>
-					<% }) %>
-				<% } %>
+					<%_ }) _%>
+				<%_ } _%>
 			</ul>
-		<% } %>
+		<%_ } _%>
 
 		<div style="position: absolute; top: 250px; width: 100%; padding: 20px; background-color: rgba(0, 0, 0, .5);">
 
@@ -50,4 +50,4 @@
 
 	</section>
 
-<% include partials/footer %>
+<%_ include partials/footer _%>
