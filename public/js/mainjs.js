@@ -184,21 +184,20 @@ $(function() {
 		}
 	});
 	
-	$("#toTop, #header-logo").click(function(){
-		var $selected = this;
-		$("html, body").stop().animate({
-			scrollTop: 0
-		}, 700);
-		$(".inner-header").css("box-shadow", ""); // for if link-group is visible
-		if (window.innerWidth <= 768) {
-			$(".link-group, .link").fadeOut(function(){
-				$(this).css("display", "");
-			});
+	$("#toTop, #header-logo").click(function() {
+		if (this.id === 'header-logo' && !( $('.home').length )) {
+			location.pathname = '/'
+		} else {
+			$("html, body").stop().animate({
+				scrollTop: 0
+			}, 700);
+			$(".inner-header").css("box-shadow", ""); // for if link-group is visible
+			if (window.innerWidth <= 768) {
+				$(".link-group, .link").fadeOut(function(){
+					$(this).css("display", "");
+				});
+			}
 		}
-
-		setTimeout(function(){
-			if ( $selected.id === 'header-logo' && !$(".index").length ) location.pathname = '/'
-		}, 700);
 	});
 
 	// Activating the carousel (disabling automatic transition)
