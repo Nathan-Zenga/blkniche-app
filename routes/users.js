@@ -6,7 +6,7 @@ var express = require('express'),
 var User = require('../models/user');
 
 // Login
-router.get('/login', function(req, res){
+router.get('/profile', function(req, res){
 	User.find(function(err, docs){
 		res.render('profile', {
 			title: 'Profile',
@@ -61,7 +61,7 @@ router.post('/register', function(req, res){
 		});
 
 		req.flash('success_msg', 'You are registered and can now login');
-		res.redirect('/users/login');
+		res.redirect('/users/profile');
 	}
 });
 
@@ -69,8 +69,8 @@ router.post('/register', function(req, res){
 require('../config/passport')(passport);
 
 // Login process
-router.post('/login',
-	passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login',failureFlash: true}),
+router.post('/profile',
+	passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/profile',failureFlash: true}),
 	function(req, res) {
 		res.redirect('/');
 	}
@@ -80,7 +80,7 @@ router.post('/login',
 router.get('/logout', function(req, res){
 	req.logout();
 	req.flash('success_msg', 'You are logged out');
-	res.redirect('/users/login');
+	res.redirect('/users/profile');
 });
 
 
