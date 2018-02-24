@@ -15,7 +15,17 @@
 	<script> $(function(){ $("#sign-up").click() }) </script>
 	<%_ } _%>
 	<%_ if(user) { _%>
-	<style> nav .link { width: 19.5% } </style>
+	<style>
+		nav .link {
+			height: 20%;
+		}
+
+		@media (min-width: 768px) {
+			nav .link {
+				width: 19.5%
+			}
+		}
+	</style>
 	<%_ } _%>
 </head>
 
