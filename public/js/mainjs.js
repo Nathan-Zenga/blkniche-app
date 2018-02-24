@@ -50,7 +50,7 @@ $(function() {
 	// hide/show contents when scrolling up/down the page
 	function toggleOnScroll(){
 
-		// hide/show toTop button when scrollTop > 0
+		// toggle toTop button display
 		if ( window.pageYOffset > 40) {
 			$("#toTop").css({transform: "translateX(-100%)"});
 		} else {
