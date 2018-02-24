@@ -22,7 +22,8 @@
 
 		@media (min-width: 768px) {
 			nav .link {
-				width: 19.5%
+				width: 19.5%;
+				height: 100%;
 			}
 		}
 	</style>
@@ -44,7 +45,7 @@
 				<a><div class="col-sm-3 link" id="videos"><p>Videos</p></div></a>
 				<a><div class="col-sm-3 link" id="info"><p>Info</p></div></a>
 				<%_ if (user) { _%>
-				<a href="/users/profile"><div class="col-sm-3 link" id="profile"><p><i class="fa fa-user"></i></p></div></a>
+				<a href="/users/profile"><div class="col-sm-3 link" id="profile"><p><i class="fa fa-user-circle-o"></i></p></div></a>
 				<a href="/users/logout"><div class="col-sm-3 link" id="logout"><p>Logout</p></div></a>
 				<%_ } else { _%>
 				<a><div class="col-sm-3 link" id="sign-up" data-toggle="modal" data-target="#registration"><p>Sign Up</p></div></a>
@@ -66,17 +67,17 @@
 
 
 <div class="row" style="position: fixed; top: 50px; right: 20px; margin: 0; z-index: 1000">
-		<%_ if (success_msg != '') { _%>
-			<div class="alert alert-success"><%= success_msg %></div>
-		<%_ } _%>
+	<%_ if (success_msg != '') { _%>
+		<div class="alert alert-success"><%= success_msg %></div>
+	<%_ } _%>
 
-		<%_ if (error_msg != '') { _%>
-			<div class="alert alert-danger"><%= error_msg %></div>
-		<%_ } _%>
+	<%_ if (error_msg != '') { _%>
+		<div class="alert alert-danger"><%= error_msg %></div>
+	<%_ } _%>
 
-		<%_ if (error != '') { _%>
-			<div class="alert alert-danger"><%= error %></div>
-		<%_ } _%>
+	<%_ if (error != '') { _%>
+		<div class="alert alert-danger"><%= error %></div>
+	<%_ } _%>
 </div>
 
 
