@@ -6,12 +6,17 @@
 	<title><%= title %> /// BLK.NICHÈ</title>
 	<link rel="stylesheet" type="text/css" href="/css/maincss.css">
 	<link rel="stylesheet" type="text/css" href="/css/logo-cube.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+	<script src="/js/libs/jquery.min.js"></script>
+	<script src="/js/libs/bootstrap.min.js"></script>
 	<script src="/js/Detect.js/detect.min.js"></script>
 	<script src="/js/Detect.js/bDetect.js"></script>
 	<script src="/js/mainjs.min.js"></script>
-	<%_ if(errors) { _%><script> $(function(){ $("#sign-up").click() }) </script><%_ } _%>
+	<%_ if(errors) { _%>
+	<script> $(function(){ $("#sign-up").click() }) </script>
+	<%_ } _%>
+	<%_ if(user) { _%>
+	<style> nav .link { width: 19.5% } </style>
+	<%_ } _%>
 </head>
 
 <body>
@@ -29,6 +34,7 @@
 				<a><div class="col-sm-3 link" id="videos"><p>Videos</p></div></a>
 				<a><div class="col-sm-3 link" id="info"><p>Info</p></div></a>
 				<%_ if (user) { _%>
+				<a href="/users/profile"><div class="col-sm-3 link" id="profile"><p><i class="fa fa-user"></i></p></div></a>
 				<a href="/users/logout"><div class="col-sm-3 link" id="logout"><p>Logout</p></div></a>
 				<%_ } else { _%>
 				<a><div class="col-sm-3 link" id="sign-up" data-toggle="modal" data-target="#registration"><p>Sign Up</p></div></a>
