@@ -1,4 +1,4 @@
-<!-- Modal for sign-up form, for client data creation -->
+<!-- Sign-up form, for client data creation -->
 <div id="registration" class="modal fade" role="dialog">
 	<div id="SignUpDialog" class="modal-dialog">
 		<div class="modal-content">
@@ -14,17 +14,18 @@
 					<fieldset>
 						<legend>SIGN UP</legend>
 
-						<div id="result">
-							<% if(errors != undefined) { %>
-								Please fill in: <% errors.forEach(function(err, i) { if(i == errors.length-1 && errors.length > 1) {%> & <% } %><%= err.msg %><% if(i < errors.length-2){ %>, <% } }) %>
-								<!-- Please fill in:
+						<p>Have an account? <a data-dismiss="modal" data-toggle="modal" data-target="#login-form"><i>Log in.</i></a></p>
+
+						<% if(errors != undefined) { %>
+							<div id="result">
+								<!-- Please fill in: <% errors.forEach(function(err, i) { if(i == errors.length-1 && errors.length > 1) {%> & <% } %><%= err.msg %><% if(i < errors.length-2){ %>, <% } }) %> -->
 								<ul>
 									<% errors.forEach(function(err) { %>
 										<li><%= err.msg %></li>
 									<% }) %>
-								</ul> -->
-							<% } %>
-						</div>
+								</ul>
+							</div>
+						<% } %>
 						
 						<label class="sr-only">First Name</label>
 						<input class="form-control details name" type="text" id="firstName" name="firstName" placeholder="First name" style>
@@ -64,10 +65,6 @@
 						<input class="form-control submit" type="submit" id="signUpSubmit" value="Create Account">
 					</fieldset>
 				</form>
-			</div>
-
-			<div class="modal-footer">
-				<p>Have an account? <a data-dismiss="modal" data-toggle="modal" data-target="#login-form"><i>Log in.</i></a></p>
 			</div>
 
 		</div>
