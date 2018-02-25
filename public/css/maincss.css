@@ -37,8 +37,7 @@ section {
 
 nav,
 nav div,
-.container-fluid,
-section {
+.container-fluid {
 	position: relative;
 	height: 100%
 }
@@ -193,12 +192,15 @@ nav .link {
 	border: none;
 }
 
+.modal fieldset > p {
+	margin-bottom: 1em;
+}
+
 .modal .modal-body {
 	padding: 15px 10%;
 }
 
-.modal .details,
-.modal .submit {
+.modal .details {
 	margin-bottom: 1.5em;
 }
 
@@ -245,22 +247,23 @@ nav .link {
 }
 
 section {
+	min-height: 100%;
 	z-index: 1;
 }
 
 section > .img-container {
-	height: 70%;
+	height: 70vh;
 }
 
 section > .textbox {
-	height: 30%;
+	height: 30vh;
 	overflow: auto;
 	padding-bottom: 20px;
 }
 
 @media (min-width: 768px) {
 	section > .col-sm-6 {
-		height: 100%;
+		height: 100vh;
 	}
 }
 
