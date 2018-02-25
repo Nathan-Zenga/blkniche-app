@@ -1,4 +1,4 @@
-<!-- Modal for sign-up form, for client data creation -->
+<!-- Log-in form -->
 <div id="login-form" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -10,9 +10,11 @@
 
 			<div class="modal-body">
 				<!-- FORM -->
-				<form class="form-group" method="post" action="/users/profile">
+				<form class="form-group" method="post" action="/users/login">
 					<fieldset>
 						<legend>LOG IN</legend>
+
+						<p>Don't have an account? <a data-dismiss="modal" data-toggle="modal" data-target="#registration"><i>Sign up.</i></a></p>
 
 						<label class="sr-only">Username</label>
 						<input class="form-control details" type="username" name="username" placeholder="Username" style>
@@ -24,10 +26,6 @@
 						<input class="form-control submit" type="submit" value="Sign in">
 					</fieldset>
 				</form>
-			</div>
-
-			<div class="modal-footer">
-				<p>Don't have an account? <a data-dismiss="modal" data-toggle="modal" data-target="#registration"><i>Sign up.</i></a></p>
 			</div>
 
 		</div>
