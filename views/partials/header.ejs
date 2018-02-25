@@ -13,8 +13,7 @@
 	<script src="/js/mainjs.min.js"></script>
 	<%_ if(errors) { _%>
 	<script> $(function(){ $("#sign-up").click() }) </script>
-	<%_ } _%>
-	<%_ if(user) { _%>
+	<%_ } if(user) { _%>
 	<style>
 		nav .link {
 			height: 20%;
@@ -22,7 +21,7 @@
 
 		@media (min-width: 768px) {
 			nav .link {
-				width: 19.5%;
+				width: 20%;
 				height: 100%;
 			}
 		}
@@ -45,7 +44,7 @@
 				<a><div class="col-sm-3 link" id="videos"><p>Videos</p></div></a>
 				<a><div class="col-sm-3 link" id="info"><p>Info</p></div></a>
 				<%_ if (user) { _%>
-				<a href="/users/profile"><div class="col-sm-3 link" id="profile"><p><i class="fa fa-user-circle-o"></i></p></div></a>
+				<a href="/profile"><div class="col-sm-3 link" id="profile"><p><i class="fa fa-user-circle-o"></i></p></div></a>
 				<a href="/users/logout"><div class="col-sm-3 link" id="logout"><p>Logout</p></div></a>
 				<%_ } else { _%>
 				<a><div class="col-sm-3 link" id="sign-up" data-toggle="modal" data-target="#registration"><p>Sign Up</p></div></a>
@@ -59,11 +58,14 @@
 
 
 <!-- including the modals -->
+<%_ if (user) { _%>
+<% include modals/update %>
+
+<%_ } else { _%>
 <% include modals/register %>
 
 <% include modals/login %>
-
-<% include modals/update %>
+<%_ } _%>
 
 
 <div class="row" style="position: fixed; top: 50px; right: 20px; margin: 0; z-index: 1000">

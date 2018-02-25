@@ -1,11 +1,22 @@
-var express = require('express');
-var router = express.Router();
+var express = require('express'),
+	router = express.Router(),
+	User = require('../models/user');
 
 // Get Homepage
-router.get('/', ensureAuthenticated, function(req, res){
+router.get('/', function(req, res){
 	res.render('index', {
 		title: 'Home',
-		pageClass: 'home'
+		pageClass: 'index'
+	});
+});
+
+router.get('/profile', ensureAuthenticated, function(req, res){
+	User.find(function(err, docs){
+		res.render('profile', {
+			title: 'Profile',
+			pageClass: 'profile',
+			customers: docs
+		});
 	});
 });
 
@@ -14,8 +25,9 @@ function ensureAuthenticated(req, res, next){
 		return next();
 	} else {
 		req.flash('error_msg','You are not logged in');
-		res.redirect('/users/profile');
+		res.redirect('/');
 	}
 }
+
 
 module.exports = router;
