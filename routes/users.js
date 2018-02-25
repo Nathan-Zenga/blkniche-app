@@ -17,7 +17,9 @@ router.post('/register/:title', function(req, res){
 	req.checkBody('lastName', 'Last name is required').notEmpty();
 	req.checkBody('email', 'Email is required').notEmpty();
 	req.checkBody('username', 'Username is required').notEmpty();
-	req.body.DOB ? req.checkBody('DOB', 'Date of birth is required').notEmpty() : req.checkBody(['day', 'month', 'year'], 'Date of birth is required').notEmpty();
+	req.checkBody('username', 'Username must not contain spaces or special characters (except "." and "-")')
+		.custom(value => { value.indexOf(/[ !@#$%^&*()+\=\[\]{};':"\\|,<>\/?]/) != -1 });
+	req.checkBody('DOB', 'Date of birth is required').notEmpty();
 	req.checkBody('nationality', 'Nationality is required').notEmpty();
 	req.checkBody('password', 'Password is required').notEmpty();
 	req.checkBody('passwordConfirm', 'Confirmed password not the same is required').equals(req.body.password);
