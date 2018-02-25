@@ -5,37 +5,30 @@ var express = require('express'),
 
 var User = require('../models/user');
 
-// Login
-router.get('/profile', function(req, res){
-	User.find(function(err, docs){
-		res.render('profile', {
-			title: 'Profile',
-			pageClass: 'profile',
-			customers: docs
-		});
-	});
-});
-
 // Register new user
-router.post('/register', function(req, res){
+router.post('/register/:title', function(req, res){
+
+	// for dynamic page rendering and redirection, only upon error detection
+	var page = title = req.params.title;
+	page == 'Home' ? page = 'index' : null;
 
 	// Validation
-	req.checkBody('firstName', 'First name').notEmpty();
-	req.checkBody('lastName', 'Last name').notEmpty();
-	req.checkBody('email', 'Email').notEmpty();
-	req.checkBody('username', 'Username').notEmpty();
-	req.body.DOB ? req.checkBody('DOB', 'Date of birth').notEmpty() : req.checkBody(['day', 'month', 'year'], 'Date of birth').notEmpty();
-	req.checkBody('nationality', 'Nationality').notEmpty();
-	req.checkBody('password', 'Password').notEmpty();
-	req.checkBody('passwordConfirm', 'Confirmed password not the same').equals(req.body.password);
+	req.checkBody('firstName', 'First name is required').notEmpty();
+	req.checkBody('lastName', 'Last name is required').notEmpty();
+	req.checkBody('email', 'Email is required').notEmpty();
+	req.checkBody('username', 'Username is required').notEmpty();
+	req.body.DOB ? req.checkBody('DOB', 'Date of birth is required').notEmpty() : req.checkBody(['day', 'month', 'year'], 'Date of birth is required').notEmpty();
+	req.checkBody('nationality', 'Nationality is required').notEmpty();
+	req.checkBody('password', 'Password is required').notEmpty();
+	req.checkBody('passwordConfirm', 'Confirmed password not the same is required').equals(req.body.password);
 
 	var errors = req.validationErrors();
 
 	if(errors) {
 		User.find(function(err, docs){
-			res.render('profile', {
-				title: 'Profile',
-				pageClass: 'profile',
+			res.render(page.toLowerCase(), {
+				title: title,
+				pageClass: page.toLowerCase(),
 				customers: docs,
 				errors: errors
 			});
@@ -61,7 +54,7 @@ router.post('/register', function(req, res){
 		});
 
 		req.flash('success_msg', 'You are registered and can now login');
-		res.redirect('/users/profile');
+		res.redirect('/');
 	}
 });
 
@@ -69,8 +62,8 @@ router.post('/register', function(req, res){
 require('../config/passport')(passport);
 
 // Login process
-router.post('/profile',
-	passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/profile',failureFlash: true}),
+router.post('/login',
+	passport.authenticate('local', {failureRedirect:'/',failureFlash: true}),
 	function(req, res) {
 		res.redirect('/');
 	}
@@ -80,19 +73,24 @@ router.post('/profile',
 router.get('/logout', function(req, res){
 	req.logout();
 	req.flash('success_msg', 'You are logged out');
-	res.redirect('/users/profile');
+	res.redirect('/');
 });
 
 
+// Deletion process
 router.delete('/delete/:id', function(req, res) {
-	// console.log(req.params.id);
 	User.remove({
 		_id: req.params.id
 	}, function(err, result) {
 		if (err) { 
-			console.log(err);
+			console.log(err); return;
 		}
 	});
+});
+
+router.get('/deleted', function(req, res) {
+	req.flash('success_msg', 'Account successfully deleted');
+	res.redirect('/');
 });
 
 
