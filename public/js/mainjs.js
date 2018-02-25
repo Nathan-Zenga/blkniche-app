@@ -312,6 +312,25 @@ $(function() {
 	$("#registration form").attr("action", formAction + "/" + title);
 
 
+	$('#registration form').bootstrapValidator({
+		feedbackIcons: {
+			valid: 'glyphicon glyphicon-ok',
+			invalid: 'glyphicon glyphicon-remove',
+			validating: 'glyphicon glyphicon-refresh'
+		},
+		fields: {
+			username: {
+				validators: {
+					regexp: {
+						regexp: /^[a-z.0-9999]+$/i,
+						message: 'No spaces or special characters!'
+					}
+				}
+			}
+		}
+	});
+
+
 
 	$(window).scroll(function() {
 
