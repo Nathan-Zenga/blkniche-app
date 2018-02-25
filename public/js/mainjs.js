@@ -185,7 +185,7 @@ $(function() {
 	});
 	
 	$("#toTop, #header-logo").click(function() {
-		if (this.id === 'header-logo' && !( $('.home').length )) {
+		if (this.id === 'header-logo' && !( $('.home, .index').length )) {
 			location.pathname = '/'
 		} else {
 			$("html, body").stop().animate({
@@ -271,8 +271,10 @@ $(function() {
 			$.ajax({
 				type: 'DELETE',
 				url: '/users/delete/' + $(this).data('id')
+				// success: function() { location.pathname = '/users/deleted' }
 			});
-			$(this).parent("li").remove();
+			location.pathname = '/users/deleted';
+			// $(this).parent("li").remove();
 		} else {
 			return false
 		}
@@ -299,33 +301,17 @@ $(function() {
 
 	});
 
+
+
 	// setting up for page re-direction error detection
-	// var formAction = $("#registration form").attr("action"),
-	// 	title = $("title").text(),
-	// 	pageClassName = $("html").attr("class");
+	var formAction = $("#registration form").attr("action"),
+		title = $("title").text();
 
-	// title = title.slice(0, title.indexOf(" ///"));
-	// pageClassName = pageClassName.slice(0, pageClassName.indexOf("page"));
+	title = title.slice(0, title.indexOf(" ///"));
 
-
-	// $("#registration form").attr("action", formAction + "/" + title + "/" + pageClassName);
+	$("#registration form").attr("action", formAction + "/" + title);
 
 
-/*	$("#update-form .submit").click(function(){
-
-		var confirmation = confirm("Definitely save updates?");
-
-		if(confirmation){
-			$.ajax({
-				type: 'POST',
-				url: '/users/update/' + $(this).data('id'),
-			});
-			window.location.reload();
-		} else {
-			return false
-		}
-	});
-*/
 
 	$(window).scroll(function() {
 
