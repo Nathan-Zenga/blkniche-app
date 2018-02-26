@@ -19,7 +19,7 @@ router.post('/register/:title', function(req, res){
 	req.checkBody('username', 'Username is required').notEmpty();
 	req.checkBody('username', 'Username must not contain spaces or special characters (except "." and "-")')
 		.custom((value) => {
-			var chars = /[!@#$%^&*()+\=\[\]{};':"\\|,<>\/?]/;
+			var chars = /[ !@#$%^&*()+\=\[\]{};':"\\|,<>\/?]/;
 			return chars.test(value) == false;
 		});
 	req.checkBody('DOB', 'Date of birth is required').notEmpty();
