@@ -9,62 +9,83 @@
 			</div>
 
 			<div class="modal-body">
-				<!-- FORM -->
-				<form class="form-group" method="post" action="/users/register">
-					<fieldset>
-						<legend>SIGN UP</legend>
+				<ul class="nav nav-pills tabs">
+					<li class="active" style="width: calc(50% - 2px)"><a data-toggle="pill" href="#signup_body">SIGN UP</a></li>
+					<li style="width: calc(50% - 2px)"><a data-toggle="pill" href="#login_body">LOG IN</a></li>
+				</ul>
 
-						<p>Have an account? <a data-dismiss="modal" data-toggle="modal" data-target="#login-form"><i>Log in.</i></a></p>
+				<!-- FORMS -->
+				<div class="tab-content">
 
-						<% if(errors != undefined) { %>
-							<div id="result">
-								<!-- Please fill in: <% errors.forEach(function(err, i) { if(i == errors.length-1 && errors.length > 1) {%> & <% } %><%= err.msg %><% if(i < errors.length-2){ %>, <% } }) %> -->
-								<ul>
-									<% errors.forEach(function(err) { %>
-										<li><%= err.msg %></li>
-									<% }) %>
-								</ul>
+					<form id="signup_body" class="form-group tab-pane fade in active" method="post" action="/users/register">
+						<fieldset>
+							<% if(errors != undefined) { %>
+								<div id="result">
+									<!-- Please fill in: <% errors.forEach(function(err, i) { if(i == errors.length-1 && errors.length > 1) {%> & <% } %><%= err.msg %><% if(i < errors.length-2){ %>, <% } }) %> -->
+									<ul>
+										<% errors.forEach(function(err) { %>
+											<li><%= err.msg %></li>
+										<% }) %>
+									</ul>
+								</div>
+							<% } %>
+							
+							<label class="sr-only">First Name</label>
+							<input class="form-control details name" type="text" id="firstName" name="firstName" placeholder="First name" style>
+							
+							<label class="sr-only">Last Name</label>
+							<input class="form-control details name" type="text" id="lastName" name="lastName" placeholder="Last name" style>
+							
+							<label class="sr-only">Email Address</label>
+							<input class="form-control details" type="email" id="email" name="email" placeholder="Email" style>
+
+							<label class="sr-only">Username</label>
+							<input class="form-control details" type="text" id="username" name="username" placeholder="Username" style>
+							
+							<div class="DOB-group">
+								<label class="sr-only">Date of Birth</label>
+								<input class="form-control details" type="text" id="DOB" name="DOB" placeholder="Date of birth" onfocus="(this.type='date')" onblur="(this.type='text')" style>
 							</div>
-						<% } %>
-						
-						<label class="sr-only">First Name</label>
-						<input class="form-control details name" type="text" id="firstName" name="firstName" placeholder="First name" style>
-						
-						<label class="sr-only">Last Name</label>
-						<input class="form-control details name" type="text" id="lastName" name="lastName" placeholder="Last name" style>
-						
-						<label class="sr-only">Email Address</label>
-						<input class="form-control details" type="email" id="email" name="email" placeholder="Email" style>
 
-						<label class="sr-only">Username</label>
-						<input class="form-control details" type="text" id="username" name="username" placeholder="Username" style>
-						
-						<div class="DOB-group">
-							<label class="sr-only">Date of Birth</label>
-							<input class="form-control details" type="text" id="DOB" name="DOB" placeholder="Date of birth" onfocus="(this.type='date')" onblur="(this.type='text')" style>
-						</div>
+							<label class="sr-only">Nationality</label>
+							<select class="form-control details" id="nationality" name="nationality" style>
+								<option value="">Nationality</option>
+								<option value="United Kingdom">United Kingdom</option>
+								<option value="United States of America">United States of America</option>
+								<option value="South America">South America</option>
+								<option value="Europe">Europe</option>
+								<option value="Asia">Asia</option>
+								<option value="Australia">Australia</option>
+							</select>
+							
+							<label class="sr-only">New Password</label>
+							<input class="form-control details" type="password" id="password" name="password" placeholder="New password">
+							
+							<label class="sr-only">Confirm Password</label>
+							<input class="form-control details" type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm password">
+							
+							<label class="sr-only">SUBMIT</label>
+							<input class="form-control submit" type="submit" id="signUpSubmit" value="Create Account">
+						</fieldset>
+					</form>
 
-						<label class="sr-only">Nationality</label>
-						<select class="form-control details" id="nationality" name="nationality" style>
-							<option value="">Nationality</option>
-							<option value="United Kingdom">United Kingdom</option>
-							<option value="United States of America">United States of America</option>
-							<option value="South America">South America</option>
-							<option value="Europe">Europe</option>
-							<option value="Asia">Asia</option>
-							<option value="Australia">Australia</option>
-						</select>
-						
-						<label class="sr-only">New Password</label>
-						<input class="form-control details" type="password" id="password" name="password" placeholder="New password">
-						
-						<label class="sr-only">Confirm Password</label>
-						<input class="form-control details" type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm password">
-						
-						<label class="sr-only">SUBMIT</label>
-						<input class="form-control submit" type="submit" id="signUpSubmit" value="Create Account">
-					</fieldset>
-				</form>
+					<form id="login_body" class="form-group tab-pane fade" method="post" action="/users/login">
+						<fieldset>
+
+							<label class="sr-only">Username</label>
+							<input class="form-control details" type="username" name="username" placeholder="Username" style>
+
+							<label class="sr-only">Password</label>
+							<input class="form-control details" type="password" name="password" placeholder="Password">
+
+							<label class="sr-only">Log in</label>
+							<input class="form-control submit" type="submit" value="Sign in">
+
+						</fieldset>
+					</form>
+
+
+				</div>
 			</div>
 
 		</div>

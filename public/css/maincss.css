@@ -187,6 +187,25 @@ nav .link {
 	cursor: pointer;
 }
 
+.modal .tabs {
+	margin-bottom: 20px;
+}
+
+.modal .tabs a {
+	text-align: center;
+	font-size: 1.2em;
+}
+
+.modal .nav-pills > li.active > a,
+.modal .nav-pills > li.active > a:focus,
+.modal .nav-pills > li.active > a:hover {
+	background-color: rgba(0,0,0,.5);
+}
+
+.modal .nav-pills a:hover {
+	color: inherit;
+}
+
 .modal legend {
 	text-align: center;
 	border: none;
