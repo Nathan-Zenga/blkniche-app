@@ -1,7 +1,8 @@
 var LocalStrategy = require('passport-local').Strategy,
 	bcrypt = require('bcryptjs'),
 	User = require('../models/user'),
-	config = require('../config/config');
+	config = require('../config/config'),
+	msg = 'Invalid username or password';
 
 module.exports = function(passport) {
 	passport.use(new LocalStrategy(
@@ -9,7 +10,7 @@ module.exports = function(passport) {
 			User.getUserByUsername(username, function(err, user){
 			if(err) throw err;
 			if(!user){
-				return done(null, false, {message: 'Unknown User'});
+				return done(null, false, {message: msg});
 			}
 
 			User.comparePassword(password, user.password, function(err, isMatch){
@@ -17,7 +18,7 @@ module.exports = function(passport) {
 				if(isMatch){
 					return done(null, user);
 				} else {
-					return done(null, false, {message: 'Invalid password'});
+					return done(null, false, {message: msg});
 				}
 			});
 		});
