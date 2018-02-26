@@ -281,6 +281,21 @@ $(function() {
 	});
 
 
+	var action = $("#update-form form").attr('action');
+
+	// update request set-up
+	$(".updateCustomer").click(function(){
+
+		// adding object id to path as parameter for update req
+		var withId = action + "/" + $(this).data('id');
+
+		// modifying attr
+		$("#update-form form").attr('action', withId);
+
+	});
+
+
+
 	// setting up for page re-direction error detection
 	var formAction = $("#registration #signup_body").attr("action"),
 		title = $("title").text();
