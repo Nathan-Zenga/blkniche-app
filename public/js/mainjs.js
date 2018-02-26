@@ -304,12 +304,12 @@ $(function() {
 
 
 	// setting up for page re-direction error detection
-	var formAction = $("#registration form").attr("action"),
+	var formAction = $("#registration #signup_body").attr("action"),
 		title = $("title").text();
 
 	title = title.slice(0, title.indexOf(" ///"));
 
-	$("#registration form").attr("action", formAction + "/" + title);
+	$("#registration #signup_body").attr("action", formAction + "/" + title);
 
 
 
