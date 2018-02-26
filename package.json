@@ -20,8 +20,8 @@
     "grunt": "1.0.1",
     "grunt-cli": "1.2.0",
     "grunt-contrib-uglify": "3.3.0",
-    "mongoose": "*",
-    "nodemailer": "^4.4.2",
+    "mongoose": "^5.0.7",
+    "nodemailer": "^4.6.0",
     "passport": "*",
     "passport-http": "*",
     "passport-local": "*"
