@@ -281,28 +281,6 @@ $(function() {
 	});
 
 
-	var legend_text = $("#update-form legend").text(),
-		action = $("#update-form form").attr('action');
-
-	// update request set-up
-	$(".updateCustomer").click(function(){
-
-		// reset texts and attributes to default
-		$("#update-form legend").text(legend_text);
-		$("#update-form form").attr('action', action);
-
-		// adding object id to path as parameter for update req + name field to form legend (title)
-		var withId = action + "/" + $(this).data('id');
-		var name = " - " + $(this).closest("li").find("span.username").text();
-
-		// modifying attr + appending name to legend
-		$("#update-form form").attr('action', withId);
-		$("#update-form legend").append(name);
-
-	});
-
-
-
 	// setting up for page re-direction error detection
 	var formAction = $("#registration #signup_body").attr("action"),
 		title = $("title").text();

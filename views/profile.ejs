@@ -2,20 +2,6 @@
 
 	<section style="padding: 100px 0">
 
-<!-- 		<div id="bgreel">
-			<div style="background-image: url('/img/bgreel/IMG_0576.JPG');"></div>
-			<div style="background-image: url('/img/bgreel/IMG_0650.JPG');"></div>
-			<div style="background-image: url('/img/bgreel/IMG_0670.JPG');"></div>
-			<div style="background-image: url('/img/bgreel/IMG_0688.JPG');"></div>
-			<div style="background-image: url('/img/bgreel/IMG_0750.JPG');"></div>
-			<div style="background-image: url('/img/bgreel/IMG_0485.JPG');"></div>
-			<div style="background-image: url('/img/bgreel/IMG_0506.JPG');"></div>
-			<div style="background-image: url('/img/bgreel/IMG_0550.JPG');"></div>
-			<div style="background-image: url('/img/bgreel/IMG_0785.JPG');"></div>
-			<div style="background-image: url('/img/bgreel/IMG_0786.JPG');"></div>
-			<div style="background-image: url('/img/bgreel/IMG_0792.JPG');"></div>
-		</div> -->
-
 		<%_ if (customers.length) { _%>
 			<ul class="customerList" style="left: 0px; width: 100%; padding-top: 20px; padding-bottom: 20px; background-color: rgba(0, 0, 0, .5); color: white">
 				<%_ if (user) { _%>
@@ -25,14 +11,6 @@
 					<li>Nationality: <%= user.nationality %></li><br>
 					<a class="btn btn-default updateCustomer" data-id="<%= user._id %>" role="button" data-toggle="modal" data-target="#update-form">UPDATE</a> 
 					<a class="btn btn-danger deleteCustomer" data-id="<%= user._id %>">DELETE ACCOUNT</a>
-				<%_ } else { _%>
-					<%_ customers.forEach(function(doc){ _%>
-						<li>
-							<span class="username"><%= doc.username %></span> (<%= doc.email %>) - 
-							<a class="deleteCustomer" data-id="<%= doc._id %>">DELETE</a> / 
-							<a class="updateCustomer" data-id="<%= doc._id %>" data-toggle="modal" data-target="#update-form">UPDATE</a> 
-						</li>
-					<%_ }) _%>
 				<%_ } _%>
 			</ul>
 		<%_ } _%>
