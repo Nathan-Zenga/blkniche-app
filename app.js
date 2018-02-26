@@ -1,5 +1,5 @@
 // import modules
-var express = require('express');
+var express = require('express'),
 	cookieParser = require('cookie-parser'),
 	bodyParser = require('body-parser'),
 	http = require('http'), // core module
@@ -38,9 +38,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Express session middleware
 app.use(session({
-		secret: 'secret',
-		saveUninitialized: true,
-		resave: true
+	secret: 'secret',
+	saveUninitialized: true,
+	resave: true
 }));
 
 // Passport init
