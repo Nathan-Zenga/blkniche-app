@@ -21,7 +21,7 @@
 				<%_ if (user) { _%>
 					<li>Name: <%= user.firstName + " " + user.lastName %></li>
 					<li>Email: <%= user.email %></li>
-					<li>Date of birth: <%= user.DOB.getDate() + "/" + user.DOB.getMonth() + "/" + user.DOB.getFullYear() %></li>
+					<li>Date of birth: <%= user.DOB.getDate() + "/" + (user.DOB.getMonth()+1) + "/" + user.DOB.getFullYear() %></li>
 					<li>Nationality: <%= user.nationality %></li><br>
 					<a class="btn btn-default updateCustomer" data-id="<%= user._id %>" role="button" data-toggle="modal" data-target="#update-form">UPDATE</a> 
 					<a class="btn btn-danger deleteCustomer" data-id="<%= user._id %>">DELETE ACCOUNT</a>
