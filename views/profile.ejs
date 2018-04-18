@@ -3,14 +3,21 @@
 	<section style="padding: 100px 0">
 
 			<%_ if (user) { _%>
-				<ul class="customerList" style="left: 0px; width: 100%; padding-top: 20px; padding-bottom: 20px; background-color: rgba(0, 0, 0, .5); color: white">
+				<ul class="profile-info">
 					<li>Name: <%= user.firstName + " " + user.lastName %></li>
 					<li>Email: <%= user.email %></li>
 					<li>Date of birth: <%= user.DOB.getDate() + "/" + (user.DOB.getMonth()+1) + "/" + user.DOB.getFullYear() %></li>
 					<li>Nationality: <%= user.nationality %></li><br>
 					<a class="btn btn-default updateCustomer" data-id="<%= user._id %>" role="button" data-toggle="modal" data-target="#update-form">UPDATE</a> 
 					<a class="btn btn-danger deleteCustomer" data-id="<%= user._id %>">DELETE ACCOUNT</a>
+					<a class="btn btn-default uploadDp">CHANGE PROFILE PHOTO</a>
+					<a class="btn btn-danger removeDp" href="/profile/delete/dp">DELETE PROFILE PHOTO</a>
+					<form id="uploadDp_form" style="display: none" action="/profile/upload/dp" method="POST" enctype="multipart/form-data">
+						<input type="file" name="dp">
+						<input type="submit">
+					</form>
 				</ul>
+				<div class="dp-container"><img style="width: 100%; height:100%" src="<%= typeof dp_src == 'function' ? dp_src() : dp_src %>"></div>
 			<%_ } _%>
 
 		<div style="margin-top: 100px; width: 100%; padding: 20px; background-color: rgba(0, 0, 0, .5);">

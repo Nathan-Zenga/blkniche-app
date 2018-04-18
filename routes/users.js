@@ -1,5 +1,6 @@
 var express = require('express'),
 	router = express.Router(),
+	fs = require('fs'),
 	passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy;
 
@@ -84,12 +85,20 @@ router.get('/logout', function(req, res){
 
 // Deletion process
 router.delete('/delete/:id', function(req, res) {
-	User.remove({
-		_id: req.params.id
-	}, function(err, result) {
-		if (err) { 
-			console.log(err); return;
-		}
+	let filename = 'public/u/i' + req.user._id.toString().slice(-5);
+	let jpg = fs.existsSync(filename + '.jpg');
+	let jpeg = fs.existsSync(filename + '.jpeg');
+	let ext = jpg ? '.jpg' : jpeg ? '.jpeg' : '.png';
+	let file = filename + ext;
+
+	fs.unlink(file, (err) => {
+		User.remove({
+			_id: req.params.id
+		}, function(err, result) {
+			if (err) { 
+				console.log(err); return;
+			}
+		});
 	});
 });
 

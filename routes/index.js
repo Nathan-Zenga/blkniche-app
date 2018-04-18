@@ -10,24 +10,4 @@ router.get('/', function(req, res){
 	});
 });
 
-router.get('/profile', ensureAuthenticated, function(req, res){
-	User.find(function(err, docs){
-		res.render('profile', {
-			title: 'Profile',
-			pageClass: 'profile',
-			customers: docs
-		});
-	});
-});
-
-function ensureAuthenticated(req, res, next){
-	if(req.isAuthenticated()){
-		return next();
-	} else {
-		req.flash('error_msg','You are not logged in');
-		res.redirect('/');
-	}
-}
-
-
 module.exports = router;
