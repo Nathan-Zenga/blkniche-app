@@ -63,8 +63,7 @@ app.use(function (req, res, next) {
 	next();
 });
 
-
-
+// prepare routes
 app.use('/', require('./routes/index'));
 app.use('/profile', require('./routes/profile'));
 app.use('/users', require('./routes/users'));
