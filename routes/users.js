@@ -2,9 +2,20 @@ var express = require('express'),
 	router = express.Router(),
 	fs = require('fs'),
 	passport = require('passport'),
-	LocalStrategy = require('passport-local').Strategy;
+	mongoose = require('mongoose'),
+	Grid = require('gridfs-stream'),
+	LocalStrategy = require('passport-local').Strategy,
+	User = require('../models/user');
 
-var User = require('../models/user');
+let conn = mongoose.connection;
+let gfs; // init gfs
+
+// Check connection
+conn.once('open', function() {
+	// init stream
+	gfs = Grid(conn.db, mongoose.mongo);
+	gfs.collection('profile_icons');
+});
 
 // Register new user
 router.post('/register/:title', function(req, res){
@@ -56,7 +67,6 @@ router.post('/register/:title', function(req, res){
 
 		User.createUser(newUser, function(err, user){
 			if(err) throw err;
-			console.log(user);
 		});
 
 		req.flash('success_msg', 'You are registered and can now login');
@@ -83,30 +93,43 @@ router.get('/logout', function(req, res){
 });
 
 
-// Deletion process
+// Account Deletion process
 router.delete('/delete/:id', function(req, res) {
-	let filename = 'public/u/i' + req.user._id.toString().slice(-5);
-	let jpg = fs.existsSync(filename + '.jpg');
-	let jpeg = fs.existsSync(filename + '.jpeg');
-	let ext = jpg ? '.jpg' : jpeg ? '.jpeg' : '.png';
-	let file = filename + ext;
 
-	fs.unlink(file, (err) => {
-		User.remove({
-			_id: req.params.id
-		}, function(err, result) {
-			if (err) { 
-				console.log(err); return;
-			}
-		});
+	// for when the user's icon is not the default
+	gfs.files.find().toArray((err, files) => {
+		if (files || files.length) {
+			files.forEach(file => {
+
+				// Check file exists
+				var name = "i" + req.user._id.toString().slice(-5);
+				if (file.filename.includes(name)) {
+					var isJPG = file.contentType.includes("jpeg");
+					var ext = isJPG ? ".jpg" : ".png";
+					var filename = name + ext;
+					// remove existing custom icon before new upload
+					gfs.remove({ filename: filename, root: 'profile_icons' }, (err, gridStore) => {
+						if (err) {
+							return res.status(404).json({ err: err });
+						}
+
+						// Delete account
+						User.remove({
+							_id: req.params.id
+						}, function(err, result) {
+							if (err) { 
+								console.log(err); return;
+							}
+							req.flash('success_msg', 'Account successfully deleted');
+							res.redirect('/');
+						});
+					});
+				}
+
+			});
+		}
 	});
 });
-
-router.get('/deleted', function(req, res) {
-	req.flash('success_msg', 'Account successfully deleted');
-	res.redirect('/');
-});
-
 
 router.post('/update/:id', function(req, res) {
 
@@ -126,8 +149,6 @@ router.post('/update/:id', function(req, res) {
 		updates.DOB = new Date(req.body.year_update + "-" + req.body.month_update + "-" + req.body.day_update)
 	}
 
-	console.log(req.body);
-
 	// update document fields
 	User.update({
 		_id: req.params.id
@@ -138,11 +159,6 @@ router.post('/update/:id', function(req, res) {
 	function(err, result) {
 		if (err) { 
 			console.log(err);
-		} else {
-			// log latest update
-			User.find({ _id: req.params.id }, function(err, docs){
-				console.log(docs)
-			});
 		}
 		res.redirect(req.get('referer'));
 	});

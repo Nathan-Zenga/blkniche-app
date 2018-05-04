@@ -9,6 +9,7 @@ var express = require('express'),
 	session = require('express-session'),
 	passport = require('passport'),
 	mongoose = require('mongoose'),
+	methodOverride = require('method-override'),
 	config = require('./config/config');
 
 mongoose.connect(config.db);
@@ -31,6 +32,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(methodOverride('_method'));
 
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));

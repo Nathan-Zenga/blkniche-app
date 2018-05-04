@@ -262,25 +262,6 @@ $(function() {
 	}
 
 
-	// delete client data
-	$(".deleteCustomer").click(function(){
-
-		var confirmation = confirm("You sure?");
-
-		if(confirmation){
-			$.ajax({
-				type: 'DELETE',
-				url: '/users/delete/' + $(this).data('id')
-				// success: function() { location.pathname = '/users/deleted' }
-			});
-			location.pathname = '/users/deleted';
-			// $(this).parent("li").remove();
-		} else {
-			return false
-		}
-	});
-
-
 	var action = $("#update-form form").attr('action');
 
 	// update request set-up
@@ -293,7 +274,6 @@ $(function() {
 		$("#update-form form").attr('action', withId);
 
 	});
-
 
 
 	// setting up for page re-direction error detection

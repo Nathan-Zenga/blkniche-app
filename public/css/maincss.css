@@ -419,3 +419,40 @@ footer .socials a {
 		font-size: 1.5em;		
 	}
 }
+
+.icon-container {
+	position: absolute;
+	top: 70px;
+	right: 25px;
+	background-color: white;
+	width: 100px;
+	height: 100px;
+	border: 5px solid white;
+	border-radius: 300px;
+	overflow: hidden;
+}
+
+.profile-info {
+	left: 0px;
+	width: 100%;
+	padding: 20px 40px;
+	background-color: rgba(0, 0, 0, .5);
+	color: white;
+}
+
+.profile-info form:not(#uploadIcon_form) {
+	display: inline-block;
+}
+
+@media (max-width: 768px) {
+	.profile-info a {
+		display: block;
+	}
+}
+
+@media (min-width: 768px) {
+	.icon-container {
+		width: 300px;
+		height: 300px;
+	}
+}
