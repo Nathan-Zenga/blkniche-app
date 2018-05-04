@@ -2,25 +2,24 @@
 var express = require('express'),
 	cookieParser = require('cookie-parser'),
 	bodyParser = require('body-parser'),
-	http = require('http'), // core module
 	path = require('path'), // core module
 	ejs = require('ejs'),
 	expressValidator = require('express-validator'),
 	flash = require('connect-flash'),
 	session = require('express-session'),
 	passport = require('passport'),
-	LocalStrategy = require('passport-local').Strategy,
 	mongoose = require('mongoose'),
-	config = require('./config/config'),
-	FACTORIAL = path.join(__dirname, 'build', 'factorial.min.js');
+	config = require('./config/config');
 
 mongoose.connect(config.db);
-let db = mongoose.connection;
+let conn = mongoose.connection;
 
 // Check connection
-db.once('open', function() { console.log('Connected to db'); });
+conn.once('open', function() {
+	console.log('Connected to db');
+});
 // Check for DB errors
-db.on('error', function(err) { console.log(err); });
+conn.on('error', function(err) { console.log(err); });
 
 // Initialise express app
 var app = express();
