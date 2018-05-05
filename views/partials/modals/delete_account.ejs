@@ -1,0 +1,27 @@
+<!-- Delete account confirmation -->
+<div id="delete-account" class="modal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<p class="modal-title" data-dismiss="modal"><img src="/img/logo/logo 3.png"></p>
+			</div>
+
+			<div class="modal-body">
+				<form class="form-group" method="POST" action="/users/delete/<%= user._id %>?_method=DELETE">
+					<fieldset>
+						<legend>YOU SURE?</legend>
+
+						<p>Enter password to confirm.</p>
+
+						<label class="sr-only">Password</label>
+						<input class="form-control details" type="password" name="password" placeholder="Password">
+						<input class="form-control btn btn-danger submit" type="submit" value="Delete Account">
+					</fieldset>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>

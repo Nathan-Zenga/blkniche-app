@@ -61,29 +61,6 @@ router.post('/u/upload/icon', (req, res, next) => {
 				req.flash('error_msg', `${err}`);
 			} else if (req.file == undefined) {
 				req.flash('error_msg','No file selected!');
-			} else {
-				// for when the user's icon is not the default
-				gfs.files.find().toArray((err, files) => {
-					if (files || files.length) {
-						files.forEach(file => {
-
-							// Check file exists
-							var name = "i" + req.user._id.toString().slice(-5);
-							if (file.filename.includes(name)) {
-								var isJPG = file.contentType.includes("jpeg");
-								var ext = isJPG ? ".jpg" : ".png";
-								var filename = name + ext;
-								// remove existing custom icon before new upload
-								gfs.remove({ filename: filename, root: 'profile_icons' }, (err, gridStore) => {
-									if (err) {
-										return res.status(404).json({ err: err });
-									}
-								});
-							}
-
-						});
-					}
-				});
 			}
 			res.redirect(req.get('referer'));
 		});

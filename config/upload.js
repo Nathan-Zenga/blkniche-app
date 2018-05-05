@@ -1,13 +1,50 @@
 const multer = require('multer');
 const path = require('path');
+const mongoose = require('mongoose');
 const config = require('./config');
 const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
 const crypto = require('crypto');
+
+let conn = mongoose.connection;
+let gfs; // init gfs
+
+// Check connection
+conn.once('open', function() {
+	// init stream
+	gfs = Grid(conn.db, mongoose.mongo);
+	gfs.collection('profile_icons');
+});
 
 // Set The Storage Engine
 const storage = new GridFsStorage({
 	url: config.db,
 	file: (req, file) => {
+
+		var name = "i" + req.user._id.toString().slice(-5);
+
+		// for when the user's icon is not the default
+		gfs.files.find().toArray((err, files) => {
+			if (files || files.length) {
+				files.forEach(file => {
+
+					// Check file exists
+					if (file.filename.includes(name)) {
+						var isJPG = file.contentType.includes("jpeg");
+						var ext = isJPG ? ".jpg" : ".png";
+						var filename = name + ext;
+						// remove existing custom icon before new upload
+						gfs.remove({ filename: filename, root: 'profile_icons' }, (err, gridStore) => {
+							if (err) {
+								return res.status(404).json({ err: err });
+							}
+						});
+					}
+
+				});
+			}
+		});
+
 		return new Promise((resolve, reject) => {
 			crypto.randomBytes(16, (err, buf) => {
 				if (err) {
@@ -15,7 +52,7 @@ const storage = new GridFsStorage({
 				} else if (typeof req.user === "undefined") {
 					return console.error("req.user is undefined");
 				}
-				const filename = "i" + req.user._id.toString().slice(-5) + path.extname(file.originalname);
+				const filename = name + path.extname(file.originalname);
 				const fileInfo = {
 					filename: filename,
 					bucketName: 'profile_icons'
