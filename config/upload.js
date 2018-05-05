@@ -2,6 +2,7 @@ const multer = require('multer');
 const path = require('path');
 const mongoose = require('mongoose');
 const config = require('./config');
+const gfsRemove = config.gfsRemove;
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const crypto = require('crypto');
@@ -23,27 +24,8 @@ const storage = new GridFsStorage({
 
 		var name = "i" + req.user._id.toString().slice(-5);
 
-		// for when the user's icon is not the default
-		gfs.files.find().toArray((err, files) => {
-			if (files || files.length) {
-				files.forEach(file => {
-
-					// Check file exists
-					if (file.filename.includes(name)) {
-						var isJPG = file.contentType.includes("jpeg");
-						var ext = isJPG ? ".jpg" : ".png";
-						var filename = name + ext;
-						// remove existing custom icon before new upload
-						gfs.remove({ filename: filename, root: 'profile_icons' }, (err, gridStore) => {
-							if (err) {
-								return res.status(404).json({ err: err });
-							}
-						});
-					}
-
-				});
-			}
-		});
+		// delete icon (if not default) before upload
+		gfsRemove(req, null, gfs, name);
 
 		return new Promise((resolve, reject) => {
 			crypto.randomBytes(16, (err, buf) => {

@@ -5,7 +5,8 @@ var express = require('express'),
 	mongoose = require('mongoose'),
 	Grid = require('gridfs-stream'),
 	LocalStrategy = require('passport-local').Strategy,
-	User = require('../models/user');
+	User = require('../models/user'),
+	gfsRemove = require('../config/config').gfsRemove;
 
 let conn = mongoose.connection;
 let gfs; // init gfs
@@ -102,39 +103,8 @@ router.delete('/delete/:id', function(req, res) {
 			req.flash('error_msg','Incorrect password.');
 			return res.redirect(req.get('referer'));
 		} else {
-			// for when the user's icon is not the default
-			gfs.files.find().toArray((err, files) => {
-				if (files || files.length) {
-					files.forEach(file => {
-
-						// Check file exists
-						var name = "i" + req.user._id.toString().slice(-5);
-						if (file.filename.includes(name)) {
-							var isJPG = file.contentType.includes("jpeg");
-							var ext = isJPG ? ".jpg" : ".png";
-							var filename = name + ext;
-							// remove existing icon
-							gfs.remove({ filename: filename, root: 'profile_icons' }, (err, gridStore) => {
-								if (err) {
-									return res.status(404).json({ err: err });
-								}
-
-								// Delete account
-								User.remove({
-									_id: req.params.id
-								}, function(err, result) {
-									if (err) { 
-										console.log(err); return;
-									}
-									req.flash('success_msg', 'Account successfully deleted');
-									res.redirect('/');
-								});
-							});
-						}
-
-					});
-				}
-			});
+			// remove custom icon before deleting account
+			gfsRemove(req, res, gfs, null, User);
 		}
 	});
 });
