@@ -8,22 +8,20 @@
 					<li>Email: <%= user.email %></li>
 					<li>Date of birth: <%= user.DOB.getDate() + "/" + (user.DOB.getMonth()+1) + "/" + user.DOB.getFullYear() %></li>
 					<li>Nationality: <%= user.nationality %></li><br>
-					<button class="btn btn-default updateCustomer" data-id="<%= user._id %>" role="button" data-toggle="modal" data-target="#update-form">UPDATE</button> 
-					<form method="POST" action="/users/delete/<%= user._id %>?_method=DELETE">
-						<button class="btn btn-danger deleteCustomer">DELETE ACCOUNT</button>
-					</form>
+					<button class="btn btn-default updateCustomer" data-id="<%= user._id %>" role="button" data-toggle="modal" data-target="#update-form">UPDATE</button>
+					<button class="btn btn-danger deleteCustomer" data-toggle="modal" data-target="#delete-account">DELETE ACCOUNT</button>
 					<br><br>
 					<button class="btn btn-default uploadIcon">CHANGE PROFILE PHOTO</button>
 					<%_ if( icon_src !== undefined ) { _%>
 					<%_ if( !icon_src.filename.includes("default") ) { _%>
 						<form method="POST" action="/profile/u/remove/icon/<%= icon_src._id %>?_method=DELETE">
-							<button class="btn btn-danger removeicon">DELETE PROFILE PHOTO</button>
+							<button class="btn btn-danger removeIcon">DELETE PROFILE PHOTO</button>
 						</form>
 					<%_ } _%>
 					<%_ } _%>
 					<form id="uploadIcon_form" style="display: none" method="POST" action="/profile/u/upload/icon" enctype="multipart/form-data">
 						<input type="file" name="icon">
-						<input type="submit">
+						<input style="color: black" type="submit">
 					</form>
 				</ul>
 				<%_ var imgSrc = !icon_src ? "/img/default.png" : "/profile/u/" + icon_src.filename _%>
