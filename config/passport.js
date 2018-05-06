@@ -5,9 +5,8 @@ var LocalStrategy = require('passport-local').Strategy,
 	msg = 'Invalid username or password';
 
 module.exports = function(passport) {
-	passport.use(new LocalStrategy(
-		function(username, password, done) {
-			User.getUserByUsername(username, function(err, user){
+	passport.use(new LocalStrategy(function(username, password, done) {
+		User.getUserByUsername(username, function(err, user) {
 			if(err) throw err;
 			if(!user){
 				return done(null, false, {message: msg});

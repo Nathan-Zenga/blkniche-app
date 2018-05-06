@@ -10,9 +10,29 @@ module.exports = {
 		}
 	},
 	gfsRemove: (req, res, gfs, name, User) => {
+
+		var removeUser = () => {
+			if (User || typeof User != "undefined") {
+				// Delete account
+				User.remove({
+					_id: req.params.id
+				}, function(err, result) {
+					if (err) { 
+						console.log(err); return;
+					}
+					req.flash('success_msg', 'Account successfully deleted');
+					res.redirect('/');
+				});
+			} else {
+				// only in case of new upload process
+				return false
+			}
+		};
+
 		if (!name || typeof name == "undefined") {
 			name = "i" + req.user._id.toString().slice(-5);
 		}
+		
 		gfs.files.find().toArray((err, files) => {
 			if (files || files.length) {
 				files.forEach(file => {
@@ -27,23 +47,14 @@ module.exports = {
 							if (err) {
 								return res.status(404).json({ err: err });
 							}
-
-							if (User || typeof User != "undefined") {
-								// Delete account
-								User.remove({
-									_id: req.params.id
-								}, function(err, result) {
-									if (err) { 
-										console.log(err); return;
-									}
-									req.flash('success_msg', 'Account successfully deleted');
-									res.redirect('/');
-								});
-							}
+							removeUser();
 						});
+					} else {
+						removeUser();
 					}
-
 				});
+			} else {
+				removeUser();
 			}
 		});
 	}
