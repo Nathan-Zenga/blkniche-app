@@ -275,17 +275,6 @@ $(function() {
 
 	});
 
-
-	// setting up for page re-direction error detection
-	var formAction = $("#registration #signup_body").attr("action"),
-		title = $("title").text();
-
-	title = title.slice(0, title.indexOf(" ///"));
-
-	$("#registration #signup_body").attr("action", formAction + "/" + title);
-
-
-
 	$(window).scroll(function() {
 
 		toggleOnScroll();

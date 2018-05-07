@@ -19,38 +19,53 @@ conn.once('open', function() {
 });
 
 // Register new user
-router.post('/register/:title', function(req, res){
+router.post('/register', function(req, res){
 
 	// for dynamic page rendering and redirection, only upon error detection
 	var page = title = req.params.title;
 	page == 'Home' ? page = 'index' : null;
 
 	// Validation
-	req.checkBody('firstName', 'First name is required').notEmpty();
-	req.checkBody('lastName', 'Last name is required').notEmpty();
-	req.checkBody('email', 'Email is required').notEmpty();
-	req.checkBody('username', 'Username is required').notEmpty();
-	req.checkBody('username', 'Username must not contain spaces or special characters (except "." and "-")')
+	req.checkBody('firstName', 'First name').notEmpty();
+	req.checkBody('lastName', 'Last name').notEmpty();
+	req.checkBody('email', 'Email').notEmpty();
+	req.checkBody('username', 'Username').notEmpty();
+	req.checkBody('username', 'Username: no spaces or special characters allowed (except "." and "-").')
 		.custom((value) => {
-			var chars = /[ !@#$%^&*()+\=\[\]{};':"\\|,<>\/?]/;
+			var chars = /[ !@#$£%^&*()+\=\[\]{};':"\\|,<>\/?]/;
 			return chars.test(value) == false;
 		});
-	req.checkBody('DOB', 'Date of birth is required').notEmpty();
-	req.checkBody('nationality', 'Nationality is required').notEmpty();
-	req.checkBody('password', 'Password is required').notEmpty();
-	req.checkBody('passwordConfirm', 'Confirmed password not the same is required').equals(req.body.password);
+	req.checkBody('DOB', 'Date of birth').notEmpty();
+	req.checkBody('nationality', 'Nationality').notEmpty();
+	req.checkBody('password', 'Password').notEmpty();
+	req.checkBody('passwordConfirm', 'Confirmed password not the same.').equals(req.body.password);
 
 	var errors = req.validationErrors();
 
 	if(errors) {
-		User.find(function(err, docs){
-			res.render(page.toLowerCase(), {
-				title: title,
-				pageClass: page.toLowerCase(),
-				customers: docs,
-				errors: errors
-			});
+		var errList = [];
+		var otherErrs = [];
+		errors.forEach(err => {
+			if (err.msg.includes('characters') || err.param == 'passwordConfirm') {
+				otherErrs.push(err.msg)
+			} else {
+				errList.push(err.msg.toLowerCase())
+			}
 		});
+
+		if (errList.length > 1) {
+			var lastIndex = errList.length-1;
+			lastIndex = " and " + errList[lastIndex];
+			errList = errList.slice(0, -1).join(', ') + lastIndex;
+		}
+
+		if (errList.length) req.flash('login_error', 'Please fill in your ' + errList + '.');
+		if (otherErrs.length) {
+			otherErrs.forEach(err => {
+				req.flash('login_error_chars', err);
+			})
+		}
+
 	} else {
 		var newUser = new User({
 			firstName: req.body.firstName,
@@ -71,8 +86,8 @@ router.post('/register/:title', function(req, res){
 		});
 
 		req.flash('success_msg', 'You are registered and can now login');
-		res.redirect('/');
 	}
+	res.redirect('/');
 });
 
 // Passport config

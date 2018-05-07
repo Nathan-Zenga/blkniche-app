@@ -19,16 +19,17 @@
 
 					<form id="signup_body" class="form-group tab-pane fade in active" method="post" action="/users/register">
 						<fieldset>
-							<% if(errors != undefined) { %>
+							<%_ if(login_error.length || login_error_chars.length) { _%>
 								<div id="result">
-									<!-- Please fill in: <% errors.forEach(function(err, i) { if(i == errors.length-1 && errors.length > 1) {%> & <% } %><%= err.msg %><% if(i < errors.length-2){ %>, <% } }) %> -->
-									<ul>
-										<% errors.forEach(function(err) { %>
-											<li><%= err.msg %></li>
-										<% }) %>
-									</ul>
+									<%_ if(login_error.length) { _%>
+										<p><%= login_error %></p>
+									<%_ } if(login_error_chars.length) { _%>
+										<%_ login_error_chars.forEach(err => { _%>
+											<p><%= err %></p>
+										<%_ }) _%>
+									<%_ } _%>
 								</div>
-							<% } %>
+							<%_ } _%>
 							
 							<label class="sr-only">First Name</label>
 							<input class="form-control details name" type="text" id="firstName" name="firstName" placeholder="First name" style>
