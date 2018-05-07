@@ -11,7 +11,7 @@
 	<script src="/js/libs/detect.min.js"></script>
 	<script src="/js/detect-config.min.js"></script>
 	<script src="/js/mainjs.min.js"></script>
-	<%_ if(errors) { _%>
+	<%_ if(login_error.length || login_error_chars.length) { _%>
 	<script> $(() => { $("#sign-up").click() }) </script>
 	<%_ } if(pageClass == "profile") { _%>
 	<script>
@@ -76,15 +76,15 @@
 
 
 <div class="row" style="position: fixed; top: 50px; right: 20px; margin: 0; z-index: 1000">
-	<%_ if (success_msg != '') { _%>
+	<%_ if (success_msg.length) { _%>
 		<div class="alert alert-success"><%= success_msg %></div>
 	<%_ } _%>
 
-	<%_ if (error_msg != '') { _%>
+	<%_ if (error_msg.length) { _%>
 		<div class="alert alert-danger"><%= error_msg %></div>
 	<%_ } _%>
 
-	<%_ if (error != '') { _%>
+	<%_ if (error.length) { _%>
 		<div class="alert alert-danger"><%= error %></div>
 	<%_ } _%>
 </div>
