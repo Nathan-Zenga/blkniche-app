@@ -73,6 +73,10 @@ app.use('/mail', require('./routes/mail'));
 
 // Set port + listen for requests
 app.set('port', (process.env.PORT || 5111));
-app.listen(app.get('port'), function(){
+var server = app.listen(app.get('port'), function(){
 	console.log('Server started on port '+app.get('port'));
 });
+
+module.exports.closeServer = () => {
+	server.close();
+}
