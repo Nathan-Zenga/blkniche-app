@@ -6,6 +6,7 @@
   "scripts": {
     "postinstall": "grunt uglify",
     "start": "node app",
+    "test": "mocha || true",
     "dev": "grunt uglify && nodemon app"
   },
   "dependencies": {
@@ -29,12 +30,16 @@
     "nodemailer": "^4.6.4",
     "passport": "*",
     "passport-http": "*",
-    "passport-local": "*"
+    "passport-local": "*",
+    "request": "^2.85.0"
   },
   "engines": {
     "node": "*",
     "npm": "*"
   },
   "author": "Nathan Zengamambu",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.1.2"
+  }
 }
