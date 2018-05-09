@@ -1,6 +1,7 @@
 var express = require('express'),
 	router = express.Router(),
 	fs = require('fs'),
+	bcrypt = require('bcryptjs'),
 	passport = require('passport'),
 	mongoose = require('mongoose'),
 	Grid = require('gridfs-stream'),
@@ -126,8 +127,25 @@ router.delete('/delete/:id', function(req, res) {
 
 router.post('/update/:id', function(req, res) {
 
-	// prepare object for update operation
+	// prepare objects for update operation
 	var updates = {};
+	var saveUpdates = (updates, hash) => {
+		if (updates) {
+			if (hash) updates.password = hash;
+			User.update({
+				_id: req.params.id
+			},
+			{
+				$set: updates
+			},
+			(err, result) => {
+				if (err) { 
+					console.log(err);
+				}
+			});
+			res.redirect(req.get('referer'));
+		}
+	}
 
 	// checking for values in body, in which case they are added to the object
 	if (req.body.firstName_update)		updates.firstName = req.body.firstName_update;
@@ -142,19 +160,30 @@ router.post('/update/:id', function(req, res) {
 		updates.DOB = new Date(req.body.year_update + "-" + req.body.month_update + "-" + req.body.day_update)
 	}
 
-	// update document fields
-	User.update({
-		_id: req.params.id
-	},
-	{
-		$set: updates
-	},
-	function(err, result) {
-		if (err) { 
-			console.log(err);
+	if (req.body.new_password) {
+		if (!req.body.old_password) {
+			req.flash('error_msg','Please fill in your old password.');
+			res.redirect(req.get('referer'));
+		} else {
+			User.comparePassword(req.body.old_password, req.user.password, function(err, isMatch){
+				if(err) throw err;
+				if(!isMatch){
+					req.flash('error_msg','Incorrect password.');
+					res.redirect(req.get('referer'));
+				} else {
+					bcrypt.genSalt(10, function(err, salt) {
+						bcrypt.hash(req.body.new_password, salt, function(err, hash) {
+							// save new password
+							saveUpdates(updates, hash);
+						});
+					});
+				}
+			});
 		}
-		res.redirect(req.get('referer'));
-	});
+	} else {
+		// update document fields
+		saveUpdates(updates);
+	}
 });
 
 

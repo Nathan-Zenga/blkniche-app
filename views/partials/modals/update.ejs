@@ -14,7 +14,7 @@
 					<fieldset>
 						<legend>UPDATE DETAILS</legend>
 
-						<p style="padding-bottom:1em; font-style: italic;">Leave any fields blank to leave details unchanged.</p>
+						<p style="font-style: italic;">Leave any fields blank to leave details unchanged.</p>
 
 						<label class="sr-only">First Name</label>
 						<input class="form-control details name" type="text" name="firstName_update" placeholder="First name" style>
@@ -43,6 +43,12 @@
 							<option value="Asia">Asia</option>
 							<option value="Australia">Australia</option>
 						</select>
+
+						<label class="sr-only">Old Password</label>
+						<input class="form-control details" type="password" name="old_password" placeholder="Old Password">
+
+						<label class="sr-only">New Password</label>
+						<input class="form-control details" type="password" name="new_password" placeholder="New Password">
 
 						<label class="sr-only">SAVE</label>
 						<input class="form-control submit" type="submit" value="Save">
