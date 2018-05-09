@@ -77,6 +77,8 @@ var server = app.listen(app.get('port'), function(){
 	console.log('Server started on port '+app.get('port'));
 });
 
+// exporting for testing purposes
+module.exports.port = app.get('port');
 module.exports.closeServer = () => {
 	server.close();
 }
