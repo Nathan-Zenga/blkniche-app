@@ -247,19 +247,37 @@ $(function() {
 	});
 
 
+	// on page load: plays current video if section is shown within the viewport
 	try {
-
-		// on page load: plays current video if not playing + if section is within the viewport
 		if ( window.pageYOffset > $("section.videos").offset().top - $("section.videos").height()/4 &&
 			 window.pageYOffset <= $("section.videos").offset().top + $("section.videos").height()/2 &&
 			 !$(".videos .item.active video").get(0).playing ) {
 
 			$(".videos .item.active video").get(0).play() // play current video if conditions are met
 		}
-
 	} catch(err) {
 		console.log(err)
 	}
+
+	$("#signup_body .submit").click(function(e) {
+		e.preventDefault();
+
+		var data = {};
+		var $body = $("#signup_body");
+
+		data.firstName = $body.find("#firstName").val();
+		data.lastName = $body.find("#lastName").val();
+		data.email = $body.find("#email").val();
+		data.username = $body.find("#username").val();
+		data.DOB = $body.find("#DOB").val();
+		data.nationality = $body.find("#nationality").val();
+		data.password = $body.find("#password").val();
+		data.passwordConfirm = $body.find("#passwordConfirm").val();
+
+		$.post('/users/register', JSON.stringify(data), function(result, status) {
+			alert("result: " + result + "\nstatus: " + status);
+		});
+	});
 
 
 	var action = $("#update-form form").attr('action');
