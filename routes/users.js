@@ -22,6 +22,8 @@ conn.once('open', function() {
 // Register new user
 router.post('/register', function(req, res){
 
+	var result = '';
+
 	// for dynamic page rendering and redirection, only upon error detection
 	var page = title = req.params.title;
 	page == 'Home' ? page = 'index' : null;
@@ -60,10 +62,14 @@ router.post('/register', function(req, res){
 			errList = errList.slice(0, -1).join(', ') + lastIndex;
 		}
 
-		if (errList.length) req.flash('login_error', 'Please fill in your ' + errList + '.');
+		if (errList.length) {
+			req.flash('login_error', 'Please fill in your ' + errList + '.');
+			result += req.flash('login_error') + '... ';
+		}
 		if (otherErrs.length) {
 			otherErrs.forEach(err => {
 				req.flash('login_error_chars', err);
+				result += req.flash('login_error_chars') + '... ';
 			})
 		}
 
@@ -87,8 +93,11 @@ router.post('/register', function(req, res){
 		});
 
 		req.flash('success_msg', 'You are registered and can now login');
+		result = req.flash('success_msg');
 	}
-	res.redirect('/');
+
+	res.write(result);
+	res.end();
 });
 
 // Passport config

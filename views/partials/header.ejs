@@ -11,9 +11,7 @@
 	<script src="/js/libs/detect.min.js"></script>
 	<script src="/js/detect-config.min.js"></script>
 	<script src="/js/mainjs.min.js"></script>
-	<%_ if(login_error.length || login_error_chars.length) { _%>
-	<script> $(() => { $("#sign-up").click() }) </script>
-	<%_ } if(pageClass == "profile") { _%>
+	<%_ if(pageClass == "profile") { _%>
 	<script>
 		$(() => {
 			$(".uploadIcon").click(function() {
