@@ -34,6 +34,7 @@ router.post('/register', function(req, res){
 	req.checkBody('firstName', 'First name').notEmpty();
 	req.checkBody('lastName', 'Last name').notEmpty();
 	req.checkBody('email', 'Email').notEmpty();
+	if(req.body.email) req.checkBody('email', 'Must be an email address').isEmail();
 	req.checkBody('username', 'Username').notEmpty();
 	req.checkBody('username', 'Username: no spaces or special characters allowed (except "." and "-").')
 		.custom((value) => {
@@ -51,7 +52,7 @@ router.post('/register', function(req, res){
 		var errList = [];
 		var otherErrs = [];
 		errors.forEach(err => {
-			if (err.msg.includes('characters') || err.param == 'passwordConfirm') {
+			if (/characters|address/.test(err.msg) || err.param == 'passwordConfirm') {
 				otherErrs.push(err.msg)
 			} else {
 				errList.push(err.msg.toLowerCase())
