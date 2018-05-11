@@ -125,7 +125,7 @@ router.get('/logout', function(req, res){
 
 
 // Account Deletion process
-router.delete('/delete/:id', function(req, res) {
+router.delete('/delete', function(req, res) {
 
 	User.comparePassword(req.body.password, req.user.password, function(err, isMatch){
 		if(err) throw err;
@@ -139,25 +139,29 @@ router.delete('/delete/:id', function(req, res) {
 	});
 });
 
-router.post('/update/:id', function(req, res) {
+router.post('/update', function(req, res) {
 
 	// prepare objects for update operation
 	var updates = {};
 	var saveUpdates = (updates, hash) => {
 		if (updates) {
 			if (hash) updates.password = hash;
-			User.update({
-				_id: req.params.id
-			},
-			{
-				$set: updates
-			},
-			(err, result) => {
-				if (err) { 
-					console.log(err);
-				}
+			User.update({ _id: req.user._id }, { $set: updates }, (err, result) => {
+				if (err) return err;
+				User.find({ _id: req.user._id }, function(err, doc) {
+					if (err) return err;
+					// preparing data for AJAX callback
+					var updated = {
+						name: doc[0].firstName + " " + doc[0].lastName,
+						email: doc[0].email,
+						DOB: doc[0].DOB.getDate() + '/' + (doc[0].DOB.getMonth()+1) + '/' + doc[0].DOB.getFullYear(),
+						nationality: doc[0].nationality
+					};
+					updated = JSON.stringify(updated);
+					res.write(updated);
+					res.end();
+				});
 			});
-			res.redirect(req.get('referer'));
 		}
 	}
 
@@ -175,15 +179,20 @@ router.post('/update/:id', function(req, res) {
 	}
 
 	if (req.body.new_password) {
+		var result = '';
 		if (!req.body.old_password) {
-			req.flash('error_msg','Please fill in your old password.');
-			res.redirect(req.get('referer'));
+			req.flash('update_error','Please fill in your old password.');
+			result += req.flash('update_error');
+			res.write(result);
+			res.end();
 		} else {
 			User.comparePassword(req.body.old_password, req.user.password, function(err, isMatch){
 				if(err) throw err;
 				if(!isMatch){
-					req.flash('error_msg','Incorrect password.');
-					res.redirect(req.get('referer'));
+					req.flash('update_error','Incorrect password.');
+					result += req.flash('update_error');
+					res.write(result);
+					res.end();
 				} else {
 					bcrypt.genSalt(10, function(err, salt) {
 						bcrypt.hash(req.body.new_password, salt, function(err, hash) {
