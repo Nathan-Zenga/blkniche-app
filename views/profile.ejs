@@ -4,11 +4,13 @@
 
 			<%_ if (user) { _%>
 				<ul class="profile-info">
-					<li>Name: <%= user.firstName + " " + user.lastName %></li>
-					<li>Email: <%= user.email %></li>
-					<li>Date of birth: <%= user.DOB.getDate() + "/" + (user.DOB.getMonth()+1) + "/" + user.DOB.getFullYear() %></li>
-					<li>Nationality: <%= user.nationality %></li><br>
-					<button class="btn btn-default updateCustomer" data-id="<%= user._id %>" role="button" data-toggle="modal" data-target="#update-form">UPDATE</button>
+					<span>
+						<li>Name: <%= user.firstName + " " + user.lastName %></li>
+						<li>Email: <%= user.email %></li>
+						<li>Date of birth: <%= user.DOB.getDate() + "/" + (user.DOB.getMonth()+1) + "/" + user.DOB.getFullYear() %></li>
+						<li>Nationality: <%= user.nationality %></li><br>
+					</span>
+					<button class="btn btn-default updateCustomer" role="button" data-toggle="modal" data-target="#update-form">UPDATE</button>
 					<button class="btn btn-danger deleteCustomer" data-toggle="modal" data-target="#delete-account">DELETE ACCOUNT</button>
 					<br><br>
 					<button class="btn btn-default uploadIcon">CHANGE PROFILE PHOTO</button>

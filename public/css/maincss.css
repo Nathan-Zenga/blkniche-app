@@ -261,7 +261,7 @@ nav .link {
 	text-align: center;
 }
 
-.modal #result {
+.modal .result {
 	text-align: left;
 	margin-bottom: .5em;
 }

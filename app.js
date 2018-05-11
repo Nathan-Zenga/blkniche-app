@@ -61,6 +61,7 @@ app.use(function (req, res, next) {
 	res.locals.error = req.flash('error');
 	res.locals.login_error = req.flash('login_error');
 	res.locals.login_error_chars = req.flash('login_error_chars');
+	res.locals.update_error = req.flash('update_error');
 	res.locals.user = req.user || null;
 	next();
 });

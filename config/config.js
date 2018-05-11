@@ -15,7 +15,7 @@ module.exports = {
 			if (User || typeof User != "undefined") {
 				// Delete account
 				User.remove({
-					_id: req.params.id
+					_id: req.user.id
 				}, function(err, result) {
 					if (err) { 
 						console.log(err); return;

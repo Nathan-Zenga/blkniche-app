@@ -262,27 +262,13 @@ $(function() {
 	$("#signup_body .submit").click(function(e) {
 		e.preventDefault();
 
-		var $body = $("#signup_body");
+		var $details = $("#signup_body .details");
+		var data = {};
 
-		var firstName = $body.find("#firstName").val();
-		var lastName = $body.find("#lastName").val();
-		var email = $body.find("#email").val();
-		var username = $body.find("#username").val();
-		var DOB = $body.find("#DOB").val();
-		var nationality = $body.find("#nationality").val();
-		var password = $body.find("#password").val();
-		var passwordConfirm = $body.find("#passwordConfirm").val();
-
-		var data = {
-			firstName: firstName,
-			lastName: lastName,
-			email: email,
-			username: username,
-			DOB: DOB,
-			nationality: nationality,
-			password: password,
-			passwordConfirm: passwordConfirm
-		};
+		$details.each(function() {
+			var key = $(this).attr('name');
+			data[key] = $(this).val();
+		});
 
 		$.ajax({
 			type: 'post',
@@ -290,39 +276,69 @@ $(function() {
 			contentType: 'application/json',
 			data: JSON.stringify(data),
 			success: function(result, status) {
-				$("#result").empty();
+				$(".result").empty();
 				result = result.split(' ... ');
-				
+
 				result.forEach(function(res) {
-					console.log(res);
 					res = "<p>" + res + "</p>";
 					if (res.includes("registered")) {
-						$("#signup_body .details").val("");
+						$details.val("");
 					}
-					$("#result").append(res);
+					$("#signup_body .result").append(res);
 				});
 			},
 			error: function(jqHXR, status, err) {
 				console.log("ERROR: " + err);
-				console.log("jq... whatever: " + jqHXR);
+				console.log("jqHXR: " + jqHXR);
 				console.log("status: " + status);
 			}
 		});
 	});
 
+	$("#update-form .submit").click(function(e) {
+		e.preventDefault();
 
-	var action = $("#update-form form").attr('action');
+		var $details = $("#update-form .details");
+		var data = {};
 
-	// update request set-up
-	$(".updateCustomer").click(function(){
+		$details.each(function() {
+			var key = $(this).attr('name');
+			data[key] = $(this).val();
+		});
 
-		// adding object id to path as parameter for update req
-		var withId = action + "/" + $(this).data('id');
+		$.ajax({
+			type: 'post',
+			url: '/users/update', 
+			contentType: 'application/json',
+			data: JSON.stringify(data),
+			success: function(result, status) {
+				$(".result").empty();
+				if (/Incorrect|Please fill/.test(result)) {
+					result = "<p>" + result + "</p>";
+					$("#update-form .result").append(result);
+					$("#update-form input[name='old_password']").val("");
+					$("#update-form input[name='new_password']").val("");
+				} else {
+					result = JSON.parse(result); // convert to object from string
 
-		// modifying attr
-		$("#update-form form").attr('action', withId);
+					var info = '<li>Name: ' + result.name + '</li>' +
+					'<li>Email: ' + result.email + '</li>' +
+					'<li>Date of birth: ' + result.DOB + '</li>' +
+					'<li>Nationality: ' + result.nationality + '</li><br>';
 
+					$(".profile-info span").html(info);
+					$("#update-form .close").click();
+					$details.val("");
+				}
+			},
+			error: function(jqHXR, status, err) {
+				console.log("ERROR: " + err);
+				console.log("jqHXR: " + jqHXR);
+				console.log("status: " + status);
+			}
+		});
 	});
+
 
 	$(window).scroll(function() {
 
