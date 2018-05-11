@@ -22,7 +22,9 @@ conn.once('open', function() {
 // Register new user
 router.post('/register', function(req, res){
 
-	var result = '';
+	var login_error = '';
+	var login_error_chars = '';
+	var success_msg = '';
 
 	// for dynamic page rendering and redirection, only upon error detection
 	var page = title = req.params.title;
@@ -64,12 +66,12 @@ router.post('/register', function(req, res){
 
 		if (errList.length) {
 			req.flash('login_error', 'Please fill in your ' + errList + '.');
-			result += req.flash('login_error') + '... ';
+			login_error += req.flash('login_error') + ' ... ';
 		}
 		if (otherErrs.length) {
 			otherErrs.forEach(err => {
 				req.flash('login_error_chars', err);
-				result += req.flash('login_error_chars') + '... ';
+				login_error_chars += req.flash('login_error_chars') + ' ... ';
 			})
 		}
 
@@ -93,10 +95,12 @@ router.post('/register', function(req, res){
 		});
 
 		req.flash('success_msg', 'You are registered and can now login');
-		result = req.flash('success_msg');
+		success_msg += req.flash('success_msg');
 	}
 
-	res.write(result);
+	res.write(login_error);
+	res.write(login_error_chars);
+	res.write(success_msg);
 	res.end();
 });
 

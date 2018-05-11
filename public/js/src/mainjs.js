@@ -262,20 +262,51 @@ $(function() {
 	$("#signup_body .submit").click(function(e) {
 		e.preventDefault();
 
-		var data = {};
 		var $body = $("#signup_body");
 
-		data.firstName = $body.find("#firstName").val();
-		data.lastName = $body.find("#lastName").val();
-		data.email = $body.find("#email").val();
-		data.username = $body.find("#username").val();
-		data.DOB = $body.find("#DOB").val();
-		data.nationality = $body.find("#nationality").val();
-		data.password = $body.find("#password").val();
-		data.passwordConfirm = $body.find("#passwordConfirm").val();
+		var firstName = $body.find("#firstName").val();
+		var lastName = $body.find("#lastName").val();
+		var email = $body.find("#email").val();
+		var username = $body.find("#username").val();
+		var DOB = $body.find("#DOB").val();
+		var nationality = $body.find("#nationality").val();
+		var password = $body.find("#password").val();
+		var passwordConfirm = $body.find("#passwordConfirm").val();
 
-		$.post('/users/register', JSON.stringify(data), function(result, status) {
-			alert("result: " + result + "\nstatus: " + status);
+		var data = {
+			firstName: firstName,
+			lastName: lastName,
+			email: email,
+			username: username,
+			DOB: DOB,
+			nationality: nationality,
+			password: password,
+			passwordConfirm: passwordConfirm
+		};
+
+		$.ajax({
+			type: 'post',
+			url: '/users/register', 
+			contentType: 'application/json',
+			data: JSON.stringify(data),
+			success: function(result, status) {
+				$("#result").empty();
+				result = result.split(' ... ');
+				
+				result.forEach(function(res) {
+					console.log(res);
+					res = "<p>" + res + "</p>";
+					if (res.includes("registered")) {
+						$("#signup_body .details").val("");
+					}
+					$("#result").append(res);
+				});
+			},
+			error: function(jqHXR, status, err) {
+				console.log("ERROR: " + err);
+				console.log("jq... whatever: " + jqHXR);
+				console.log("status: " + status);
+			}
 		});
 	});
 
