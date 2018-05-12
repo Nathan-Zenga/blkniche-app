@@ -277,15 +277,20 @@ $(function() {
 			data: JSON.stringify(data),
 			success: function(result, status) {
 				$(".result").empty();
-				result = result.split(' ... ');
 
-				result.forEach(function(res) {
-					res = "<p>" + res + "</p>";
-					if (res.includes("registered")) {
-						$details.val("");
-					}
-					$("#signup_body .result").append(res);
-				});
+				for(k in result) {
+					result[k] = "<p>" + result[k] + "</p>"
+				}
+				if (result.login_error) {
+					$("#signup_body .result").append(result.login_error);
+				}
+				if (result.login_error_chars) {
+					$("#signup_body .result").append(result.login_error_chars);
+				}
+				if (result.success_msg) {
+					$("#signup_body .result").html(result.success_msg);
+					$details.val("");
+				}
 			},
 			error: function(jqHXR, status, err) {
 				console.log("ERROR: " + err);
@@ -319,8 +324,6 @@ $(function() {
 					$("#update-form input[name='old_password']").val("");
 					$("#update-form input[name='new_password']").val("");
 				} else {
-					result = JSON.parse(result); // convert to object from string
-
 					var info = '<li>Name: ' + result.name + '</li>' +
 					'<li>Email: ' + result.email + '</li>' +
 					'<li>Date of birth: ' + result.DOB + '</li>' +
@@ -339,6 +342,11 @@ $(function() {
 		});
 	});
 
+	$("modal-header > *").click(function(){
+		$(".result").empty();
+		$(".details").val("");
+	});
+
 
 	$(window).scroll(function() {
 
@@ -354,7 +362,7 @@ $(function() {
 				$(".videos .item.active video").get(0).pause();
 				$(".videos .item.active video").get(0).currentTime = 0;
 			}
-		
+
 		} else {
 			$(".videos .item.active video").get(0).play();
 		}

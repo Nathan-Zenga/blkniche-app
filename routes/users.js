@@ -22,9 +22,7 @@ conn.once('open', function() {
 // Register new user
 router.post('/register', function(req, res){
 
-	var login_error = '';
-	var login_error_chars = '';
-	var success_msg = '';
+	var errData = {};
 
 	// for dynamic page rendering and redirection, only upon error detection
 	var page = title = req.params.title;
@@ -67,12 +65,12 @@ router.post('/register', function(req, res){
 
 		if (errList.length) {
 			req.flash('login_error', 'Please fill in your ' + errList + '.');
-			login_error += req.flash('login_error') + ' ... ';
+			errData.login_error = req.flash('login_error');
 		}
 		if (otherErrs.length) {
 			otherErrs.forEach(err => {
 				req.flash('login_error_chars', err);
-				login_error_chars += req.flash('login_error_chars') + ' ... ';
+				errData.login_error_chars = req.flash('login_error_chars');
 			})
 		}
 
@@ -96,13 +94,10 @@ router.post('/register', function(req, res){
 		});
 
 		req.flash('success_msg', 'You are registered and can now login');
-		success_msg += req.flash('success_msg');
+		errData.success_msg = req.flash('success_msg');
 	}
 
-	res.write(login_error);
-	res.write(login_error_chars);
-	res.write(success_msg);
-	res.end();
+	res.send(errData);
 });
 
 // Passport config
@@ -157,9 +152,7 @@ router.post('/update', function(req, res) {
 						DOB: doc[0].DOB.getDate() + '/' + (doc[0].DOB.getMonth()+1) + '/' + doc[0].DOB.getFullYear(),
 						nationality: doc[0].nationality
 					};
-					updated = JSON.stringify(updated);
-					res.write(updated);
-					res.end();
+					res.send(updated);
 				});
 			});
 		}

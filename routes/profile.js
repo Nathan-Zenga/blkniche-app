@@ -19,31 +19,29 @@ conn.once('open', function() {
 
 router.get('/', auth, function(req, res){
 
-	User.find(function(err, docs){
-		gfs.files.find().toArray((err, files) => {
-			if (err) return err;
+	gfs.files.find().toArray((err, files) => {
+		if (err) return err;
 
-			var name = "i" + req.user._id.toString().slice(-5);
+		var name = "i" + req.user._id.toString().slice(-5);
 
-			var currentFile = () => {
-				var result;
-				// Check if there are files
-				if (files || files.length) {
-					files.forEach(file => {
-						// Check file exists
-						if (file.filename.includes(name)) {
-							result = file
-						}
-					});
-				}
-				return result
-			};
+		var currentFile = () => {
+			var result;
+			// Check if there are files
+			if (files || files.length) {
+				files.forEach(file => {
+					// Check file exists
+					if (file.filename.includes(name)) {
+						result = file
+					}
+				});
+			}
+			return result
+		};
 
-			res.render('profile', {
-				title: 'Profile',
-				pageClass: 'profile',
-				icon_src: currentFile()
-			});
+		res.render('profile', {
+			title: 'Profile',
+			pageClass: 'profile',
+			icon_src: currentFile()
 		});
 	});
 

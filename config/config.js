@@ -18,14 +18,9 @@ module.exports = {
 					_id: req.user.id
 				}, function(err, result) {
 					if (err) { 
-						console.log(err); return;
+						return console.log(err);
 					}
-					req.flash('success_msg', 'Account successfully deleted');
-					res.redirect('/');
 				});
-			} else {
-				// only in case of new upload process
-				return false
 			}
 		};
 
@@ -55,6 +50,10 @@ module.exports = {
 				});
 			} else {
 				removeUser();
+			}
+			if (res && User) {
+				req.flash('success_msg', 'Account successfully deleted');
+				res.redirect('/');
 			}
 		});
 	}
