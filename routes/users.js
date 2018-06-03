@@ -5,7 +5,6 @@ var express = require('express'),
 	passport = require('passport'),
 	mongoose = require('mongoose'),
 	Grid = require('gridfs-stream'),
-	LocalStrategy = require('passport-local').Strategy,
 	User = require('../models/user'),
 	gfsRemove = require('../config/config').gfsRemove;
 
