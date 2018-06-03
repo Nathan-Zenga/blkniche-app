@@ -20,84 +20,105 @@ conn.once('open', function() {
 });
 
 // Register new user
-router.post('/register', function(req, res){
+router.post('/register', function(req, res) {
+	User.find(function(err, docs) { // preparing for comparison querying
+		var errData = {};
 
-	var errData = {};
+		// for dynamic page rendering and redirection, only upon error detection
+		var page = title = req.params.title;
+		page == 'Home' ? page = 'index' : null;
 
-	// for dynamic page rendering and redirection, only upon error detection
-	var page = title = req.params.title;
-	page == 'Home' ? page = 'index' : null;
+		// Validation
+		req.checkBody('firstName', 'First name').notEmpty();
+		req.checkBody('lastName', 'Last name').notEmpty();
+		req.checkBody('email', 'Email').notEmpty();
+		if(req.body.email) req.checkBody('email', 'Must be an email address').isEmail();
+		req.checkBody('username', 'Username').notEmpty();
+		req.checkBody('username', 'Username: no spaces or special characters allowed (except "." and "-").')
+			.custom(value => {
+				var chars = /[ !@#$£%^&*()+\=\[\]{};':"\\|,<>\/?]/;
+				return chars.test(value) == false;
+			});
+		req.checkBody('DOB', 'Date of birth').notEmpty();
+		req.checkBody('nationality', 'Nationality').notEmpty();
+		req.checkBody('password', 'Password').notEmpty();
+		req.checkBody('passwordConfirm', 'Confirmed password not the same.').equals(req.body.password);
 
-	// Validation
-	req.checkBody('firstName', 'First name').notEmpty();
-	req.checkBody('lastName', 'Last name').notEmpty();
-	req.checkBody('email', 'Email').notEmpty();
-	if(req.body.email) req.checkBody('email', 'Must be an email address').isEmail();
-	req.checkBody('username', 'Username').notEmpty();
-	req.checkBody('username', 'Username: no spaces or special characters allowed (except "." and "-").')
-		.custom((value) => {
-			var chars = /[ !@#$£%^&*()+\=\[\]{};':"\\|,<>\/?]/;
-			return chars.test(value) == false;
-		});
-	req.checkBody('DOB', 'Date of birth').notEmpty();
-	req.checkBody('nationality', 'Nationality').notEmpty();
-	req.checkBody('password', 'Password').notEmpty();
-	req.checkBody('passwordConfirm', 'Confirmed password not the same.').equals(req.body.password);
-
-	var errors = req.validationErrors();
-
-	if(errors) {
-		var errList = [];
-		var otherErrs = [];
-		errors.forEach(err => {
-			if (/characters|address/.test(err.msg) || err.param == 'passwordConfirm') {
-				otherErrs.push(err.msg)
-			} else {
-				errList.push(err.msg.toLowerCase())
+		// Validating field uniqueness
+		req.checkBody('username', 'Username already used').custom(value => {
+			var exists = false;
+			for (var i = 0; i < docs.length; i++) {
+				if (value === docs[i].username) {
+					exists = true
+				}
 			}
+			return !exists
+		});
+		req.checkBody('email', 'Email already used').custom(value => {
+			var exists = false;
+			for (var i = 0; i < docs.length; i++) {
+				if (value === docs[i].email) {
+					exists = true
+				}
+			}
+			return !exists
 		});
 
-		if (errList.length > 1) {
-			var lastIndex = errList.length-1;
-			lastIndex = " and " + errList[lastIndex];
-			errList = errList.slice(0, -1).join(', ') + lastIndex;
+		var errors = req.validationErrors();
+
+		if(errors) {
+			var missingFieldErrors = [];
+			var otherErrs = [];
+			errors.forEach(err => {
+				if (/characters|address|already used/.test(err.msg) || err.param == 'passwordConfirm') {
+					otherErrs.push(err.msg)
+				} else {
+					missingFieldErrors.push(err.msg.toLowerCase())
+				}
+			});
+
+			if (missingFieldErrors.length) {
+				if (missingFieldErrors.length > 1) {
+					var lastIndex = missingFieldErrors.length-1;
+					lastIndex = " and " + missingFieldErrors[lastIndex];
+					missingFieldErrors = missingFieldErrors.slice(0, -1).join(', ') + lastIndex;
+				}
+				req.flash('login_error', 'Please fill in your ' + missingFieldErrors + '.');
+				errData.login_error = req.flash('login_error');
+			}
+			if (otherErrs.length) {
+				errData.login_error_chars = [];
+				otherErrs.forEach(err => {
+					// req.flash('login_error_chars', err);
+					errData.login_error_chars.push(err);
+				})
+			}
+
+		} else {
+			var newUser = new User({
+				firstName: req.body.firstName,
+				lastName: req.body.lastName,
+				email: req.body.email,
+				username: req.body.username,
+				DOB: req.body.DOB,
+				nationality: req.body.nationality,
+				password: req.body.password
+			});
+
+			if (req.body.DOB === undefined) {
+				newUser.DOB = req.body.year + "-" + req.body.month + "-" + req.body.day;
+			}
+
+			User.createUser(newUser, function(err, user){
+				if(err) throw err;
+			});
+
+			req.flash('success_msg', 'You are registered and can now login');
+			errData.success_msg = req.flash('success_msg');
 		}
 
-		if (errList.length) {
-			req.flash('login_error', 'Please fill in your ' + errList + '.');
-			errData.login_error = req.flash('login_error');
-		}
-		if (otherErrs.length) {
-			otherErrs.forEach(err => {
-				req.flash('login_error_chars', err);
-				errData.login_error_chars = req.flash('login_error_chars');
-			})
-		}
-
-	} else {
-		var newUser = new User({
-			firstName: req.body.firstName,
-			lastName: req.body.lastName,
-			email: req.body.email,
-			username: req.body.username,
-			DOB: req.body.DOB,
-			nationality: req.body.nationality,
-			password: req.body.password
-		});
-
-		if (req.body.DOB === undefined) {
-			newUser.DOB = req.body.year + "-" + req.body.month + "-" + req.body.day;
-		}
-
-		User.createUser(newUser, function(err, user){
-			if(err) throw err;
-		});
-
-		req.flash('success_msg', 'You are registered and can now login');
-		errData.success_msg = req.flash('success_msg');
-	}
-
-	res.send(errData);
+		res.send(errData);
+	});
 });
 
 // Passport config
