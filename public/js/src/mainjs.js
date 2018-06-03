@@ -278,17 +278,16 @@ $(function() {
 			success: function(result, status) {
 				$(".result").empty();
 
-				for(k in result) {
-					result[k] = "<p>" + result[k] + "</p>"
-				}
 				if (result.login_error) {
-					$("#signup_body .result").append(result.login_error);
+					$("#signup_body .result").append("<p>"+result.login_error+"</p>");
 				}
 				if (result.login_error_chars) {
-					$("#signup_body .result").append(result.login_error_chars);
+					result.login_error_chars.forEach(function(msg) {
+						$("#signup_body .result").append("<p>"+msg+"</p>");
+					});
 				}
 				if (result.success_msg) {
-					$("#signup_body .result").html(result.success_msg);
+					$("#signup_body .result").html("<p>"+result.success_msg+"</p>");
 					$details.val("");
 				}
 			},
