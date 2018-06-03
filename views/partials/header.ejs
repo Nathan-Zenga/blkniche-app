@@ -19,6 +19,12 @@
 			});
 		})
 	</script>
+	<%_ } if(pageClass == "forgot") { _%>
+	<script>
+		$(() => {
+			$('#forgot.modal').modal('show');
+		});
+	</script>
 	<%_ } if(user) { _%>
 	<style>
 		nav .link {
@@ -67,6 +73,9 @@
 <%_ if (user) { _%>
 <% include modals/update %>
 <% include modals/delete_account %>
+
+<%_ } else if (pageClass == 'forgot') { _%>
+<% include modals/forgot_password %>
 
 <%_ } else { _%>
 <% include modals/register %>
