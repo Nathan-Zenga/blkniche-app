@@ -5,15 +5,8 @@ var express = require('express'),
 	nodemailer = require("nodemailer"),
 	crypto = require("crypto");
 
-// forgot password
-router.get('/forgot', function(req, res) {
-	res.render('blank', {
-		title: 'Forgot',
-		pageClass: 'forgot'
-	});
-});
-
 router.post('/forgot', function(req, res, next) {
+	var msg = {};
 	async.waterfall([
 		function(done) {
 			crypto.randomBytes(20, function(err, buf) {
@@ -25,7 +18,8 @@ router.post('/forgot', function(req, res, next) {
 			User.findOne({ email: req.body.email }, function(err, user) {
 				if (!user) {
 					req.flash('error', 'No account with that email address exists.');
-					return res.redirect('/forgot');
+					msg.error = req.flash('error');
+					return res.send(msg);
 				}
 
 				user.resetPasswordToken = token;
@@ -40,13 +34,15 @@ router.post('/forgot', function(req, res, next) {
 			var smtpTransport = nodemailer.createTransport({
 				service: 'Gmail',
 				auth: {
-					user: 'learntocodeinfo@gmail.com',
-					pass: process.env.GMAILPW
+					user: 'nathanzenga@gmail.com',
+					pass: "Thomas96."
 				}
 			});
 			var mailOptions = {
-				to: user.email,
-				from: 'learntocodeinfo@gmail.com',
+				// to: user.email,
+				// from: 'nathanzenga@gmail.com',
+				to: 'nathanzenga@gmail.com',
+				from: user.email,
 				subject: 'Node.js Password Reset',
 				text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
 					'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
@@ -56,12 +52,13 @@ router.post('/forgot', function(req, res, next) {
 			smtpTransport.sendMail(mailOptions, function(err) {
 				console.log('mail sent');
 				req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+				msg.success = req.flash('success');
 				done(err, 'done');
 			});
 		}
 	], function(err) {
 		if (err) return next(err);
-		res.redirect('/forgot');
+		res.send(msg);
 	});
 });
 
