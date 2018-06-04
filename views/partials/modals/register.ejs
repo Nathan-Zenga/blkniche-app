@@ -10,8 +10,9 @@
 
 			<div class="modal-body">
 				<ul class="nav nav-pills tabs">
-					<li class="active" style="width: calc(50% - 2px)"><a data-toggle="pill" href="#signup_body">SIGN UP</a></li>
-					<li style="width: calc(50% - 2px)"><a data-toggle="pill" href="#login_body">LOG IN</a></li>
+					<li class="active"><a data-toggle="pill" href="#signup_body">SIGN UP</a></li>
+					<li><a data-toggle="pill" href="#login_body">LOG IN</a></li>
+					<li style="display: none"><a data-toggle="pill" href="#forgot_body">FORGOT</a></li>
 				</ul>
 
 				<!-- FORMS -->
@@ -68,6 +69,7 @@
 
 							<label class="sr-only">Password</label>
 							<input class="form-control details" type="password" name="password" placeholder="Password">
+							<small id="forgot_pass_link"><a>Forgot password?</a></small>
 
 							<label class="sr-only">Log in</label>
 							<input class="form-control submit" type="submit" value="Sign in">
@@ -75,6 +77,18 @@
 						</fieldset>
 					</form>
 
+					<form id="forgot_body" class="form-group tab-pane fade">
+						<fieldset>
+							<p>Submit your email address and we’ll send you a link to reset your password.</p>
+							<div class="result"></div>
+
+							<label class="sr-only">Email Address</label>
+							<input class="form-control details" type="email" name="email" placeholder="Email">
+
+							<label class="sr-only">Submit</label>
+							<input class="form-control submit" type="submit" value="Submit">
+						</fieldset>
+					</form>
 
 				</div>
 			</div>

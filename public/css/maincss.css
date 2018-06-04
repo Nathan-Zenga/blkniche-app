@@ -206,6 +206,10 @@ nav .link {
 	color: inherit;
 }
 
+#registration .tabs li {
+	width: calc(50% - 2px);
+}
+
 .modal legend {
 	text-align: center;
 	border: none;

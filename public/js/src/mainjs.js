@@ -341,9 +341,50 @@ $(function() {
 		});
 	});
 
-	$("modal-header > *").click(function(){
+	$("#forgot_body .submit").click(function(e) {
+		e.preventDefault();
+
+		var $details = $("#forgot_body .details");
+		var data = {};
+
+		$details.each(function() {
+			var key = $(this).attr('name');
+			data[key] = $(this).val();
+		});
+
+		$.ajax({
+			type: 'post',
+			url: '/account/forgot',
+			contentType: 'application/json',
+			data: JSON.stringify(data),
+			success: function(msg, status) {
+				$(".result").empty();
+				if (msg.error) {
+					console.log(msg.error);
+					$(".result").html("<p>"+msg.error+"</p>")
+				}
+				else if (msg.success) {
+					$(".result").html("<p>"+msg.success+"</p>")
+				}
+				// $(".result p").delay(3000).fadeOut(function(){
+				// 	$(this).remove("p")
+				// });
+			},
+			error: function(jqHXR, status, err) {
+				console.log("ERROR: " + err);
+				console.log("jqHXR: " + jqHXR);
+				console.log("status: " + status);
+			}
+		});
+	});
+
+	$(".modal-header > *").click(function(){
 		$(".result").empty();
 		$(".details").val("");
+	});
+
+	$("#forgot_pass_link").click(function(){
+		$("#registration .tabs li:last").find("a").click();
 	});
 
 
