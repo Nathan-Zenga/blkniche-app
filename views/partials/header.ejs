@@ -19,12 +19,6 @@
 			});
 		})
 	</script>
-	<%_ } if(pageClass == "forgot") { _%>
-	<script>
-		$(() => {
-			$('#forgot.modal').modal('show');
-		});
-	</script>
 	<%_ } if(user) { _%>
 	<style>
 		nav .link {
@@ -74,7 +68,13 @@
 
 <%_ } else if (typeof token !== 'undefined') { _%>
 <% include modals/reset_password %>
-<script> ($('#reset_password_form').modal('show'))(); </script>
+<script>
+	$('#reset_password_form').modal({
+		show: true,
+		backdrop: 'static',
+		keyboard: false
+	});
+</script>
 
 <%_ } else { _%>
 <% include modals/register %>

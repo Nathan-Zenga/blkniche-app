@@ -262,7 +262,7 @@ $(function() {
 	$("#signup_body .submit").click(function(e) {
 		e.preventDefault();
 
-		var $details = $("#signup_body .details");
+		var $details = $(this).closest("form").find(".details");
 		var data = {};
 
 		$details.each(function() {
@@ -302,7 +302,7 @@ $(function() {
 	$("#update_form .submit").click(function(e) {
 		e.preventDefault();
 
-		var $details = $("#update_form .details");
+		var $details = $(this).closest("form").find(".details");
 		var data = {};
 
 		$details.each(function() {
@@ -346,7 +346,7 @@ $(function() {
 	$("#forgot_body .submit").click(function(e) {
 		e.preventDefault();
 
-		var $details = $("#forgot_body .details");
+		var $details = $(this).closest("form").find(".details");
 		var data = {};
 
 		$details.each(function() {
@@ -380,7 +380,7 @@ $(function() {
 	$("#reset_password_form .submit").click(function(e) {
 		e.preventDefault();
 
-		var $details = $("#reset_password_form .details");
+		var $details = $(this).closest("form").find(".details");
 		var data = {};
 
 		$details.each(function() {
@@ -402,7 +402,8 @@ $(function() {
 					$(".result").html("<p>"+msg.noMatch+"</p>")
 				}
 				else {
-					$(".result").html("<p>"+msg.success+"</p>")
+					$(".result").html("<p>"+msg.success+"</p>");
+					$details.closest(".modal").modal("hide");
 				}
 			},
 			error: function(jqHXR, status, err) {
