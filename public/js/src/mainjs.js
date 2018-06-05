@@ -51,23 +51,23 @@ $(function() {
 	function toggleOnScroll(){
 
 		// toggle toTop button display
-		if ( window.pageYOffset > 40) {
+		if ( window.pageYOffset > 40 ) {
 			$("#toTop").css({transform: "translateX(-100%)"});
+			if (location.pathname === '/') $(".socials").removeClass("fixed");
 		} else {
 			$("#toTop").css({transform: ""});
+			if (location.pathname === '/') $(".socials").addClass("fixed");
 		}
 
 		try {
 			// fix header position to viewport when scrolling past second section
-			if ( window.pageYOffset > $("section").eq(1).offset().top - 100) {
-				if ( !$(".inner-header").hasClass("fixed") ) {
-					$(".inner-header").addClass("fixed");
-				}
+			if ( window.pageYOffset > $("section").eq(1).offset().top - 100 ) {
+				$(".inner-header").addClass("fixed");
 			} else {
 				$(".inner-header").removeClass("fixed");
 			}
 		} catch(err) {
-			console.log(err)
+			return 0
 		}
 
 	}
@@ -256,7 +256,7 @@ $(function() {
 			$(".videos .item.active video").get(0).play() // play current video if conditions are met
 		}
 	} catch(err) {
-		console.log(err)
+		return 0
 	}
 
 	$("#signup_body .submit").click(function(e) {
@@ -431,16 +431,20 @@ $(function() {
 
 		// stop video once scrolled outside the region of videos section
 		// else, play video
-		if ( window.pageYOffset < $("section.videos").offset().top - $("section.videos").height()/4 ||
-			 window.pageYOffset >= $("section.videos").offset().top + $("section.videos").height()/2 ) {
-			
-			if ( $(".videos .item.active video").get(0).playing ) {
-				$(".videos .item.active video").get(0).pause();
-				$(".videos .item.active video").get(0).currentTime = 0;
-			}
+		try {
+			if ( window.pageYOffset < $("section.videos").offset().top - $("section.videos").height()/4 ||
+				 window.pageYOffset >= $("section.videos").offset().top + $("section.videos").height()/2 ) {
+				
+				if ( $(".videos .item.active video").get(0).playing ) {
+					$(".videos .item.active video").get(0).pause();
+					$(".videos .item.active video").get(0).currentTime = 0;
+				}
 
-		} else {
-			$(".videos .item.active video").get(0).play();
+			} else {
+				$(".videos .item.active video").get(0).play();
+			}
+		} catch(err) {
+			return 0
 		}
 
 	});

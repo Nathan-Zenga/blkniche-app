@@ -425,9 +425,17 @@ footer .socials > div {
 footer .socials a {
 	position: relative;
 	display: block;
-	top: 50%;
-	transform: translateY(-50%);
 	text-align: center;
+}
+
+.socials.fixed {
+	position: fixed;
+	height: auto;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 50%;
+	text-shadow: 0 0 10px black, 0 0 10px black;
 }
 
 @media (min-width: 768px) {
