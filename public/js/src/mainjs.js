@@ -299,10 +299,10 @@ $(function() {
 		});
 	});
 
-	$("#update-form .submit").click(function(e) {
+	$("#update_form .submit").click(function(e) {
 		e.preventDefault();
 
-		var $details = $("#update-form .details");
+		var $details = $("#update_form .details");
 		var data = {};
 
 		$details.each(function() {
@@ -317,19 +317,21 @@ $(function() {
 			data: JSON.stringify(data),
 			success: function(result, status) {
 				$(".result").empty();
-				if (/Incorrect|Please fill/.test(result)) {
-					result = "<p>" + result + "</p>";
-					$("#update-form .result").append(result);
+				if (result.error) {
+					result.error = "<p>" + result.error + "</p>";
+					$("#update-form .result").append(result.error);
 					$("#update-form input[name='old_password']").val("");
 					$("#update-form input[name='new_password']").val("");
-				} else {
+				}
+				else if (result.changed) {
 					var info = '<li>Name: ' + result.name + '</li>' +
 					'<li>Email: ' + result.email + '</li>' +
 					'<li>Date of birth: ' + result.DOB + '</li>' +
 					'<li>Nationality: ' + result.nationality + '</li><br>';
 
-					$(".profile-info span").html(info);
-					$("#update-form .close").click();
+					$(".profile-info span").fadeOut(function(){
+						$(this).html(info).fadeIn();
+					});
 					$details.val("");
 				}
 			},
@@ -366,9 +368,42 @@ $(function() {
 				else if (msg.success) {
 					$(".result").html("<p>"+msg.success+"</p>")
 				}
-				// $(".result p").delay(3000).fadeOut(function(){
-				// 	$(this).remove("p")
-				// });
+			},
+			error: function(jqHXR, status, err) {
+				console.log("ERROR: " + err);
+				console.log("jqHXR: " + jqHXR);
+				console.log("status: " + status);
+			}
+		});
+	});
+
+	$("#reset_password_form .submit").click(function(e) {
+		e.preventDefault();
+
+		var $details = $("#reset_password_form .details");
+		var data = {};
+
+		$details.each(function() {
+			var key = $(this).attr('name');
+			data[key] = $(this).val();
+		});
+
+		$.ajax({
+			type: 'post',
+			url: location.pathname,
+			contentType: 'application/json',
+			data: JSON.stringify(data),
+			success: function(msg, status) {
+				$(".result").empty();
+				if (msg.invalidToken) {
+					$(".result").html("<p>"+msg.invalidToken+"</p>")
+				}
+				else if (msg.noMatch) {
+					$(".result").html("<p>"+msg.noMatch+"</p>")
+				}
+				else {
+					$(".result").html("<p>"+msg.success+"</p>")
+				}
 			},
 			error: function(jqHXR, status, err) {
 				console.log("ERROR: " + err);

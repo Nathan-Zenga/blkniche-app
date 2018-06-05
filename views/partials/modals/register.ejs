@@ -1,4 +1,3 @@
-<!-- Sign-up form, for client data creation -->
 <div id="registration" class="modal fade" role="dialog">
 	<div id="SignUpDialog" class="modal-dialog">
 		<div class="modal-content">
@@ -64,12 +63,12 @@
 					<form id="login_body" class="form-group tab-pane fade" method="post" action="/users/login">
 						<fieldset>
 
+							<p><small id="forgot_pass_link"><a>Forgot password? Click here.</a></small></p>
 							<label class="sr-only">Username</label>
 							<input class="form-control details" type="username" name="username" placeholder="Username" style>
 
 							<label class="sr-only">Password</label>
 							<input class="form-control details" type="password" name="password" placeholder="Password">
-							<small id="forgot_pass_link"><a>Forgot password?</a></small>
 
 							<label class="sr-only">Log in</label>
 							<input class="form-control submit" type="submit" value="Sign in">
@@ -79,7 +78,7 @@
 
 					<form id="forgot_body" class="form-group tab-pane fade">
 						<fieldset>
-							<p>Submit your email address and we’ll send you a link to reset your password.</p>
+							<p><small>Submit your email address and we’ll send you a link to reset your password.</small></p>
 							<div class="result"></div>
 
 							<label class="sr-only">Email Address</label>

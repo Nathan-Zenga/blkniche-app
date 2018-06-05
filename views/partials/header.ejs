@@ -68,16 +68,17 @@
 
 <div id="toTop"><p><span class="glyphicon glyphicon-chevron-up"></span></p></div>
 
-
-<!-- including the modals -->
 <%_ if (user) { _%>
 <% include modals/update %>
 <% include modals/delete_account %>
 
+<%_ } else if (typeof token !== 'undefined') { _%>
+<% include modals/reset_password %>
+<script> ($('#reset_password_form').modal('show'))(); </script>
+
 <%_ } else { _%>
 <% include modals/register %>
 <%_ } _%>
-
 
 <div class="row" style="position: fixed; top: 50px; right: 20px; margin: 0; z-index: 1000">
 	<%_ if (success_msg.length) { _%>

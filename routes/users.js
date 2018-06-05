@@ -159,22 +159,26 @@ router.post('/update', function(req, res) {
 	// prepare objects for update operation
 	var updates = {};
 	var saveUpdates = (updates, hash) => {
-		if (updates) {
+		var length = 0; for (k in updates) length += 1;
+		if (length) {
 			if (hash) updates.password = hash;
-			User.update({ _id: req.user._id }, { $set: updates }, (err, result) => {
+			User.findById(req.user._id, (err, user) => {
 				if (err) return err;
-				User.find({ _id: req.user._id }, function(err, doc) {
-					if (err) return err;
+				for (k in updates) user[k] = updates[k];
+				user.save(function(err){
 					// preparing data for AJAX callback
 					var updated = {
-						name: doc[0].firstName + " " + doc[0].lastName,
-						email: doc[0].email,
-						DOB: doc[0].DOB.getDate() + '/' + (doc[0].DOB.getMonth()+1) + '/' + doc[0].DOB.getFullYear(),
-						nationality: doc[0].nationality
+						name: user.firstName + " " + user.lastName,
+						email: user.email,
+						DOB: user.DOB.getDate() + '/' + (user.DOB.getMonth()+1) + '/' + user.DOB.getFullYear(),
+						nationality: user.nationality,
+						changed: length
 					};
 					res.send(updated);
 				});
 			});
+		} else {
+			res.end();
 		}
 	}
 
@@ -192,20 +196,18 @@ router.post('/update', function(req, res) {
 	}
 
 	if (req.body.new_password) {
-		var result = '';
+		var result = {};
 		if (!req.body.old_password) {
 			req.flash('update_error','Please fill in your old password.');
-			result += req.flash('update_error');
-			res.write(result);
-			res.end();
+			result.error = req.flash('update_error');
+			res.send(result);
 		} else {
 			User.comparePassword(req.body.old_password, req.user.password, function(err, isMatch){
 				if(err) throw err;
 				if(!isMatch){
 					req.flash('update_error','Incorrect password.');
-					result += req.flash('update_error');
-					res.write(result);
-					res.end();
+					result.error = req.flash('update_error');
+					res.send(result);
 				} else {
 					bcrypt.genSalt(10, function(err, salt) {
 						bcrypt.hash(req.body.new_password, salt, function(err, hash) {
