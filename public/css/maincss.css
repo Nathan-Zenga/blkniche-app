@@ -1,6 +1,6 @@
 @import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Oswald:700');
 
 html, body {
 	font-family: 'Roboto Condensed';
@@ -373,11 +373,22 @@ section .img {
 		background-attachment: fixed;
 	}
 }
+section.music .musicTitle,
+section.videos .videoTitle {
+	font-family: Oswald;
+	font-size: 3em;
+	/*font-style: italic;*/
+	-moz-transform: skew(10deg, 3deg);
+	-o-transform: skew(10deg, 3deg);
+	-webkit-transform: skew(10deg, 3deg);
+	transform: skew(10deg, 3deg);
+}
 
 section.music button {
 	background-color: gold;
 	color: black;
 	transition: .5s;
+	font-weight: bold;
 }
 
 section.music button:hover,

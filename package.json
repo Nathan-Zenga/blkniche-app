@@ -10,6 +10,7 @@
     "dev": "grunt uglify && nodemon app"
   },
   "dependencies": {
+    "async": "^2.6.1",
     "bcryptjs": "*",
     "body-parser": "*",
     "connect-flash": "*",

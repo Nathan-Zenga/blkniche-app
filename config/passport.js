@@ -6,7 +6,7 @@ var LocalStrategy = require('passport-local').Strategy,
 
 module.exports = function(passport) {
 	passport.use(new LocalStrategy(function(username, password, done) {
-		User.getUserByUsername(username, function(err, user) {
+		User.getByUsername(username, function(err, user) {
 			if(err) throw err;
 			if(!user){
 				return done(null, false, {message: msg});
@@ -28,7 +28,7 @@ module.exports = function(passport) {
 	});
 
 	passport.deserializeUser(function(id, done) {
-		User.getUserById(id, function(err, user) {
+		User.findById(id, function(err, user) {
 			done(err, user);
 		});
 	});
