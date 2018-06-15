@@ -21,7 +21,7 @@ conn.once('open', function() {
 // Register new user
 router.post('/register', function(req, res) {
 	User.find(function(err, docs) { // preparing for comparison querying
-		var errData = {};
+		var msgs = {};
 
 		// for dynamic page rendering and redirection, only upon error detection
 		var page = title = req.params.title;
@@ -35,33 +35,30 @@ router.post('/register', function(req, res) {
 		req.checkBody('username', 'Username').notEmpty();
 		req.checkBody('username', 'Username: no spaces or special characters allowed (except "." and "-").')
 			.custom(value => {
-				var chars = /[ !@#$£%^&*()+\=\[\]{};':"\\|,<>\/?]/;
+				let chars = /[ !@#$£%^&*()+\=\[\]{};':"\\|,<>\/?]/;
 				return chars.test(value) == false;
 			});
 		req.checkBody('DOB', 'Date of birth').notEmpty();
+		if(req.body.DOB) req.checkBody('DOB', 'Date of birth: invalid format').custom(value => {
+			let format = /^\d{4}-\d{2}-\d{2}$/i;
+			return format.test(value)
+		});
 		req.checkBody('nationality', 'Nationality').notEmpty();
 		req.checkBody('password', 'Password').notEmpty();
 		req.checkBody('passwordConfirm', 'Confirmed password not the same.').equals(req.body.password);
 
 		// Validating field uniqueness
-		req.checkBody('username', 'Username already used').custom(value => {
-			var exists = false;
+		var findValue = (value, field) => {
+			let exists = false;
 			for (var i = 0; i < docs.length; i++) {
-				if (value === docs[i].username) {
+				if (value === docs[i][field]) {
 					exists = true
 				}
 			}
 			return !exists
-		});
-		req.checkBody('email', 'Email already used').custom(value => {
-			var exists = false;
-			for (var i = 0; i < docs.length; i++) {
-				if (value === docs[i].email) {
-					exists = true
-				}
-			}
-			return !exists
-		});
+		}
+		req.checkBody('username', 'Username already used').custom(value => { return findValue(value, "username") });
+		req.checkBody('email', 'Email already used').custom(value => { return findValue(value, "email") });
 
 		var errors = req.validationErrors();
 
@@ -69,7 +66,7 @@ router.post('/register', function(req, res) {
 			var missingFieldErrors = [];
 			var otherErrs = [];
 			errors.forEach(err => {
-				if (/characters|address|already used/.test(err.msg) || err.param == 'passwordConfirm') {
+				if (/characters|address|already used|format/.test(err.msg) || err.param == 'passwordConfirm') {
 					otherErrs.push(err.msg)
 				} else {
 					missingFieldErrors.push(err.msg.toLowerCase())
@@ -83,13 +80,13 @@ router.post('/register', function(req, res) {
 					missingFieldErrors = missingFieldErrors.slice(0, -1).join(', ') + lastIndex;
 				}
 				req.flash('login_error', 'Please fill in your ' + missingFieldErrors + '.');
-				errData.login_error = req.flash('login_error');
+				msgs.login_error = req.flash('login_error');
 			}
 			if (otherErrs.length) {
-				errData.login_error_chars = [];
+				msgs.login_error_chars = [];
 				otherErrs.forEach(err => {
 					// req.flash('login_error_chars', err);
-					errData.login_error_chars.push(err);
+					msgs.login_error_chars.push(err);
 				})
 			}
 
@@ -113,10 +110,10 @@ router.post('/register', function(req, res) {
 			});
 
 			req.flash('success_msg', 'You are registered and can now login');
-			errData.success_msg = req.flash('success_msg');
+			msgs.success_msg = req.flash('success_msg');
 		}
 
-		res.send(errData);
+		res.send(msgs);
 	});
 });
 
