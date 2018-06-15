@@ -29,7 +29,7 @@ var browserDetect = {
 		if ( device == 'Mobile' || device == 'Tablet' || browser.indexOf('Chrome') == -1 ) {
 			$("video").attr("controls", "true");
 			$(".modal form #DOB").attr({
-				onfocus: 'text',
+				onfocus: '(this.type="text")',
 				placeholder: 'Date of Birth - YYYY-MM-DD'
 			});
 			// $("#registration .DOB-group").html('<label class="group-item">Date of Birth</label> <input class="form-control details group-item" type="number" id="day" name="day" placeholder="Day" min="01" max="31"> <input class="form-control details group-item" type="number" id="month" name="month" placeholder="Month" min="01" max="12"> <input class="form-control details group-item" type="number" id="year" name="year" placeholder="Year" min="1930" max="2017">');
