@@ -1,12 +1,18 @@
 $(function() {
 
 	// define property for all video/audio elements to check if video is currently playing
-	Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
-		get: function(){
-			return !!(this.currentTime > 0 && !this.paused && !this.ended && this.readyState > 2);
+	try {
+		if (HTMLMediaElement.prototype.playing === undefined) {
+			Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
+				get: function(){
+					return !!(this.currentTime > 0 && !this.paused && !this.ended && this.readyState > 2);
+				}
+			});
 		}
-	});
-
+	} catch(err) {
+		console.log(err)
+	}
+	
 	// TEST (for each section bg): generate random colours
 	function randomColour() {
 		var arr = [];
