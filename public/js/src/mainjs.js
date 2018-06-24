@@ -26,24 +26,17 @@ $(function() {
 	}
 
 	// change div.textbox inner text whenever carousel caption changes
-	function changeText(){
-		var match_music = $(".music .item.active .carousel-caption-title").text(),
-			match_video = $(".videos .item.active .carousel-caption-title").text();
-
+	function changeText(className){
+		var text = $("."+className+" .item.active .carousel-caption-title").text();
 		var change = setInterval(function() {
 
-			if ( match_music !== $(".music .item.active .carousel-caption-title").text() ) {
-				$(".musicTitle").text( $(".music .item.active .carousel-caption-title").text() );
-				$(".musicArtist").text( $(".music .item.active .carousel-caption-artist").text() );
-				clearInterval(change);
-			}
-			else if ( match_video !== $(".videos .item.active .carousel-caption-title").text() ) {
-				$(".videoTitle").text( $(".videos .item.active .carousel-caption-title").text() );
-				$(".videoArtist").text( $(".videos .item.active .carousel-caption-artist").text() );
-				$(".videoInfo").text( $(".videos .item.active .carousel-caption-info").text() );
+			if ( text !== $("."+className+" .item.active .carousel-caption-title").text() ) {
+				$("."+className+" .slide-title").text( $("."+className+" .item.active .carousel-caption-title").text() );
+				$("."+className+" .slide-artist").text( $("."+className+" .item.active .carousel-caption-artist").text() );
 
 				// play video element in active slide (item)
-				if ( $(".videos").find(".item.active video").length ) {
+				if (className === "videos") {
+					$(".videoInfo").text( $(".videos .item.active .carousel-caption-info").text() );
 					$(".videos .item.active video").get(0).play();
 				}
 
@@ -232,7 +225,7 @@ $(function() {
 			}
 		}
 		// play video in current carousel slide
-		changeText();
+		changeText($(this).closest("section").get(0).className);
 	});
 
 	// toggle manual playing and pausing of video
