@@ -72,6 +72,7 @@ app.use('/profile', require('./routes/profile'));
 app.use('/users', require('./routes/users'));
 app.use('/account', require('./routes/forgot'));
 app.use('/mail', require('./routes/mail'));
+app.use('/blog/post', require('./routes/blogposts'));
 
 // Set port + listen for requests
 app.set('port', (process.env.PORT || 5111));

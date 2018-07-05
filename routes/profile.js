@@ -4,6 +4,7 @@ var express = require('express'),
 	mongoose = require('mongoose'),
 	Grid = require('gridfs-stream'),
 	User = require('../models/user'),
+	Post = require('../models/post'),
 	auth = require('../config/config').ensureAuthenticated,
 	upload = require('../config/upload');
 
@@ -21,27 +22,31 @@ router.get('/', auth, function(req, res){
 
 	gfs.files.find().toArray((err, files) => {
 		if (err) return err;
+		Post.find({userId: req.user._id}, (err, posts) => {
+			if (err) return err;
 
-		var name = "i" + req.user._id.toString().slice(-5);
+			var name = "i" + req.user._id.toString().slice(-5);
 
-		var currentFile = () => {
-			var result;
-			// Check if there are files
-			if (files || files.length) {
-				files.forEach(file => {
-					// Check file exists
-					if (file.filename.includes(name)) {
-						result = file
-					}
-				});
-			}
-			return result
-		};
+			currentIcon = () => {
+				var result;
+				// Check if there are files
+				if (files || files.length) {
+					files.forEach(file => {
+						// Check file exists
+						if (file.filename.includes(name)) {
+							result = file
+						}
+					});
+				}
+				return result
+			};
 
-		res.render('profile', {
-			title: 'Profile',
-			pageClass: 'profile',
-			icon_src: currentFile()
+			res.render('profile', {
+				title: 'Profile',
+				pageClass: 'profile',
+				icon_src: currentIcon(),
+				posts: posts
+			});
 		});
 	});
 

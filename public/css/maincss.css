@@ -480,3 +480,23 @@ footer .socials a {
 		height: 300px;
 	}
 }
+
+.profile #new_post {
+	width: 300px;
+}
+
+.profile .post {
+	margin-bottom: 20px;
+}
+
+.profile .post .post_footer,
+.profile .post .post_timestamp {
+	text-align: right;
+}
+
+.profile .post .footer-button {
+	display: inline-block;
+	padding: 5px;
+	background-color: grey;
+	border: 2px solid white
+}
