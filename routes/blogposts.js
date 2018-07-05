@@ -19,4 +19,11 @@ router.post('/', function(req, res) {
 	});
 });
 
+router.delete('/delete/:id', function(req, res) {
+	Post.remove({_id: req.params.id}, (err, result) => {
+		if (err) return err;
+		res.redirect(req.get('referer'));
+	})
+});
+
 module.exports = router;
