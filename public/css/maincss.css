@@ -464,7 +464,8 @@ footer .socials a {
 	color: white;
 }
 
-.profile-info form:not(#uploadIcon_form) {
+.profile-info form:not(#uploadIcon_form),
+.profile .blog form {
 	display: inline-block;
 }
 
