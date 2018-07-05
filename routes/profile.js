@@ -22,7 +22,7 @@ router.get('/', auth, function(req, res){
 
 	gfs.files.find().toArray((err, files) => {
 		if (err) return err;
-		Post.find({userId: req.user._id}, (err, posts) => {
+		Post.find({userId: req.user._id}).sort({created_at: -1}).exec((err, posts) => {
 			if (err) return err;
 
 			var name = "i" + req.user._id.toString().slice(-5);

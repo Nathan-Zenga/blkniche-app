@@ -66,7 +66,7 @@
 						</div>
 						<%_ var dd = d => { return d < 10 ? '0'+d : d } _%>
 						<%_ var d = post.created_at _%>
-						<div class="post_timestamp"><%= dd(d.getDate()) +"/"+ dd(d.getMonth()) +"/"+ d.getFullYear() +", "+ dd(d.getHours()) +":"+ dd(d.getMinutes()) +":"+ dd(d.getSeconds()) %></div>
+						<div class="post_timestamp"><%= dd(d.getDate()) +"/"+ dd(d.getMonth()+1) +"/"+ d.getFullYear() +", "+ dd(d.getHours()) +":"+ dd(d.getMinutes()) +":"+ dd(d.getSeconds()) %></div>
 						<div class="post_footer">
 							<button class="footer-button edit">&#128394;</button>&nbsp;
 							<form method="POST" action="/blog/post/delete/<%= post._id %>?_method=DELETE">
