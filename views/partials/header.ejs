@@ -17,6 +17,11 @@
 			$(".uploadIcon").click(function() {
 				$("#uploadIcon_form").slideToggle();
 			});
+
+			var action = $("#edit_blogpost form").attr("action");
+			$(".footer-button.edit").click(function(){
+				$("#edit_blogpost form").attr("action", action + this.id);
+			});
 		})
 	</script>
 	<%_ } if(user) { _%>
@@ -66,7 +71,10 @@
 <% include modals/update %>
 <% include modals/delete_account %>
 
-<%_ } else if (typeof token !== 'undefined') { _%>
+<%_ if (pageClass == "profile") { _%>
+<% include modals/edit_blogpost %>
+
+<%_ }} else if (typeof token !== 'undefined') { _%>
 <% include modals/reset_password %>
 <script>
 	$('#reset_password_form').modal({
