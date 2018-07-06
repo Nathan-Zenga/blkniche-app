@@ -53,22 +53,27 @@
 						<%_ } _%>
 						<div class="post_body">
 							<%_ if (post.textbody.includes('\n')) { _%>
-								<%_ post.textbody.split('\n').forEach((line, i) => { _%>
-									<%_ if (i !== post.textbody.split('\n').length-1) { _%>
-										<%= line %><br>
-									<%_ } else { _%>
-										<%= line %>
-									<%_ } _%>
+								<%_ let l = post.textbody.split('\n') _%>
+								<%_ l.forEach((line, i) => { _%>
+									<%= line %>
+									<%_ if (i !== l.length-1) { _%><br><%_ } _%>
 								<%_ }) _%>
 							<%_ } else { _%>
 								<p><%= post.textbody %></p>
 							<%_ } _%>
 						</div>
 						<%_ var dd = d => { return d < 10 ? '0'+d : d } _%>
-						<%_ var d = post.created_at _%>
-						<div class="post_timestamp"><%= dd(d.getDate()) +"/"+ dd(d.getMonth()+1) +"/"+ d.getFullYear() +", "+ dd(d.getHours()) +":"+ dd(d.getMinutes()) +":"+ dd(d.getSeconds()) %></div>
+						<%_ var c = post.created_at _%>
+						<%_ var u = post.updated_at _%>
+						<%_ var edited = c.toString() !== u.toString() _%>
+						<div class="post_timestamp">
+							<span class="post_date"><%= dd(c.getDate()) +"/"+ dd(c.getMonth()+1) +"/"+ c.getFullYear() +", "+ dd(c.getHours()) +":"+ dd(c.getMinutes()) +":"+ dd(c.getSeconds()) %></span><br>
+							<%_ if (edited) { _%>
+								<span class="edited_date">Edited: <%= dd(u.getDate()) +"/"+ dd(u.getMonth()+1) +"/"+ u.getFullYear() +", "+ dd(u.getHours()) +":"+ dd(u.getMinutes()) +":"+ dd(u.getSeconds()) %></span>
+							<%_ } _%>
+						</div>
 						<div class="post_footer">
-							<button class="footer-button edit">&#128394;</button>&nbsp;
+							<button class="footer-button edit" id="<%= post._id %>" data-toggle="modal" data-target="#edit_blogpost">&#128394;</button>&nbsp;
 							<form method="POST" action="/blog/post/delete/<%= post._id %>?_method=DELETE">
 								<button class="footer-button delete">&times;</button>
 							</form>
