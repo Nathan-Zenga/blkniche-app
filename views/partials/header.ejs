@@ -22,6 +22,27 @@
 			$(".footer-button.edit").click(function(){
 				$("#edit_blogpost form").attr("action", action + this.id);
 			});
+
+			$(".footer-button.delete").click(function(){
+				var c = confirm("Sure you want to delete?");
+				var $post = $(this).closest(".post");
+				if (c) {
+					$.ajax({
+						type: 'post',
+						url: '/blog/post/delete', 
+						contentType: 'application/json',
+						data: JSON.stringify({id: this.id}),
+						success: function(msg, status) {
+							$post.fadeOut();
+						},
+						error: function(jqHXR, status, err) {
+							console.log("ERROR: " + err);
+							console.log("jqHXR: " + jqHXR);
+							console.log("status: " + status);
+						}
+					});
+				}
+			});
 		})
 	</script>
 	<%_ } if(user) { _%>

@@ -20,10 +20,10 @@ router.post('/', (req, res) => {
 	}
 });
 
-router.delete('/delete/:id', (req, res) => {
-	Post.remove({_id: req.params.id}, (err, result) => {
+router.post('/delete', (req, res) => {
+	Post.remove({_id: req.body.id}, (err, result) => {
 		if (err) return err;
-		res.redirect(req.get('referer'));
+		res.end();
 	})
 });
 
