@@ -28,71 +28,77 @@
 			</ul>
 			<%_ var imgSrc = !icon_src ? "/img/default.png" : "/profile/u/" + icon_src.filename _%>
 			<div class="icon-container"><img style="width: 100%; height:100%" src="<%= imgSrc %>"></div>
-		<%_ } _%>
 
-		<div class="blog" style="margin-top: 100px; width: 100%; padding: 20px; background-color: rgba(0, 0, 0, .5);">
-			<h1>B L O G</h1>
-			<form class="form-group" id="new_post" method="POST" action="/blog/post">
-				<label class="sr-only">Title</label>
-				<input class="form-control details" type="text" id="title" name="title" placeholder="Title (optional)">
-				
-				<label class="sr-only">Text body</label>
-				<textarea class="form-control details" type="text" id="textbody" name="textbody" placeholder="What's on your mind?"></textarea>
-				
-				<label class="sr-only">POST</label>
-				<input class="form-control submit" type="submit" value="Post">
-			</form>
+			<div class="blog" style="margin-top: 100px; width: 100%; padding: 20px; background-color: rgba(0, 0, 0, .5);">
+				<h1>B L O G</h1>
+				<form class="form-group" id="new_post" method="POST" action="/blog/post">
+					<label class="sr-only">Title</label>
+					<input class="form-control details" type="text" id="title" name="title" placeholder="Title (optional)">
 
-			<div class="post_container">
-			<%_ if (posts && posts.length) { _%>
-				<%_ posts.forEach(post => { _%>
-					<div class="post">
-						<hr>
-						<%_ if (post.title) { _%>
-							<h2><%= post.title %></h2>
-						<%_ } _%>
-						<div class="post_body">
-							<%_ if (post.textbody.includes('\n')) { _%>
-								<%_ let l = post.textbody.split('\n') _%>
-								<%_ l.forEach((line, i) => { _%>
-									<%= line %>
-									<%_ if (i !== l.length-1) { _%><br><%_ } _%>
-								<%_ }) _%>
-							<%_ } else { _%>
-								<p><%= post.textbody %></p>
+					<label class="sr-only">Text body</label>
+					<textarea class="form-control details" type="text" id="textbody" name="textbody" placeholder="What's on your mind?"></textarea>
+
+					<label class="sr-only">Tags</label>
+					<input class="form-control details" type="text" id="tags" name="tags" placeholder="Tags (separate each with a comma)"></input>
+
+					<label class="sr-only">POST</label>
+					<input class="form-control submit" type="submit" value="Post">
+				</form>
+
+				<div class="post_container">
+				<%_ if (posts && posts.length) { _%>
+					<%_ posts.forEach(post => { _%>
+						<div class="post">
+							<hr>
+							<%_ if (post.title) { _%>
+								<h2><%= post.title %></h2>
 							<%_ } _%>
+							<div class="post_body">
+								<%_ if (post.textbody.includes('\n')) { _%>
+									<%_ let l = post.textbody.split('\n') _%>
+									<%_ l.forEach((line, i) => { _%>
+										<%= line %>
+										<%_ if (i !== l.length-1) { _%><br><%_ } _%>
+									<%_ }) _%>
+								<%_ } else { _%>
+									<p><%= post.textbody %></p>
+								<%_ } _%>
+							</div>
+							<%_ var dd = d => { return d < 10 ? '0'+d : d } _%>
+							<%_ var c = post.created_at _%>
+							<%_ var u = post.updated_at _%>
+							<%_ var edited = c.toString() !== u.toString() _%>
+							<div class="post_timestamp">
+								<%_ if (post.tags.length) { _%>
+									<span class="tags">Tags: <%= "#" + (post.tags.length > 1 ? post.tags.join(", #") : post.tags.join()) %></span><br>
+								<%_ } _%>
+								<span class="post_date"><%= dd(c.getDate()) +"/"+ dd(c.getMonth()+1) +"/"+ c.getFullYear() +", "+ dd(c.getHours()) +":"+ dd(c.getMinutes()) +":"+ dd(c.getSeconds()) + " (" + timelength(c.getTime()) + ")" %></span><br>
+								<%_ if (edited) { _%>
+									<span class="edited_date">Edited: <%= dd(u.getDate()) +"/"+ dd(u.getMonth()+1) +"/"+ u.getFullYear() +", "+ dd(u.getHours()) +":"+ dd(u.getMinutes()) +":"+ dd(u.getSeconds()) %></span>
+								<%_ } _%>
+							</div>
+							<div class="post_footer">
+								<button class="footer-button edit" id="<%= post._id %>" data-toggle="modal" data-target="#edit_blogpost">&#128394;</button>&nbsp;
+								<button class="footer-button delete" id="<%= post._id %>">&times;</button>
+							</div>
 						</div>
-						<%_ var dd = d => { return d < 10 ? '0'+d : d } _%>
-						<%_ var c = post.created_at _%>
-						<%_ var u = post.updated_at _%>
-						<%_ var edited = c.toString() !== u.toString() _%>
-						<div class="post_timestamp">
-							<span class="post_date"><%= dd(c.getDate()) +"/"+ dd(c.getMonth()+1) +"/"+ c.getFullYear() +", "+ dd(c.getHours()) +":"+ dd(c.getMinutes()) +":"+ dd(c.getSeconds()) %></span><br>
-							<%_ if (edited) { _%>
-								<span class="edited_date">Edited: <%= dd(u.getDate()) +"/"+ dd(u.getMonth()+1) +"/"+ u.getFullYear() +", "+ dd(u.getHours()) +":"+ dd(u.getMinutes()) +":"+ dd(u.getSeconds()) %></span>
-							<%_ } _%>
-						</div>
-						<div class="post_footer">
-							<button class="footer-button edit" id="<%= post._id %>" data-toggle="modal" data-target="#edit_blogpost">&#128394;</button>&nbsp;
-							<button class="footer-button delete" id="<%= post._id %>">&times;</button>
-						</div>
-					</div>
-				<%_ }) _%>
-			<%_ } else { _%>
-				<p>No posts yet...</p>
-			<%_ } _%>
+					<%_ }) _%>
+				<%_ } else { _%>
+					<p>No posts yet...</p>
+				<%_ } _%>
+				</div>
 			</div>
-		</div>
 
-		<div style="margin-top: 100px; width: 100%; padding: 20px; background-color: rgba(0, 0, 0, .5);">
-			<form method="post" action="/mail/send">
-				<input type="text" name="name" placeholder="Name"><br><br>
-				<input type="email" name="email" placeholder="Email"><br><br>
-				<input type="text" name="subject" placeholder="Subject"><br><br>
-				<textarea name="message" placeholder="Message"></textarea><br><br>
-				<input type="submit" name="submit" value="Send message">
-			</form>
-		</div>
+			<div style="margin-top: 100px; width: 100%; padding: 20px; background-color: rgba(0, 0, 0, .5);">
+				<form method="post" action="/mail/send">
+					<input type="text" name="name" placeholder="Name"><br><br>
+					<input type="email" name="email" placeholder="Email"><br><br>
+					<input type="text" name="subject" placeholder="Subject"><br><br>
+					<textarea name="message" placeholder="Message"></textarea><br><br>
+					<input type="submit" name="submit" value="Send message">
+				</form>
+			</div>
+		<%_ } _%>
 
 	</section>
 

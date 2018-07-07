@@ -2,7 +2,7 @@ const multer = require('multer');
 const path = require('path');
 const mongoose = require('mongoose');
 const config = require('./config');
-const clearAll = config.clearAll;
+const clearance = config.clearance;
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const crypto = require('crypto');
@@ -25,7 +25,7 @@ const storage = new GridFsStorage({
 		var name = "i" + req.user._id.toString().slice(-5);
 
 		// delete icon (if not default) before upload
-		clearAll(req, gfs, name, null, null, function(err) {
+		clearance(req, gfs, name, null, null, function(err) {
 			if (err) return err;
 		});
 

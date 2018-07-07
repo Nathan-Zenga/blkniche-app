@@ -10,7 +10,7 @@ module.exports = {
 			res.redirect('/');
 		}
 	},
-	clearAll: (req, gfs, name, User, Post, cb) => {
+	clearance: (req, gfs, name, User, Post, cb) => {
 
 		if (!name || typeof name == "undefined") {
 			name = "i" + req.user._id.toString().slice(-5);

@@ -7,7 +7,7 @@ var express = require('express'),
 	Grid = require('gridfs-stream'),
 	User = require('../models/user'),
 	Post = require('../models/post'),
-	clearAll = require('../config/config').clearAll;
+	clearance = require('../config/config').clearance;
 
 let conn = mongoose.connection;
 let gfs; // init gfs
@@ -147,7 +147,7 @@ router.delete('/delete', function(req, res) {
 			return res.redirect(req.get('referer'));
 		} else {
 			// remove custom icon before deleting account
-			clearAll(req, gfs, null, User, Post, function(err) {
+			clearance(req, gfs, null, User, Post, function(err) {
 				if (err) return err;
 				req.flash('success_msg', 'Account successfully deleted');
 				res.redirect('/');

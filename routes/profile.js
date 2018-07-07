@@ -45,14 +45,56 @@ router.get('/', auth, function(req, res){
 				title: 'Profile',
 				pageClass: 'profile',
 				icon_src: currentIcon(),
-				posts: posts
+				posts: posts,
+				timelength: (timestamp) => {
+					const second = 1000;
+					const minute = second * 60;
+					const hour = minute * 60;
+					const day = hour * 24;
+					const week = day * 7;
+					const month = week * 30;
+					const year = month * 12;
+					var time_diff = Date.now() - timestamp;
+					var length = "Just now";
+
+					if (time_diff > second) {
+						length = Math.floor(time_diff / second) + " seconds ago";
+						if (Math.floor(time_diff / second) <= 1) length = length.replace("s ago", " ago");
+					}
+					if (time_diff > minute) {
+						length = Math.floor(time_diff / minute) + " minutes ago";
+						if (Math.floor(time_diff / minute) <= 1) length = length.replace("s ago", " ago");
+					}
+					if (time_diff > hour) {
+						length = Math.floor(time_diff / hour) + " hours ago";
+						if (Math.floor(time_diff / hour) <= 1) length = length.replace("s ago", " ago");
+					}
+					if (time_diff > day) {
+						length = Math.floor(time_diff / day) + " days ago";
+						if (Math.floor(time_diff / day) <= 1) length = length.replace("s ago", " ago");
+					}
+					if (time_diff > week) {
+						length = Math.floor(time_diff / week) + " weeks ago";
+						if (Math.floor(time_diff / week) <= 1) length = length.replace("s ago", " ago");
+					}
+					if (time_diff > month) {
+						length = Math.floor(time_diff / month) + " months ago";
+						if (Math.floor(time_diff / month) <= 1) length = length.replace("s ago", " ago");
+					}
+					if (time_diff > year) {
+						length = Math.floor(time_diff / year) + " years ago";
+						if (Math.floor(time_diff / year) <= 1) length = length.replace("s ago", " ago");
+					}
+
+					return length
+				}
 			});
 		});
 	});
 
 });
 
-router.post('/u/upload/icon', (req, res, next) => {
+router.post('/u/upload/icon', auth, (req, res, next) => {
 
 	var icon = upload.single('icon'); // field name
 
@@ -94,7 +136,7 @@ router.get('/u/:filename', (req, res) => {
 });
 
 // Delete profile icon process
-router.delete('/u/remove/icon/:id', (req, res) => {
+router.delete('/u/remove/icon/:id', auth, (req, res) => {
 	gfs.remove({ _id: req.params.id, root: 'profile_icons' }, (err, gridStore) => {
 		if (err) {
 			return res.status(404).json({ err: err });

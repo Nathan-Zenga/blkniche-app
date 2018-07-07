@@ -4,7 +4,8 @@ var mongoose = require('mongoose');
 var PostSchema = mongoose.Schema({
 	userId: String,
 	title: String,
-	textbody: String
+	textbody: String,
+	tags: Array
 }, {
 	timestamps: {
 		createdAt: 'created_at',
@@ -17,7 +18,3 @@ var PostSchema = mongoose.Schema({
 });
 
 module.exports = mongoose.model('BlogPost', PostSchema);
-
-module.exports.createPost = function(newPost, callback) {
-	newPost.save(callback);
-}
