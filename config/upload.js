@@ -2,7 +2,7 @@ const multer = require('multer');
 const path = require('path');
 const mongoose = require('mongoose');
 const config = require('./config');
-const gfsRemove = config.gfsRemove;
+const clearAll = config.clearAll;
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const crypto = require('crypto');
@@ -25,7 +25,9 @@ const storage = new GridFsStorage({
 		var name = "i" + req.user._id.toString().slice(-5);
 
 		// delete icon (if not default) before upload
-		gfsRemove(req, null, gfs, name);
+		clearAll(req, gfs, name, null, null, function(err) {
+			if (err) return err;
+		});
 
 		return new Promise((resolve, reject) => {
 			crypto.randomBytes(16, (err, buf) => {
