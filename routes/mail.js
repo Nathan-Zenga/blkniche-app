@@ -1,9 +1,10 @@
 var express = require('express'),
 	router = express.Router(),
+	auth = require('../config/config').ensureAuthenticated,
 	nodemailer = require('nodemailer'),
 	config = require('../config/config');
 
-router.post('/send', function(req, res) {
+router.post('/send', auth, function(req, res) {
 
 	let transporter = nodemailer.createTransport({
 		service: 'gmail',

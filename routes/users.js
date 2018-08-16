@@ -5,6 +5,7 @@ var express = require('express'),
 	passport = require('passport'),
 	mongoose = require('mongoose'),
 	Grid = require('gridfs-stream'),
+	auth = require('../config/config').ensureAuthenticated,
 	User = require('../models/user'),
 	Post = require('../models/post'),
 	clearance = require('../config/config').clearance;
@@ -138,7 +139,7 @@ router.get('/logout', function(req, res){
 
 
 // Account Deletion process
-router.delete('/delete', function(req, res) {
+router.delete('/delete', auth, function(req, res) {
 
 	User.comparePassword(req.body.password, req.user.password, function(err, isMatch){
 		if(err) throw err;
@@ -156,7 +157,7 @@ router.delete('/delete', function(req, res) {
 	});
 });
 
-router.post('/update', function(req, res) {
+router.post('/update', auth, function(req, res) {
 
 	// prepare objects for update operation
 	var updates = {};
