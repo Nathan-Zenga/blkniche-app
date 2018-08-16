@@ -52,7 +52,7 @@ router.get('/', auth, function(req, res){
 					const hour = minute * 60;
 					const day = hour * 24;
 					const week = day * 7;
-					const month = week * 30;
+					const month = day * 30;
 					const year = month * 12;
 					var time_diff = Date.now() - timestamp;
 					var length = "Just now";

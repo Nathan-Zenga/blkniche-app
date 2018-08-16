@@ -24,14 +24,14 @@ router.post('/', auth, (req, res) => {
 	res.redirect(req.get('referer'));
 });
 
-router.post('/delete', (req, res) => {
+router.post('/delete', auth, (req, res) => {
 	Post.remove({_id: req.body.id}, (err, result) => {
 		if (err) return err;
 		res.end();
 	})
 });
 
-router.post('/update/:id', (req, res) => {
+router.post('/update/:id', auth, (req, res) => {
 	Post.findById(req.params.id, (err, post) => {
 		if (err) return err;
 
