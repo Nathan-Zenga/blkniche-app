@@ -7,7 +7,6 @@ html, body {
 	font-weight: lighter;
 	font-size: 1em;
 	color: black;
-	width: 100%; height: 100%;
 }
 
 p {
@@ -25,49 +24,100 @@ a:hover {
 	color: gold;
 }
 
-*[class*="col"],
-.container-fluid {
+*[class*="col"] {
 	padding: 0;
 }
 
-.container-fluid,
-section {
-	position: relative;
+.dt-view {
+	display: none;
 }
 
-nav,
-nav div,
-.container-fluid {
-	position: relative;
-	height: 100%
+@media (min-width: 768px) {
+	.dt-view {
+		display: block;
+	}
+
+	.mb-view {
+		display: none;
+	}
+}
+
+.blkniche .carousel-control {
+	background-image: none;
 }
 
 header,
 footer {
+	position: absolute;
 	width: 100%;
-	height: 40px;
-	font-weight: bold;
-	color: white;
+	padding: 20px 0;
 	z-index: 101;
 }
 
 header {
-	position: absolute;
+	width: 100%;
+	text-align: center;
+	color: white
 }
 
-header > .inner-header {
+header a {
+	transition: 0s;
+}
+
+header nav {
+	position: relative;
+}
+
+@media (min-width: 768px) {
+	header nav {
+		left: 50%;
+		width: 50%;
+		-webkit-transform: translateX(-50%);
+		transform: translateX(-50%);
+	}
+}
+
+header .menu-icon {
+	position: absolute;
+	display: none;
+	right: 0;
+	padding: 15px 18px;
+	background-color: inherit;
+	transition: .4s;
+}
+
+header .menu-icon:hover,
+header .menu-icon.is-active:hover {
+	opacity: 1;
+}
+
+header .menu-icon.is-active {
+	background-color: transparent;
+}
+
+header .menu-icon .hamburger-box {
+	width: 24px;
+	height: 28px;
+}
+
+header .menu-icon .hamburger-inner:before,
+header .menu-icon .hamburger-inner:after,
+header .menu-icon .hamburger-inner {
+	width: 100%;
+	background-color: white!important;
+}
+
+
+header nav .link {
+	display: block;
+}
+
+header .inner-header.fixed {
+	position: fixed;
 	top: 0;
 	width: 100%;
-	height: 40px;
 	background-color: rgba(0,0,0,.5);
-	box-shadow: 0 0 10px 10px rgba(0,0,0,.5);
-	transition: .5s box-shadow;
-	z-index: 102;
-}
-
-header > .inner-header.fixed {
-	position: fixed;
-	animation: fadeIn .4s 1;
+	animation: fadeIn .4s 1 backwards;
 }
 
 @keyframes fadeIn {
@@ -75,99 +125,97 @@ header > .inner-header.fixed {
 	to {opacity: 1}
 }
 
-header #header-logo img {
-	position: relative;
-	left: 50%;
-	transform: translateX(-50%);
-	height: 100%;
-	-webkit-filter: invert(100%);
-	filter: invert(100%);
+header .inner-header.fixed .menu-icon {
+	display: block;
 }
 
-header #header-logo p {
-	position: relative;
-	display: none;
-	top: 0;
+header .inner-header.fixed .link-group {
+	display: none
 }
 
-@media (min-width: 768px) {
-	header > .inner-header {
-		box-shadow: 0 0 10px 7px rgba(0,0,0,.5);
+header .inner-header.fixed a {
+	padding: 20px 0;
+}
+
+@media (max-width: 767px) {
+	header .inner-header.fixed .link-group {
+		margin-top: 60px;
 	}
 
-	header #header-logo p {
-		display: inline-block;
-	}
-
-	header #header-logo img {
-		left: 0;
-		transform: translateX(0);
+	header .inner-header.fixed .link {
+		width: 100%;
+		letter-spacing: 2.5px;
 	}
 }
 
-header .col-xs-6,
-footer .col-xs-6 {
-	display: inline-block;
-	height: 100%;
+footer {
+	bottom: 0;
+	background-color: rgba(0,0,0,.5);
+	font-weight: bold;
+	color: white;
 }
 
-header .col-xs-6 > p,
 footer .col-xs-6 > p {
 	text-transform: uppercase;
 }
 
-nav div p {
+footer #copyright {
 	position: relative;
-	top: 50%;
-	transform: translateY(-50%);*/
-	padding: .5em 0;
+	padding: 0 10px;
+	font-size: .75em;
+	text-align: right;
+	text-transform: uppercase;
+}
+
+footer .socials .icon a {
+	position: relative;
+	display: block;
 	text-align: center;
 }
 
-@media (max-width: 760px) {
-	nav .link-group {
-		position: fixed;
-		display: none;
-		left: 0;
-		height: calc(100% - 40px);
-		width: 100%;
-	}
-}
-
-nav .link {
-	display: none;
-	box-sizing: content-box;
-	background-color: rgba(0,0,0,.5);
-	height: 25%;
+.socials.fixed {
+	position: fixed;
+	left: 50%;
+	bottom: 0;
+	width: 100%;
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%);
+	height: auto;
+	padding: 20px 0;
 }
 
 @media (min-width: 768px) {
-	nav .link {
-		display: block;
-		background-color: transparent;
-		height: 100%;
+	footer .socials .icon a {
+		font-size: 1.5em;
 	}
 
-	nav #menu {
-		display: none;
+	footer #copyright {
+		transform: translateY(50%);
 	}
+
+	.socials.fixed {
+		width: 50%;
+	}
+}
+
+section {
+	position: relative;
+}
+
+main {
+	position: relative;
+	height: 100%
 }
 
 #toTop {
 	position: fixed;
-	left: 100%; bottom: 40px;
-	background-color: aqua;
-	border-radius: 10px 0 0 10px;
+	left: 100%; bottom: 0;
+	background-color: rgba(0,0,0,.5);
+	padding: 17px 20px;
+	color: white;
 	cursor: pointer;
-	transition: .5s;
+	transition: .5s transform;
 	z-index: 103;
-}
-
-#toTop p {
-	position: relative;
-	text-align: center;
-	font-weight: bold;
-	padding: .5em;
 }
 
 .modal .modal-content {
@@ -271,7 +319,7 @@ nav .link {
 }
 
 section {
-	min-height: 100%;
+	min-height: 100vh;
 	z-index: 1;
 }
 
@@ -298,14 +346,6 @@ section .textbox table {
 section .textbox td {
 	text-align: center;
 	padding: 0 30px;
-}
-
-section:nth-child(odd) .textbox {
-	display: none;
-}
-
-section:nth-child(odd) .textbox.mobile {
-	display: block
 }
 
 section .carousel-inner,
@@ -338,18 +378,6 @@ section .img {
 	background-repeat: no-repeat;
 }
 
-@media (min-width: 768px) {
-	
-	section:nth-child(odd) .textbox {
-		display: block;
-	}
-
-	section:nth-child(odd) .textbox.mobile {
-		display: none;
-	}
-
-}
-
 .btn-primary,
 .btn-primary:hover,
 .btn-primary:focus {
@@ -366,6 +394,8 @@ section .img {
 	position: absolute;
 	background-size: cover;
 	background-position: center;
+	-webkit-filter: contrast(.5);
+	filter: contrast(.5);
 }
 
 @media (min-width: 768px) {
@@ -399,49 +429,6 @@ section.music button:focus {
 
 section.music button:active {
 	filter: brightness(.75);
-}
-
-footer {
-	position: absolute;
-	margin-top: -40px;
-	background-color: rgba(0,0,0,.5);
-	box-shadow: 0 0 10px 10px rgba(0,0,0,.5);
-}
-
-footer .col-xs-6:nth-child(even) p {
-	position: relative;
-	top: 50%;
-	transform: translateY(-50%);
-	padding: 0 10px;
-	font-size: .75em;
-	text-align: right;
-}
-
-footer .socials,
-footer .socials > div {
-	height: 100%;
-}
-
-footer .socials a {
-	position: relative;
-	display: block;
-	text-align: center;
-}
-
-.socials.fixed {
-	position: fixed;
-	height: auto;
-	bottom: 20px;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 50%;
-	text-shadow: 0 0 10px black, 0 0 10px black;
-}
-
-@media (min-width: 768px) {
-	footer .socials a {
-		font-size: 1.5em;
-	}
 }
 
 .icon-container {
