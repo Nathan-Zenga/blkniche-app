@@ -25,27 +25,29 @@
 	filter: invert(100%);
 }
 .back {
-	transform: translateZ(-100px) rotateY(180deg);
-	background-image: url("../img/logo/logo 3.png");
+	/*transform: translateZ(-100px) rotateY(180deg);*/
+	transform: rotateY(-90deg) translateX(-50%) rotateY(270deg);
+	background-image: url("/img/logo/logo 3.png");
 }
 .front {
-	transform: translateZ(100px);
-	background-image: url("../img/logo/logo 3.png");
+	/*transform: translateZ(100px);*/
+	transform: rotateY(-90deg) translateX(50%) rotateY(90deg);
+	background-image: url("/img/logo/logo 3.png");
 }
 .right {
-	transform: rotateY(-270deg) translateX(100px);
+	transform: rotateY(-270deg) translateX(50%);
 	transform-origin: top right;
 }
 .left {
-	transform: rotateY(270deg) translateX(-100px);
+	transform: rotateY(270deg) translateX(-50%);
 	transform-origin: center left;
 }
 .top {
-	transform: rotateX(-90deg) translateY(-100px);
+	transform: rotateX(-90deg) translateY(-50%);
 	transform-origin: top center;
 }
 .bottom {
-	transform: rotateX(90deg) translateY(100px);
+	transform: rotateX(90deg) translateY(50%);
 	transform-origin: bottom center;
 }
 @keyframes spin {
