@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html class="<%= pageClass %> page" lang="en">
+<html class="blkniche <%= pageClass %> page" lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><%= title %> /// BLK.NICHÈ</title>
-	<link rel="stylesheet" type="text/css" href="/css/maincss.css">
+	<link rel="stylesheet" type="text/css" href="/css/hamburgers.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/logo-cube.css">
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
 	<script src="/js/libs/jquery.min.js"></script>
 	<script src="/js/libs/bootstrap.min.js"></script>
 	<script src="/js/libs/detect.min.js"></script>
+	<script src="/js/libs/jquery.easing.1.3.js"></script>
 	<script src="/js/detect-config.min.js"></script>
-	<script src="/js/mainjs.min.js"></script>
+	<script src="/js/src/main.js"></script>
 	<%_ if(pageClass == "profile") { _%>
 	<script>
 		$(() => {
@@ -63,68 +65,65 @@
 
 <body>
 
-<header>
-	<div class="inner-header">
-		<a><div class="col-xs-6" id="header-logo">
-			<img src="/img/logo/logo 3.png"><p>Music Group</p>
-		</div></a>
-		
-		<nav class="col-xs-6">
-			<a><div id="menu"><p>Menu</p></div></a>
-			<div class="link-group">
-				<a><div class="col-sm-3 link" id="music"><p>Music</p></div></a>
-				<a><div class="col-sm-3 link" id="videos"><p>Videos</p></div></a>
-				<a><div class="col-sm-3 link" id="info"><p>Info</p></div></a>
-				<%_ if (user) { _%>
-				<a href="/profile"><div class="col-sm-3 link" id="profile"><p><i class="fa fa-user-circle-o"></i></p></div></a>
-				<a href="/users/logout"><div class="col-sm-3 link" id="logout"><p>Logout</p></div></a>
-				<%_ } else { _%>
-				<a><div class="col-sm-3 link" id="sign-up" data-toggle="modal" data-target="#registration"><p>Sign Up</p></div></a>
-				<%_ } _%>
-			</div>
-		</nav>
-	</div>
-</header>
+<div id="toTop"><i class="glyphicon glyphicon-chevron-up"></i></div>
 
-<div id="toTop"><p><span class="glyphicon glyphicon-chevron-up"></span></p></div>
+<%_ if (user && pageClass == "profile") { _%>
 
-<%_ if (user) { _%>
-<% include modals/update %>
-<% include modals/delete_account %>
+	<% include modals/update %>
+	<% include modals/delete_account %>
+	<% include modals/edit_blogpost %>
 
-<%_ if (pageClass == "profile") { _%>
-<% include modals/edit_blogpost %>
-
-<%_ }} else if (typeof token !== 'undefined') { _%>
-<% include modals/reset_password %>
-<script>
-	$('#reset_password_form').modal({
-		show: true,
-		backdrop: 'static',
-		keyboard: false
-	});
-</script>
-
+<%_ } else if (typeof token !== 'undefined') { _%>
+	<% include modals/reset_password %>
+	<script>
+		$('#reset_password_form').modal({
+			show: true,
+			backdrop: 'static',
+			keyboard: false
+		});
+	</script>
 <%_ } else { _%>
-<% include modals/register %>
+	<% include modals/register %>
 <%_ } _%>
 
-<div class="row" style="position: fixed; top: 50px; right: 20px; margin: 0; z-index: 1000">
-	<%_ if (success_msg.length) { _%>
-		<div class="alert alert-success"><%= success_msg %></div>
-	<%_ } _%>
+<%_ if (success_msg.length || error_msg.length || error.length) { _%>
+	<div class="row" style="position: fixed; top: 50px; right: 20px; margin: 0; z-index: 1000">
+		<%_ if (success_msg.length) { _%>
+			<div class="alert alert-success"><%= success_msg %></div>
+		<%_ } _%>
 
-	<%_ if (error_msg.length) { _%>
-		<div class="alert alert-danger"><%= error_msg %></div>
-	<%_ } _%>
+		<%_ if (error_msg.length) { _%>
+			<div class="alert alert-danger"><%= error_msg %></div>
+		<%_ } _%>
 
-	<%_ if (error.length) { _%>
-		<div class="alert alert-danger"><%= error %></div>
-	<%_ } _%>
-</div>
+		<%_ if (error.length) { _%>
+			<div class="alert alert-danger"><%= error %></div>
+		<%_ } _%>
+	</div>
+<%_ } _%>
 
 
 
 
 <!-- Main inner body of webpage -->
-<div class="container-fluid">
+<main>
+	<header>
+		<div class="inner-header">
+			<div class="menu-icon hamburger hamburger--squeeze" id="menu">
+				<span class="hamburger-box"><span class="hamburger-inner"></span></span>
+			</div>
+			<nav>
+				<div class="link-group">
+					<a class="col-xs-3 link" id="music">Music</a>
+					<a class="col-xs-3 link" id="videos">Videos</a>
+					<a class="col-xs-3 link" id="info">Info</a>
+					<%_ if (user) { _%>
+					<a class="col-xs-3 link" id="profile" href="/profile"><i class="fa fa-user-circle-o"></i></a>
+					<a class="col-xs-3 link" id="logout" href="/users/logout">Logout</a>
+					<%_ } else { _%>
+					<a class="col-xs-3 link" id="log-in" data-toggle="modal" data-target="#registration">Log In</a>
+					<%_ } _%>
+				</div>
+			</nav>
+		</div>
+	</header>
