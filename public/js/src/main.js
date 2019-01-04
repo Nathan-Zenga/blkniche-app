@@ -12,17 +12,21 @@ $(function() {
 	} catch(err) {
 		console.log(err)
 	}
-	
+
 	// TEST (for each section bg): generate random colours
 	function randomColour() {
 		var arr = [];
 
-		for (var i = 0; i < 3; i++) {
-			arr.push(Math.floor(Math.random() * 255));
-		}
+		for (var i = 0; i < 3; i++) arr.push(Math.round(Math.random() * 255));
 
 		arr = "rgb(" + arr.join(",") + ")";
 		return arr;
+	}
+
+	function smoothScrollTo(offsetTop) {
+		$("html, body").stop().animate({
+			scrollTop: offsetTop
+		}, 700, "easeInOutExpo")
 	}
 
 	// change div.textbox inner text whenever carousel caption changes
@@ -46,10 +50,10 @@ $(function() {
 		});
 	}
 
-	// hide/show contents when scrolling up/down the page
+	// change state of contents when scrolling the page
 	function toggleOnScroll(){
 
-		// toggle toTop button display
+		// toggle toTop button visibility
 		if ( window.pageYOffset > 40 ) {
 			$("#toTop").css({transform: "translateX(-100%)"});
 			if (location.pathname === '/') $(".socials").removeClass("fixed");
@@ -58,9 +62,16 @@ $(function() {
 			if (location.pathname === '/') $(".socials").addClass("fixed");
 		}
 
+		// position toTop button on top of footer if they visually overlap
+		let windowOffsetBottom = window.pageYOffset + window.innerHeight;
+		let footerOffsetTop = $("footer").offset().top;
+		let bottom = windowOffsetBottom >= footerOffsetTop ? (window.innerHeight - ($("footer").offset().top - window.pageYOffset))+"px" : "";
+		$("#toTop").css("bottom", bottom);
+
 		try {
 			// fix header position to viewport when scrolling past second section
-			if ( window.pageYOffset > $("section").eq(1).offset().top - 100 ) {
+			let top = $("section").length > 1 ? $("section").eq(1).offset().top - 100 : parseInt($("header").css("height"));
+			if ( window.pageYOffset > top ) {
 				$(".inner-header").addClass("fixed");
 			} else {
 				$(".inner-header").removeClass("fixed");
@@ -78,7 +89,7 @@ $(function() {
 			borderBottom: ""
 		});
 
-		if (window.innerWidth > 768) {
+		if (window.innerWidth > 767) {
 			$("section").each(function(i){
 				if ( $(window).scrollTop() >= $(this).offset().top - 100 ) {
 
@@ -102,10 +113,31 @@ $(function() {
 		}
 	}
 
+	var togglePlayback = function() {
+		try {
+			var aboveSection = window.pageYOffset < $("section.videos").offset().top - $("section.videos").height()/4;
+			var belowSection = window.pageYOffset >= $("section.videos").offset().top + $("section.videos").height()/2;
 
-	toggleOnScroll();
-	markLink();
+			if ( aboveSection || belowSection ) {
+				// stop video once scrolled outside the section region
+				if ( $(".videos .item.active video").get(0).playing ) {
+					$(".videos .item.active video").get(0).pause();
+					$(".videos .item.active video").get(0).currentTime = 0;
+				}
+			} else {
+				// play video if within section
+				$(".videos .item.active video").get(0).play();
+			}
+		} catch(err) {
+			console.log(err)
+		}
+	}
 
+	toggleOnScroll(); markLink(); togglePlayback();
+
+	$(window).scroll(markLink);
+	$(window).scroll(toggleOnScroll);
+	$(window).scroll(togglePlayback);
 
 	// display text from carousel captions into .textbox element
 	$(".musicTitle").text( $(".music .item.active .carousel-caption-title").text() );
@@ -117,9 +149,7 @@ $(function() {
 
 	// overriding default method actions when displaying a bootstrap modal
 	$(".modal").on('shown.bs.modal', function() {
-		$("body, .modal").css({
-			paddingRight: ""
-		});
+		$("body, .modal").css("padding-right", "");
 	});
 
 	// bg auto-playing slideshow
@@ -141,62 +171,27 @@ $(function() {
 		});
 	});
 
-	// Mobile view: show menu options on click.
-	// Increments delay time through each menu link before fading in, using function variable 'i'
 	$("#menu").click(function() {
-		$(".link-group").fadeToggle(function(){
-			if ($(this).css("display") == "none") {
-				$(this).css("display", "");
-			}
+		$(this).toggleClass("is-active");
+		$(".link-group").stop().slideToggle(function() {
+			if ($(this).css("display") == "none") $(this).css("display", "")
 		});
-
-		if ($(".link").css("display") == "none") {
-			$(".inner-header").css("box-shadow", "none");
-
-			// fade in each link (almost) sequentially
-			$(".link").each(function(i) {
-				$(this).delay(i * 200).fadeIn();
-			})
-		} else {
-			$(".inner-header").css("box-shadow", "");
-
-			// fade out the links + set prop to default value
-			$(".link").fadeOut(function(){
-				$(this).css("display","")
-			})
-		}
 	});
 
 	// scroll to section corresponding to chosen nav link
 	$(".link").click(function() {
-		if (window.innerWidth <= 768) {
-			$("#menu").click()
-		}
+		if (window.innerWidth <= 768 && $("#menu").hasClass("is-active")) $("#menu").click();
 
 		try {
 			var page = $(this).attr("id");
-			$("html, body").stop().animate({
-				scrollTop: $("section." + page).offset().top
-			}, 700)
+			smoothScrollTo($("section." + page).offset().top);
 		} catch(err) {
 			console.log("Section doesn't exist OR registration modal is now open")
 		}
 	});
 	
 	$("#toTop, #header-logo").click(function() {
-		if (this.id === 'header-logo' && !( $('.home, .index').length )) {
-			location.pathname = '/'
-		} else {
-			$("html, body").stop().animate({
-				scrollTop: 0
-			}, 700);
-			$(".inner-header").css("box-shadow", ""); // for if link-group is visible
-			if (window.innerWidth <= 768) {
-				$(".link-group, .link").fadeOut(function(){
-					$(this).css("display", "");
-				});
-			}
-		}
+		(this.id === "header-logo" && location.pathname !== "/") ? location.pathname = "/" : smoothScrollTo(0);
 	});
 
 	// Activating the carousel (disabling automatic transition)
@@ -248,14 +243,14 @@ $(function() {
 
 	// on page load: plays current video if section is shown within the viewport
 	try {
-		if ( window.pageYOffset > $("section.videos").offset().top - $("section.videos").height()/4 &&
-			 window.pageYOffset <= $("section.videos").offset().top + $("section.videos").height()/2 &&
-			 !$(".videos .item.active video").get(0).playing ) {
+		var boundaryBottom = window.pageYOffset <= $("section.videos").offset().top + $("section.videos").height()/2;
+		var boundaryTop = window.pageYOffset > $("section.videos").offset().top - $("section.videos").height()/4;
 
+		if ( boundaryTop && boundaryBottom && !$(".videos .item.active video").get(0).playing ) {
 			$(".videos .item.active video").get(0).play() // play current video if conditions are met
 		}
 	} catch(err) {
-		return 0
+		console.log(err)
 	}
 
 	$("#signup_body .submit").click(function(e) {
@@ -289,11 +284,6 @@ $(function() {
 					$("#signup_body .result").html("<p>"+result.success_msg+"</p>");
 					$details.val("");
 				}
-			},
-			error: function(jqHXR, status, err) {
-				console.log("ERROR: " + err);
-				console.log("jqHXR: " + jqHXR);
-				console.log("status: " + status);
 			}
 		});
 	});
@@ -420,32 +410,6 @@ $(function() {
 
 	$("#forgot_pass_link").click(function(){
 		$("#registration .tabs li:last").find("a").click();
-	});
-
-
-	$(window).scroll(function() {
-
-		toggleOnScroll();
-		markLink();
-
-		// stop video once scrolled outside the region of videos section
-		// else, play video
-		try {
-			if ( window.pageYOffset < $("section.videos").offset().top - $("section.videos").height()/4 ||
-				 window.pageYOffset >= $("section.videos").offset().top + $("section.videos").height()/2 ) {
-				
-				if ( $(".videos .item.active video").get(0).playing ) {
-					$(".videos .item.active video").get(0).pause();
-					$(".videos .item.active video").get(0).currentTime = 0;
-				}
-
-			} else {
-				$(".videos .item.active video").get(0).play();
-			}
-		} catch(err) {
-			return 0
-		}
-
 	});
 
 });
