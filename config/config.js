@@ -1,6 +1,5 @@
 var async = require("async");
 module.exports = {
-	db: 'mongodb://nathanzen:thomas96@ds251737.mlab.com:51737/blacknichedb',
 	ensureAuthenticated: (req, res, next) => {
 		if(req.isAuthenticated()) {
 			return next();

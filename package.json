@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "async": "^2.6.1",
+    "aws-sdk": "^2.399.0",
     "bcryptjs": "*",
     "body-parser": "*",
     "connect-flash": "*",
     "cookie-parser": "^1.4.1",
+    "dotenv": "^6.2.0",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "express-messages": "*",
