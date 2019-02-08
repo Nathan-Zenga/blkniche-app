@@ -1,19 +1,18 @@
 // import modules
-var express = require('express'),
-	cookieParser = require('cookie-parser'),
-	bodyParser = require('body-parser'),
-	path = require('path'), // core module
-	ejs = require('ejs'),
-	expressValidator = require('express-validator'),
-	flash = require('connect-flash'),
-	session = require('express-session'),
-	passport = require('passport'),
-	mongoose = require('mongoose'),
-	methodOverride = require('method-override'),
-	config = require('./config/config'),
-	env = require('./config/env')();
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const path = require('path'); // core module
+const ejs = require('ejs');
+const expressValidator = require('express-validator');
+const flash = require('connect-flash');
+const session = require('express-session');
+const passport = require('passport');
+const mongoose = require('mongoose');
+const methodOverride = require('method-override');
+const config = require('./config/config');
 
-mongoose.connect(env.db);
+mongoose.connect(config.db);
 let conn = mongoose.connection;
 
 // Check connection
