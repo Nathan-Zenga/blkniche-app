@@ -29,7 +29,7 @@ module.exports = {
 								var filename = name + ext;
 								// remove existing icon
 								gfs.remove({ filename: filename, root: 'profile_icons' }, (err, gridStore) => {
-									if (err) return res.status(404).json({ err: err });
+									if (err) return cb(err);
 								});
 							}
 						});
@@ -40,7 +40,7 @@ module.exports = {
 			function(id, done) { // Delete blog posts
 				if (Post && Post != null) {
 					Post.remove({userId: id}, (err, result) => {
-						if (err) return err;
+						if (err) return cb(err);
 					})
 				}
 				done();
@@ -48,7 +48,7 @@ module.exports = {
 			function(done) { // Delete account
 				if (User && User != null) {
 					User.remove({ _id: req.user.id }, (err, result) => {
-						if (err) return err;
+						if (err) return cb(err);
 					})
 				}
 				done('done');
