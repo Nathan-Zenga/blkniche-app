@@ -1,5 +1,7 @@
-var async = require("async");
+const async = require("async");
+const env = require('./env')();
 module.exports = {
+	db: env.db,
 	ensureAuthenticated: (req, res, next) => {
 		if(req.isAuthenticated()) {
 			return next();
