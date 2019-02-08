@@ -1,8 +1,8 @@
 var express = require('express'),
 	router = express.Router(),
-	auth = require('../config/config').ensureAuthenticated,
 	nodemailer = require('nodemailer'),
-	config = require('../config/config');
+	config = require('../config/config'),
+	auth = config.ensureAuthenticated;
 
 router.post('/send', auth, function(req, res) {
 
@@ -11,8 +11,8 @@ router.post('/send', auth, function(req, res) {
 		port: 465,
 		secure: true,
 		auth: {
-			user: 'nathanzenga@gmail.com',
-			pass: config.pass
+			user: 'nznodemailer@gmail.com',
+			pass: 'nodemailer246'
 		},
 		tls: {
 			rejectUnauthorized: false

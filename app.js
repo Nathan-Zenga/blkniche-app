@@ -10,9 +10,10 @@ var express = require('express'),
 	passport = require('passport'),
 	mongoose = require('mongoose'),
 	methodOverride = require('method-override'),
-	config = require('./config/config');
+	config = require('./config/config'),
+	env = require('./config/env')();
 
-mongoose.connect(config.db);
+mongoose.connect(env.db);
 let conn = mongoose.connection;
 
 // Check connection
