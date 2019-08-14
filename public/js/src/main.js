@@ -172,7 +172,7 @@ $(function() {
 	$("#menu").click(function() {
 		$(this).toggleClass("is-active");
 		$(".link-group").stop().slideToggle(function() {
-			if ($(this).css("display") == "none") $(this).css("display", "")
+			if ($(this).css("display") == "none") $(this).css("display", "").removeAttr("style")
 		});
 	});
 
