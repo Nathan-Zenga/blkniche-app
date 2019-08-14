@@ -24,9 +24,7 @@ $(function() {
 	}
 
 	function smoothScrollTo(offsetTop) {
-		$("html, body").stop().animate({
-			scrollTop: offsetTop
-		}, 700, "easeInOutExpo")
+		$("html, body").stop().animate({ scrollTop: offsetTop }, 700, "easeInOutExpo")
 	}
 
 	// change div.textbox inner text whenever carousel caption changes
@@ -301,16 +299,16 @@ $(function() {
 
 		$.ajax({
 			type: 'post',
-			url: '/users/update', 
+			url: '/users/update',
 			contentType: 'application/json',
 			data: JSON.stringify(data),
 			success: function(result, status) {
 				$(".result").empty();
 				if (result.error) {
 					result.error = "<p>" + result.error + "</p>";
-					$("#update-form .result").append(result.error);
-					$("#update-form input[name='old_password']").val("");
-					$("#update-form input[name='new_password']").val("");
+					$("#update_form .result").append(result.error);
+					$("#update_form input[name='old_password']").val("");
+					$("#update_form input[name='new_password']").val("");
 				}
 				else if (result.changed) {
 					var info = '<li>Name: ' + result.name + '</li>' +
@@ -322,6 +320,7 @@ $(function() {
 						$(this).html(info).fadeIn();
 					});
 					$details.val("");
+					$details.closest(".modal").modal("hide");
 				}
 			},
 			error: function(jqHXR, status, err) {
