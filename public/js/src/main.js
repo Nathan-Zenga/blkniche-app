@@ -251,153 +251,106 @@ $(function() {
 		console.log(err)
 	}
 
-	$("#signup_body .submit").click(function(e) {
+	$("#signup_body").submit(function(e) {
 		e.preventDefault();
-
-		var $details = $(this).closest("form").find(".details");
 		var data = {};
 
-		$details.each(function() {
-			var key = $(this).attr('name');
-			data[key] = $(this).val();
+		$(this).serializeArray().forEach(function(field) {
+			var name = field.name;
+			data[name] = field.value;
 		});
 
-		$.ajax({
-			type: 'post',
-			url: '/users/register', 
-			contentType: 'application/json',
-			data: JSON.stringify(data),
-			success: function(result, status) {
-				$(".result").empty();
+		$.post('/users/register', data, function(result, status) {
+			$(".result").empty();
 
-				if (result.login_error) {
-					$("#signup_body .result").append("<p>"+result.login_error+"</p>");
-				}
-				if (result.login_error_chars) {
-					result.login_error_chars.forEach(function(msg) {
-						$("#signup_body .result").append("<p>"+msg+"</p>");
-					});
-				}
-				if (result.success_msg) {
-					$("#signup_body .result").html("<p>"+result.success_msg+"</p>");
-					$details.val("");
-				}
+			if (result.login_error) {
+				$("#signup_body .result").append("<p>"+result.login_error+"</p>");
+			}
+			if (result.login_error_chars) {
+				result.login_error_chars.forEach(function(msg) {
+					$("#signup_body .result").append("<p>"+msg+"</p>");
+				});
+			}
+			if (result.success_msg) {
+				$("#signup_body .result").html("<p>"+result.success_msg+"</p>");
+				$details.val("");
 			}
 		});
 	});
 
-	$("#update_form .submit").click(function(e) {
+	$("#update_form").submit(function(e) {
 		e.preventDefault();
-
-		var $details = $(this).closest("form").find(".details");
 		var data = {};
 
-		$details.each(function() {
-			var key = $(this).attr('name');
-			data[key] = $(this).val();
+		$(this).serializeArray().forEach(function(field) {
+			var name = field.name;
+			data[name] = field.value;
 		});
 
-		$.ajax({
-			type: 'post',
-			url: '/users/update',
-			contentType: 'application/json',
-			data: JSON.stringify(data),
-			success: function(result, status) {
-				$(".result").empty();
-				if (result.error) {
-					result.error = "<p>" + result.error + "</p>";
-					$("#update_form .result").append(result.error);
-					$("#update_form input[name='old_password']").val("");
-					$("#update_form input[name='new_password']").val("");
-				}
-				else if (result.changed) {
-					var info = '<li>Name: ' + result.name + '</li>' +
-					'<li>Email: ' + result.email + '</li>' +
-					'<li>Date of birth: ' + result.DOB + '</li>' +
-					'<li>Nationality: ' + result.nationality + '</li><br>';
+		$.post('/users/update', data, function(result, status) {
+			$(".result").empty();
+			if (result.error) {
+				result.error = "<p>" + result.error + "</p>";
+				$("#update_form .result").append(result.error);
+				$("#update_form input[name='old_password']").val("");
+				$("#update_form input[name='new_password']").val("");
+			}
+			else if (result.changed) {
+				var info = '<li>Name: ' + result.name + '</li>' +
+				'<li>Email: ' + result.email + '</li>' +
+				'<li>Date of birth: ' + result.DOB + '</li>' +
+				'<li>Nationality: ' + result.nationality + '</li><br>';
 
-					$(".profile-info span").fadeOut(function(){
-						$(this).html(info).fadeIn();
-					});
-					$details.val("");
-					$details.closest(".modal").modal("hide");
-				}
-			},
-			error: function(jqHXR, status, err) {
-				console.log("ERROR: " + err);
-				console.log("jqHXR: " + jqHXR);
-				console.log("status: " + status);
+				$(".profile-info span").fadeOut(function(){
+					$(this).html(info).fadeIn();
+				});
+				$details.val("");
+				$details.closest(".modal").modal("hide");
 			}
 		});
 	});
 
-	$("#forgot_body .submit").click(function(e) {
+	$("#forgot_body").submit(function(e) {
 		e.preventDefault();
-
-		var $details = $(this).closest("form").find(".details");
 		var data = {};
 
-		$details.each(function() {
-			var key = $(this).attr('name');
-			data[key] = $(this).val();
+		$(this).serializeArray().forEach(function(field) {
+			var name = field.name;
+			data[name] = field.value;
 		});
 
-		$.ajax({
-			type: 'post',
-			url: '/account/forgot',
-			contentType: 'application/json',
-			data: JSON.stringify(data),
-			success: function(msg, status) {
-				$(".result").empty();
-				if (msg.error) {
-					console.log(msg.error);
-					$(".result").html("<p>"+msg.error+"</p>")
-				}
-				else if (msg.success) {
-					$(".result").html("<p>"+msg.success+"</p>")
-				}
-			},
-			error: function(jqHXR, status, err) {
-				console.log("ERROR: " + err);
-				console.log("jqHXR: " + jqHXR);
-				console.log("status: " + status);
+		$.post('/account/forgot', data, function(msg, status) {
+			$(".result").empty();
+			if (msg.error) {
+				console.log(msg.error);
+				$(".result").html("<p>"+msg.error+"</p>")
+			}
+			else if (msg.success) {
+				$(".result").html("<p>"+msg.success+"</p>")
 			}
 		});
 	});
 
-	$("#reset_password_form .submit").click(function(e) {
+	$("#reset_password_form").submit(function(e) {
 		e.preventDefault();
-
-		var $details = $(this).closest("form").find(".details");
 		var data = {};
 
-		$details.each(function() {
-			var key = $(this).attr('name');
-			data[key] = $(this).val();
+		$(this).serializeArray().forEach(function(field) {
+			var name = field.name;
+			data[name] = field.value;
 		});
 
-		$.ajax({
-			type: 'post',
-			url: location.pathname,
-			contentType: 'application/json',
-			data: JSON.stringify(data),
-			success: function(msg, status) {
-				$(".result").empty();
-				if (msg.invalidToken) {
-					$(".result").html("<p>"+msg.invalidToken+"</p>")
-				}
-				else if (msg.noMatch) {
-					$(".result").html("<p>"+msg.noMatch+"</p>")
-				}
-				else {
-					$(".result").html("<p>"+msg.success+"</p>");
-					$details.closest(".modal").modal("hide");
-				}
-			},
-			error: function(jqHXR, status, err) {
-				console.log("ERROR: " + err);
-				console.log("jqHXR: " + jqHXR);
-				console.log("status: " + status);
+		$.post(location.pathname, data, function(msg, status) {
+			$(".result").empty();
+			if (msg.invalidToken) {
+				$(".result").html("<p>"+msg.invalidToken+"</p>")
+			}
+			else if (msg.noMatch) {
+				$(".result").html("<p>"+msg.noMatch+"</p>")
+			}
+			else {
+				$(".result").html("<p>"+msg.success+"</p>");
+				$details.closest(".modal").modal("hide");
 			}
 		});
 	});
