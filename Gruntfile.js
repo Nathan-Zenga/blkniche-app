@@ -5,8 +5,8 @@ module.exports = function(grunt) {
 		uglify: {
 			build: {
 				files: [{
-					src: 'public/js/src/mainjs.js',
-					dest: 'public/js/mainjs.min.js'
+					src: 'public/js/src/main.js',
+					dest: 'public/js/main.min.js'
 				},
 				{
 					src: 'public/js/src/detect-config.js',
