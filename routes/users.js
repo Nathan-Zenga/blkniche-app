@@ -30,23 +30,14 @@ router.post('/register', function(req, res) {
 		page == 'Home' ? page = 'index' : null;
 
 		// Validation
-		req.checkBody('firstName', 'First name').notEmpty();
-		req.checkBody('lastName', 'Last name').notEmpty();
-		req.checkBody('email', 'Email').notEmpty();
-		if(req.body.email) req.checkBody('email', 'Must be an email address').isEmail();
-		req.checkBody('username', 'Username').notEmpty();
-		req.checkBody('username', 'Username: no spaces or special characters allowed (except "." and "-").')
-			.custom(value => {
-				let chars = /[ !@#$£%^&*()+\=\[\]{};':"\\|,<>\/?]/;
-				return chars.test(value) == false;
-			});
-		req.checkBody('DOB', 'Date of birth').notEmpty();
-		if(req.body.DOB) req.checkBody('DOB', 'Date of birth: invalid format').custom(value => {
+		req.checkBody('username', 'Username: no spaces or special characters allowed (except "." and "-").').custom(value => {
+			let chars = /[ !@#$£%^&*()+\=\[\]{};':"\\|,<>\/?]/;
+			return chars.test(value) == false;
+		});
+		req.checkBody('DOB', 'Date of birth: invalid format').custom(value => {
 			let format = /^\d{4}-\d{2}-\d{2}$/i;
 			return format.test(value)
 		});
-		req.checkBody('nationality', 'Nationality').notEmpty();
-		req.checkBody('password', 'Password').notEmpty();
 		req.checkBody('passwordConfirm', 'Confirmed password not the same.').equals(req.body.password);
 
 		// Validating field uniqueness
