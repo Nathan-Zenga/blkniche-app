@@ -27,7 +27,6 @@ var browserDetect = {
 		console.log(device);
 
 		if ( device == 'Mobile' || device == 'Tablet' || browser.indexOf('Chrome') == -1 ) {
-			$("video").attr("controls", "true");
 			$(".modal form #DOB").attr({
 				onfocus: '(this.type="text")',
 				placeholder: 'Date of Birth - YYYY-MM-DD'
