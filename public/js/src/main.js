@@ -1,4 +1,5 @@
 $(function() {
+	Galleria.loadTheme("https://cdnjs.cloudflare.com/ajax/libs/galleria/1.5.7/themes/classic/galleria.classic.min.js").configure({ transition: 'fade', showInfo: false, thumbnails: false });
 
 	// define property for all video/audio elements to check if video is currently playing
 	try {
@@ -28,24 +29,14 @@ $(function() {
 	}
 
 	// change div.textbox inner text whenever carousel caption changes
-	function changeText(className){
-		var text = $("."+className+" .item.active .carousel-caption-title").text();
-		var change = setInterval(function() {
-
-			if ( text !== $("."+className+" .item.active .carousel-caption-title").text() ) {
-				$("."+className+" .slide-title").text( $("."+className+" .item.active .carousel-caption-title").text() );
-				$("."+className+" .slide-artist").text( $("."+className+" .item.active .carousel-caption-artist").text() );
-
-				// play video element in active slide (item)
-				if (className === "videos") {
-					$(".videoInfo").text( $(".videos .item.active .carousel-caption-info").text() );
-					$(".videos .item.active video").get(0).play();
-				}
-
-				clearInterval(change);
+	function changeText(section) {
+		$(section).each(function() {
+			$(this).find(".slide-title").text( $(this).find(".item.active .carousel-caption-title").text() );
+			$(this).find(".slide-artist").text( $(this).find(".item.active .carousel-caption-artist").text() );
+			if ($(this).find(".item.active .carousel-caption-info").length) {
+				$(this).find(".slide-info").text( $(this).find(".item.active .carousel-caption-info").text() );
 			}
-
-		});
+		})
 	}
 
 	// change state of contents when scrolling the page
@@ -111,39 +102,10 @@ $(function() {
 		}
 	}
 
-	var togglePlayback = function() {
-		try {
-			var aboveSection = window.pageYOffset < $("section.videos").offset().top - $("section.videos").height()/4;
-			var belowSection = window.pageYOffset >= $("section.videos").offset().top + $("section.videos").height()/2;
-
-			if ( aboveSection || belowSection ) {
-				// stop video once scrolled outside the section region
-				if ( $(".videos .item.active video").get(0).playing ) {
-					$(".videos .item.active video").get(0).pause();
-					$(".videos .item.active video").get(0).currentTime = 0;
-				}
-			} else {
-				// play video if within section
-				$(".videos .item.active video").get(0).play();
-			}
-		} catch(err) {
-			console.log(err)
-		}
-	}
-
-	toggleOnScroll(); markLink(); togglePlayback();
+	toggleOnScroll(); markLink();
 
 	$(window).scroll(markLink);
 	$(window).scroll(toggleOnScroll);
-	$(window).scroll(togglePlayback);
-
-	// display text from carousel captions into .textbox element
-	$(".musicTitle").text( $(".music .item.active .carousel-caption-title").text() );
-	$(".musicArtist").text( $(".music .item.active .carousel-caption-artist").text() );
-	$(".videoTitle").text( $(".videos .item.active .carousel-caption-title").text() );
-	$(".videoArtist").text( $(".videos .item.active .carousel-caption-artist").text() );
-	$(".videoInfo").text( $(".videos .item.active .carousel-caption-info").text() );
-
 
 	// overriding default method actions when displaying a bootstrap modal
 	$(".modal").on('shown.bs.modal', function() {
@@ -192,6 +154,25 @@ $(function() {
 		(this.id === "header-logo" && location.pathname !== "/") ? location.pathname = "/" : smoothScrollTo(0);
 	});
 
+	// Dynamically loading videos from Flickr
+	var flickr = new Galleria.Flickr();
+	flickr.setOptions({description: true}).set("72157710305001647", function(data) {
+		data.forEach(function(video, i) {
+			let description = JSON.parse(video.description.replace(/&quot;/g, '"'));
+			$("section.videos .carousel-inner").append(
+				'<div class="item'+ (i < 1 ? ' active' : '') +'">' +
+					'<video class="img" loop controls><source src="'+ video.big.replace("_z.jpg", "_l.mp4") +'"/></video>' +
+					'<div class="carousel-caption">' +
+						'<h3 class="carousel-caption-title">'+ video.title +'</h3>' +
+						'<p class="carousel-caption-artist">'+ description.artist +'</p>' +
+						'<p class="carousel-caption-info">'+ description.info.replace(/\n/g, "<br>") +'</p>' +
+					'</div>' +
+				'</div>'
+			);
+			if (i === data.length-1) changeText($("section.videos"));
+		})
+	});
+
 	// Activating the carousel (disabling automatic transition)
 	$(".carousel").carousel({interval: false});
 
@@ -209,48 +190,32 @@ $(function() {
 		$($(this).closest("section").get(0)).find(".carousel").carousel("next");
 	});
 
-	$(".carousel-indicators > li, .left, .right").click(function(){
+	$(".carousel").on("slid.bs.carousel", function() {
 		// stop all video playback when navigating to another slide
-		if ( $(this).closest(".carousel").find(".item.active video").length ) {
-			for (var i = 0; i < $(this).closest(".carousel").find("video").length; i++) {
-				$(this).closest(".carousel").find("video").get(i).pause();
-				$(this).closest(".carousel").find("video").get(i).currentTime = 0;
-			}
+		let $carousel = $(this).closest(".carousel");
+		if ( $carousel.find("video").length ) {
+			$carousel.find("video").each(function(){
+				let currentVideo = $(this).get(0);
+				currentVideo.pause();
+				currentVideo.currentTime = 0;
+				if ($(currentVideo).parent(".item").hasClass("active")) currentVideo.play();
+			})
 		}
 		// play video in current carousel slide
-		changeText($(this).closest("section").get(0).className);
+		changeText( $(this).closest("section") );
 	});
 
 	// toggle manual playing and pausing of video
-
 	var isPlaying = true;
-
 	$("video")
 	.attr({oncontextmenu: "return false"})
 	.css({cursor: "pointer"})
 	.click(function(){
-		if ( isPlaying ) {
-			$(this).get(0).pause()
-			isPlaying = false;
-		} else {
-			$(this).get(0).play()
-			isPlaying = true;
-		}
+		$(this).get(0)[isPlaying ? "pause" : "play"]()
+		isPlaying = isPlaying ? false : true;
 	});
 
-
-	// on page load: plays current video if section is shown within the viewport
-	try {
-		var boundaryBottom = window.pageYOffset <= $("section.videos").offset().top + $("section.videos").height()/2;
-		var boundaryTop = window.pageYOffset > $("section.videos").offset().top - $("section.videos").height()/4;
-
-		if ( boundaryTop && boundaryBottom && !$(".videos .item.active video").get(0).playing ) {
-			$(".videos .item.active video").get(0).play() // play current video if conditions are met
-		}
-	} catch(err) {
-		console.log(err)
-	}
-
+	/* FORMS */
 	$("#signup_body").submit(function(e) {
 		e.preventDefault();
 		var data = {};
