@@ -42,10 +42,6 @@ a:hover {
 	}
 }
 
-.blkniche .carousel-control {
-	background-image: none;
-}
-
 header,
 footer {
 	position: absolute;
@@ -349,10 +345,12 @@ section .item {
 }
 
 .page section .carousel-control {
-	top: 40px;
-	bottom: 40px;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
 	width: 10%;
-	transform: none;
+	height: 50%;
+	background-image: none;
 }
 
 section .carousel-caption {
@@ -360,7 +358,7 @@ section .carousel-caption {
 }
 
 section .carousel-indicators {
-	bottom: 10px
+	bottom: 60px
 }
 
 section .img {
@@ -371,6 +369,10 @@ section .img {
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
+}
+
+section video.img {
+	cursor: pointer;
 }
 
 .btn-primary,
@@ -398,11 +400,9 @@ section .img {
 		background-attachment: fixed;
 	}
 }
-section.music .musicTitle,
-section.videos .videoTitle {
+section .slide-title {
 	font-family: Oswald;
 	font-size: 3em;
-	/*font-style: italic;*/
 	-moz-transform: skew(10deg, 3deg);
 	-o-transform: skew(10deg, 3deg);
 	-webkit-transform: skew(10deg, 3deg);
