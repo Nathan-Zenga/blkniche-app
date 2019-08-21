@@ -102,10 +102,32 @@ $(function() {
 		}
 	}
 
+	function togglePlayback() {
+		try {
+			var aboveSection = window.pageYOffset < $("section.videos").offset().top - $("section.videos").height()/4;
+			var belowSection = window.pageYOffset >= $("section.videos").offset().top + $("section.videos").height() - $("section.videos").height()/4;
+			var activeVideo = $(".videos .item.active video").get(0);
+
+			if ( aboveSection || belowSection ) {
+				// stop video once scrolled outside the section region
+				if ( activeVideo.playing ) {
+					activeVideo.pause();
+					activeVideo.currentTime = 0;
+				}
+			} else {
+				// play video if within section
+				activeVideo.play();
+			}
+		} catch(err) {
+			console.log(err)
+		}
+	}
+
 	toggleOnScroll(); markLink(); changeText( $("section") );
 
 	$(window).scroll(markLink);
 	$(window).scroll(toggleOnScroll);
+	$(window).scroll(togglePlayback);
 
 	// overriding default method actions when displaying a bootstrap modal
 	$(".modal").on('shown.bs.modal', function() {
@@ -169,7 +191,8 @@ $(function() {
 					'</div>' +
 				'</div>'
 			);
-			if (i === data.length-1) changeText($("section.videos"));
+			// invoking functions after loading videos
+			if (i === data.length-1) togglePlayback(), changeText($("section.videos"));
 		})
 	});
 
