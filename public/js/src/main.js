@@ -102,7 +102,7 @@ $(function() {
 		}
 	}
 
-	toggleOnScroll(); markLink();
+	toggleOnScroll(); markLink(); changeText( $("section") );
 
 	$(window).scroll(markLink);
 	$(window).scroll(toggleOnScroll);
