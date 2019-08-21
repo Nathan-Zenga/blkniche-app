@@ -181,7 +181,12 @@ $(function() {
 	flickr.setOptions({description: true}).set("72157710305001647", function(data) {
 		data.forEach(function(video, i) {
 			let description = JSON.parse(video.description.replace(/&quot;/g, '"'));
-			$("section.videos .carousel-inner").append(
+
+			$("section.videos")
+			.find(".carousel-indicators").append(
+				'<li id="cover'+ i +'" data-target="#videos-carousel" data-slide-to="'+ i +'" '+ (i < 1 ? ' class="active"' : '') +'></li>'
+			)
+			.end().find(".carousel-inner").append(
 				'<div class="item'+ (i < 1 ? ' active' : '') +'">' +
 					'<video class="img" loop controls playsinline><source src="'+ video.big.replace("_z.jpg", "_l.mp4") +'"/></video>' +
 					'<div class="carousel-caption">' +
