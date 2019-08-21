@@ -183,7 +183,7 @@ $(function() {
 			let description = JSON.parse(video.description.replace(/&quot;/g, '"'));
 			$("section.videos .carousel-inner").append(
 				'<div class="item'+ (i < 1 ? ' active' : '') +'">' +
-					'<video class="img" loop controls><source src="'+ video.big.replace("_z.jpg", "_l.mp4") +'"/></video>' +
+					'<video class="img" loop controls playsinline><source src="'+ video.big.replace("_z.jpg", "_l.mp4") +'"/></video>' +
 					'<div class="carousel-caption">' +
 						'<h3 class="carousel-caption-title">'+ video.title +'</h3>' +
 						'<p class="carousel-caption-artist">'+ description.artist +'</p>' +
