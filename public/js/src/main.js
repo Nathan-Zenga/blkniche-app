@@ -129,6 +129,15 @@ $(function() {
 	$(window).scroll(toggleOnScroll);
 	$(window).scroll(togglePlayback);
 
+	$(document.body).click(function(e) {
+		// check if menu icon not hidden and if cursor is outside menu
+		if (!$("#menu").is(":hidden") && e.clientY > parseInt($("#menu.is-active").css("height"))) { // offset top not required because top position is already 0
+			let headerFixed = $(".inner-header").hasClass("fixed");
+			let menuOpen = $("#menu").hasClass("is-active");
+			if (headerFixed && menuOpen) $("#menu").click();
+		}
+	})
+
 	// overriding default method actions when displaying a bootstrap modal
 	$(".modal").on('shown.bs.modal', function() {
 		$("body, .modal").css("padding-right", "");
@@ -156,7 +165,7 @@ $(function() {
 	$("#menu").click(function() {
 		$(this).toggleClass("is-active");
 		$(".link-group").stop().slideToggle(function() {
-			if ($(this).css("display") == "none") $(this).css("display", "").removeAttr("style")
+			if ($(this).is(":hidden")) $(this).css("display", "").removeAttr("style")
 		});
 	});
 
