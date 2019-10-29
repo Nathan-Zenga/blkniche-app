@@ -330,7 +330,7 @@ section > .textbox {
 }
 
 @media (min-width: 768px) {
-	section > .col-sm-6 {
+	section > .column {
 		height: 100vh;
 		padding: 0;
 	}
