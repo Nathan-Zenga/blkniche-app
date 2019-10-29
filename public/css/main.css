@@ -1,9 +1,9 @@
 @import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-@import url('https://fonts.googleapis.com/css?family=DM+Sans|Roboto+Condensed|Oswald:700');
+@import url('https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed|Oswald:700');
 
 html, body {
-	font-family: 'DM Sans';
+	font-family: 'Questrial';
 	font-size: 1em;
 	color: rgb(220, 196, 68);
 	background-color: rgb(64, 64, 66);

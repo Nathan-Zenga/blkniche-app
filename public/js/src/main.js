@@ -144,16 +144,16 @@ $(function() {
 	});
 
 	// bg auto-playing slideshow
-	$("#bgreel > div:gt(0)").hide();
+	$("#bgreel > div:gt(0)").fadeTo(0, 0);
 	setInterval(function() {
 		$('#bgreel > div:first')
-			.delay(1000)
-			.fadeOut(2000)
+			.fadeTo(2000, 0)
+			.dequeue()
 			.next()
-			.fadeIn(2000)
+			.fadeTo(0, 1)
 			.end()
 			.appendTo('#bgreel');
-	}, 4000);
+	}, 5000);
 
 	// TEST: sets random colours as background color each page
 	/*$("section").each(function(){
