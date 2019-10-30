@@ -12,7 +12,7 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const config = require('./config/config');
 
-mongoose.connect(config.db, {useNewUrlParser: true});
+mongoose.connect(process.env.DB, {useNewUrlParser: true});
 let conn = mongoose.connection;
 
 // Check connection
