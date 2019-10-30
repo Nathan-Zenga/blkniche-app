@@ -88,32 +88,10 @@ $(function() {
 		}
 	}
 
-	function togglePlayback() {
-		try {
-			var aboveSection = window.pageYOffset < $("section.videos").offset().top - $("section.videos").height()/4;
-			var belowSection = window.pageYOffset >= $("section.videos").offset().top + $("section.videos").height() - $("section.videos").height()/4;
-			var activeVideo = $(".videos .item.active video").get(0);
-
-			if ( aboveSection || belowSection ) {
-				// stop video once scrolled outside the section region
-				if ( activeVideo.playing ) {
-					activeVideo.pause();
-					activeVideo.currentTime = 0;
-				}
-			} else {
-				// play video if within section
-				activeVideo.play();
-			}
-		} catch(err) {
-			console.log(err)
-		}
-	}
-
 	toggleOnScroll(); markLink(); changeText( $("section") );
 
 	$(window).scroll(markLink);
 	$(window).scroll(toggleOnScroll);
-	$(window).scroll(togglePlayback);
 
 	$(document.body).click(function(e) {
 		// check if menu icon not hidden and if cursor is outside menu
@@ -179,7 +157,7 @@ $(function() {
 			)
 			.end().find(".carousel-inner").append(
 				'<div class="item'+ (i < 1 ? ' active' : '') +'">' +
-					'<video class="img" loop controls playsinline><source src="'+ video.big.replace(/_b.jpg|_z.jpg/, "_l.jpg") +'"/></video>' +
+					'<video class="img" loop playsinline><source src="'+ video.big.replace(/_b.jpg|_z.jpg/, "_l.jpg") +'"/></video>' +
 					'<div class="carousel-caption">' +
 						'<h3 class="carousel-caption-title">'+ video.title +'</h3>' +
 						'<p class="carousel-caption-artist">'+ description.artist +'</p>' +
@@ -188,7 +166,7 @@ $(function() {
 				'</div>'
 			);
 			// invoking functions after loading videos
-			if (i === data.length-1) togglePlayback(), changeText($("section.videos"));
+			if (i === data.length-1) changeText($("section.videos"));
 		})
 	});
 
@@ -210,28 +188,44 @@ $(function() {
 	});
 
 	$(".carousel").on("slid.bs.carousel", function() {
-		// stop all video playback when navigating to another slide
-		let $carousel = $(this).closest(".carousel");
-		if ( $carousel.find("video").length ) {
-			$carousel.find("video").each(function(){
+		// stop all video playback when showing another slide
+		let carousel = this;
+		if ( $(carousel).find("video").length ) {
+			$(carousel).find("video").each(function(){
 				let currentVideo = $(this).get(0);
 				currentVideo.pause();
 				currentVideo.currentTime = 0;
+				currentVideo.volume = 1;
 				// play video in current carousel slide
-				if ($(currentVideo).parent(".item").hasClass("active")) currentVideo.play();
+				if ($(currentVideo).parent(".item").hasClass("active")) {
+					currentVideo.play();
+					$(currentVideo).closest("section").find(".playback-button .symbol").removeClass("fa-play").addClass("fa-pause");
+				}
 			})
 		}
 		changeText( $(this).closest("section") );
 	});
 
-	// toggle manual playing and pausing of video
-	var isPlaying = true;
-	$("video")
-	.attr({oncontextmenu: "return false"})
-	.css({cursor: "pointer"})
-	.click(function(){
-		$(this).get(0)[isPlaying ? "pause" : "play"]()
-		isPlaying = isPlaying ? false : true;
+	$(".playback-button").click(function() {
+		var currentVideo = $(this).closest("section").find(".item.active video").get(0);
+		var $symbol = $(this).find(".symbol");
+		if (currentVideo.playing) {
+			currentVideo.pause();
+			$symbol.removeClass("fa-pause").addClass("fa-play");
+		} else {
+			currentVideo.play();
+			$symbol.removeClass("fa-play").addClass("fa-pause");
+		}
+	});
+
+	$(".mute-button").click(function() {
+		var currentVideo = $(this).closest("section").find(".item.active video").get(0);
+		currentVideo.volume = currentVideo.volume ? 0 : 1;
+	});
+
+	$(".back-button, .forward-button").click(function() {
+		var currentVideo = $(this).closest("section").find(".item.active video").get(0);
+		currentVideo.currentTime += this.className.includes("back-button") ? -15 : 15;
 	});
 
 	/* FORMS */
