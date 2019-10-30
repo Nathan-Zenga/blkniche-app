@@ -251,6 +251,10 @@ section, main {
 	margin-bottom: 1.5em;
 }
 
+.modal .form-control {
+	border: none;
+}
+
 .modal .details.name {
 	text-align: left;
 	width: calc(50% - 10px);
@@ -322,8 +326,23 @@ section .textbox .textbody {
 		padding: 0;
 	}
 
+	section .text-container {
+		padding: 2em 0;
+		overflow: auto;
+	}
+
 	section .textbox {
 		height: 100%;
+	}
+
+	section.content-width-fluid .img-container {
+		width: 100%;
+	}
+
+	section.content-width-fluid .text-container {
+		position: absolute;
+		right: 0;
+		background-color: rgba(32, 32, 33, .5);
 	}
 }
 
