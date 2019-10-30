@@ -74,7 +74,7 @@ $(function() {
 					borderBottom: ""
 				})
 				.each(function() {
-					if ( $(this).attr('id') === $lastVisitedSection.attr('class') ) {
+					if ( $lastVisitedSection.attr('class').includes($(this).attr('id')) ) {
 
 						$(this).css({
 							borderBottom: "2px solid white"
