@@ -14,29 +14,15 @@ $(function() {
 		console.log(err)
 	}
 
-	// TEST (for each section bg): generate random colours
-	/*function randomColour() {
-		var arr = [];
-
-		for (var i = 0; i < 3; i++) arr.push(Math.round(Math.random() * 255));
-
-		arr = "rgb(" + arr.join(",") + ")";
-		return arr;
-	}*/
-
 	function smoothScrollTo(offsetTop) {
 		$("html, body").stop().animate({ scrollTop: offsetTop }, 700, "easeInOutExpo")
 	}
 
 	// change div.textbox inner text whenever carousel caption changes
 	function changeText(section) {
-		$(section).each(function() {
-			$(this).find(".slide-title").text( $(this).find(".item.active .carousel-caption-title").text() );
-			$(this).find(".slide-artist").text( $(this).find(".item.active .carousel-caption-artist").text() );
-			if ($(this).find(".item.active .carousel-caption-info").length) {
-				$(this).find(".slide-info").text( $(this).find(".item.active .carousel-caption-info").text() );
-			}
-		})
+		$(section).find(".slide-title").text( $(section).find(".item.active .carousel-caption-title").text() );
+		$(section).find(".slide-artist").text( $(section).find(".item.active .carousel-caption-artist").text() );
+		$(section).find(".slide-info").text( $(section).find(".item.active .carousel-caption-info").text() );
 	}
 
 	// change state of contents when scrolling the page
@@ -144,23 +130,19 @@ $(function() {
 	});
 
 	// bg auto-playing slideshow
-	$("#bgreel > div:gt(0)").fadeTo(0, 0);
-	setInterval(function() {
-		$('#bgreel > div:first')
-			.fadeTo(2000, 0)
-			.dequeue()
-			.next()
-			.fadeTo(0, 1)
-			.end()
-			.appendTo('#bgreel');
-	}, 5000);
-
-	// TEST: sets random colours as background color each page
-	/*$("section").each(function(){
-		$(this).css({
-			backgroundColor: randomColour()
-		});
-	});*/
+	$(".bgreel").each(function() {
+		var bgreel = this;
+		$(bgreel).children("div:gt(0)").fadeTo(0, 0);
+		setInterval(function() {
+			$(bgreel).children('div:first')
+				.fadeTo(2000, 0)
+				.dequeue()
+				.next()
+				.fadeTo(0, 1)
+				.end()
+				.appendTo(bgreel);
+		}, 5000);
+	});
 
 	$("#menu").click(function() {
 		$(this).toggleClass("is-active");
@@ -235,10 +217,10 @@ $(function() {
 				let currentVideo = $(this).get(0);
 				currentVideo.pause();
 				currentVideo.currentTime = 0;
+				// play video in current carousel slide
 				if ($(currentVideo).parent(".item").hasClass("active")) currentVideo.play();
 			})
 		}
-		// play video in current carousel slide
 		changeText( $(this).closest("section") );
 	});
 
