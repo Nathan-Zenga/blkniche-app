@@ -394,9 +394,7 @@ section:not(.index) .bgreel {
 }
 
 section .slide-title {
-	/*font-family: Oswald;*/
 	font-weight: bold;
-	font-size: 3em;
 	-moz-transform: skew(10deg, 3deg);
 	-o-transform: skew(10deg, 3deg);
 	-webkit-transform: skew(10deg, 3deg);
