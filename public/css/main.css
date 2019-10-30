@@ -184,8 +184,18 @@ section, main {
 	z-index: 103;
 }
 
+.modal {
+	color: rgb(50, 50, 50);
+}
+
+.modal .modal-header {
+	border-bottom: none;
+}
+
 .modal .modal-content {
-	background-color: rgba(255, 255, 255, .7)
+	background-color: rgba(255, 255, 255, .7);
+	border: none;
+	box-shadow: none;
 }
 
 .modal .close {
