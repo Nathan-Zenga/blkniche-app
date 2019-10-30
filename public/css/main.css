@@ -66,10 +66,9 @@ header nav {
 
 @media (min-width: 768px) {
 	header nav {
-		left: 50%;
 		width: 50%;
-		-webkit-transform: translateX(-50%);
-		transform: translateX(-50%);
+		margin-left: auto;
+		margin-right: auto;
 	}
 }
 
@@ -170,7 +169,7 @@ footer .socials .icon a {
 .socials.fixed {
 	position: fixed;
 	left: 50%;
-	bottom: 20px;
+	bottom: 0;
 	width: 100%;
 	-webkit-transform: translateX(-50%);
 	transform: translateX(-50%);
@@ -188,7 +187,6 @@ footer .socials .icon a {
 
 	.socials.fixed {
 		width: 50%;
-		bottom: 0;
 	}
 }
 
@@ -317,10 +315,15 @@ section > .img-container {
 	padding: 20px;
 }
 
-section > .textbox {
-	height: 30vh;
-	overflow: auto;
-	padding-bottom: 20px;
+section .textbox {
+	display: table;
+}
+
+section .textbox .textbody {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	padding: 0 30px;
 }
 
 @media (min-width: 768px) {
@@ -330,21 +333,12 @@ section > .textbox {
 	}
 }
 
-section .textbox table {
-	width: 100%; height: 100%;
-}
-
-section .textbox td {
-	text-align: center;
-	padding: 0 30px;
-}
-
 section .carousel-inner,
 section .item {
 	height: 100%;
 }
 
-.page section .carousel-control {
+.carousel .carousel-control {
 	top: 50%;
 	-webkit-transform: translateY(-50%);
 	transform: translateY(-50%);
@@ -381,25 +375,30 @@ section video.img {
 	border-color: transparent;
 }
 
-#bgreel,
-#bgreel > div {
-	width: 100%;
+.bgreel,
+.bgreel > div {
 	height: 100%;
 }
 
-#bgreel > div {
+.bgreel > div {
 	position: absolute;
+	width: 100%;
 	background-size: cover;
 	background-position: center;
 	-webkit-filter: contrast(.5);
 	filter: contrast(.5);
 }
 
+section:not(.index) .bgreel {
+	position: relative;
+}
+
 @media (min-width: 768px) {
-	#bgreel > div {
+	.index .bgreel > div {
 		background-attachment: fixed;
 	}
 }
+
 section .slide-title {
 	/*font-family: Oswald;*/
 	font-weight: bold;
