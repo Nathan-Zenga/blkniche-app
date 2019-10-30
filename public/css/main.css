@@ -289,10 +289,6 @@ section {
 	z-index: 1;
 }
 
-section > .column {
-	width: 100%;
-}
-
 section > .img-container {
 	height: 70vh;
 	padding: 20px;
@@ -300,6 +296,7 @@ section > .img-container {
 
 section .textbox {
 	display: table;
+	width: 100%;
 }
 
 section .textbox .textbody {
@@ -313,6 +310,10 @@ section .textbox .textbody {
 	section > .column {
 		height: 100vh;
 		padding: 0;
+	}
+
+	section .textbox {
+		height: 100%;
 	}
 }
 
