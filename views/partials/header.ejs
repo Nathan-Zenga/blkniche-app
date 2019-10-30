@@ -112,14 +112,14 @@
 		</div>
 		<nav>
 			<div class="link-group row">
-				<a class="col-xs-3 link" id="music">Music</a>
-				<a class="col-xs-3 link" id="videos">Videos</a>
-				<a class="col-xs-3 link" id="info">Info</a>
+				<a class="link" id="music">Music</a>
+				<a class="link" id="videos">Videos</a>
+				<a class="link" id="info">Info</a>
 				<%_ if (user) { _%>
-				<a class="col-xs-3 link" id="profile" href="/profile"><i class="fa fa-user-circle-o"></i></a>
-				<a class="col-xs-3 link" id="logout" href="/users/logout">Logout</a>
+				<a class="link" id="profile" href="/profile"><i class="fa fa-user-circle-o"></i></a>
+				<a class="link" id="logout" href="/users/logout">Logout</a>
 				<%_ } else { _%>
-				<a class="col-xs-3 link" id="log-in" data-toggle="modal" data-target="#registration">Log In</a>
+				<a class="link" id="log-in" data-toggle="modal" data-target="#registration">Log In</a>
 				<%_ } _%>
 			</div>
 		</nav>
