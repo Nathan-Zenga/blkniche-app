@@ -64,28 +64,26 @@ $(function() {
 			borderBottom: ""
 		});
 
-		if (window.innerWidth > 767) {
-			$("section").each(function(i){
-				if ( $(window).scrollTop() >= $(this).offset().top - 100 ) {
+		$("section").each(function(i){
+			if ( $(window).scrollTop() >= $(this).offset().top - 100 ) {
 
-					var $lastVisitedSection = $(this);
+				var $lastVisitedSection = $(this);
 
-					$("nav .link")
-					.css({
-						borderBottom: ""
-					})
-					.each(function() {
-						if ( $(this).attr('id') === $lastVisitedSection.attr('class') ) {
+				$("nav .link")
+				.css({
+					borderBottom: ""
+				})
+				.each(function() {
+					if ( $(this).attr('id') === $lastVisitedSection.attr('class') ) {
 
-							$(this).css({
-								borderBottom: "2px solid white"
-							})
+						$(this).css({
+							borderBottom: "2px solid white"
+						})
 
-						}
-					})
-				}
-			});
-		}
+					}
+				})
+			}
+		});
 	}
 
 	toggleOnScroll(); markLink(); changeText( $("section") );
@@ -131,8 +129,6 @@ $(function() {
 
 	// scroll to section corresponding to chosen nav link
 	$(".link").click(function() {
-		if (window.innerWidth <= 768 && $("#menu").hasClass("is-active")) $("#menu").click();
-
 		try {
 			var page = $(this).attr("id");
 			smoothScrollTo($("section." + page).offset().top);
