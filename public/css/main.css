@@ -291,7 +291,7 @@ section {
 
 section > .img-container {
 	height: 70vh;
-	padding: 20px;
+	padding: 20px 0;
 }
 
 section .textbox {
@@ -393,21 +393,21 @@ section .slide-title {
 	transform: skew(10deg, 3deg);
 }
 
-section.music button {
-	background-color: gold;
-	color: black;
-	transition: .5s;
-	font-weight: bold;
+section .video-controls {
+	display: inline-table;
+	margin-bottom: 1em;
 }
 
-section.music button:hover,
-section.music button:focus {
-	background-color: darkgoldenrod;
-	outline-color: gold;
+section .video-controls button {
+	display: table-cell;
+	width: 3em;
+	height: 3em;
+	border-radius: 50%;
+	background-color: rgba(0, 0, 0, .5);
 }
 
-section.music button:active {
-	filter: brightness(.75);
+section .video-controls button i {
+	vertical-align: middle;
 }
 
 .icon-container {
