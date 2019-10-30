@@ -38,14 +38,14 @@ $(function() {
 		}
 
 		// position toTop button on top of footer if they visually overlap
-		let windowOffsetBottom = window.pageYOffset + window.innerHeight;
-		let footerOffsetTop = $("footer").offset().top;
-		let bottom = windowOffsetBottom >= footerOffsetTop ? (window.innerHeight - ($("footer").offset().top - window.pageYOffset))+"px" : "";
+		var windowOffsetBottom = window.pageYOffset + window.innerHeight;
+		var footerOffsetTop = $("footer").offset().top;
+		var bottom = windowOffsetBottom >= footerOffsetTop ? (window.innerHeight - ($("footer").offset().top - window.pageYOffset))+"px" : "";
 		$("#toTop").css("bottom", bottom);
 
 		try {
 			// fix header position to viewport when scrolling past second section
-			let top = $("section").length > 1 ? $("section").eq(1).offset().top - 100 : parseInt($("header").css("height"));
+			var top = $("section").length > 1 ? $("section").eq(1).offset().top - 100 : parseInt($("header").css("height"));
 			if ( window.pageYOffset > top ) {
 				$(".inner-header").addClass("fixed");
 			} else {
@@ -94,8 +94,8 @@ $(function() {
 	$(document.body).click(function(e) {
 		// check if menu icon not hidden and if cursor is outside menu
 		if (!$("#menu").is(":hidden") && e.clientY > parseInt($("#menu.is-active").css("height"))) { // offset top not required because top position is already 0
-			let headerFixed = $(".inner-header").hasClass("fixed");
-			let menuOpen = $("#menu").hasClass("is-active");
+			var headerFixed = $(".inner-header").hasClass("fixed");
+			var menuOpen = $("#menu").hasClass("is-active");
 			if (headerFixed && menuOpen) $("#menu").click();
 		}
 	})
@@ -145,7 +145,7 @@ $(function() {
 	var flickr = new Galleria.Flickr();
 	flickr.setOptions({description: true}).set("72157710305001647", function(data) {
 		data.forEach(function(video, i) {
-			let description = JSON.parse(video.description.replace(/&quot;/g, '"'));
+			var description = JSON.parse(video.description.replace(/&quot;/g, '"'));
 
 			$("section.videos")
 			.find(".carousel-indicators").append(
@@ -185,10 +185,10 @@ $(function() {
 
 	$(".carousel").on("slid.bs.carousel", function() {
 		// stop all video playback when showing another slide
-		let carousel = this;
+		var carousel = this;
 		if ( $(carousel).find("video").length ) {
 			$(carousel).find("video").each(function(){
-				let currentVideo = $(this).get(0);
+				var currentVideo = $(this).get(0);
 				currentVideo.pause();
 				currentVideo.currentTime = 0;
 				currentVideo.volume = 1;
