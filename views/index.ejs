@@ -3,7 +3,7 @@
 	<!-- HOME / TOP / MAIN section -->
 	<section class="index">
 		<!-- Background image slideshow (autoplaying with JS) -->
-		<div id="bgreel">
+		<div class="bgreel">
 			<div style="background-image: url('/img/bgreel/IMG_0576.JPG');"></div>
 			<div style="background-image: url('/img/bgreel/IMG_0650.JPG');"></div>
 			<div style="background-image: url('/img/bgreel/IMG_0670.JPG');"></div>
@@ -90,18 +90,13 @@
 			</a>
 
 		</div>
-		
+
 		<div class="column col-sm-6 textbox">
-			<table>
-				<tr>
-					<td>
-						<!-- follow two element text is extracted from carousel caption in JS -->
-						<h2 class="slide-title music-title"></h2>
-						<p class="slide-artist music-artist"></p><br>
-						<p class="slide-info music-info"><button type="button" class="btn btn-primary">BUY NOW</button></p>
-					</td>
-				</tr>
-			</table>
+			<div class="textbody">
+				<!-- follow two element text is extracted from carousel caption in JS -->
+				<h2 class="slide-title music-title"></h2>
+				<p class="slide-artist music-artist"></p><br>
+			</div>
 		</div>
 
 	</section>
@@ -132,33 +127,37 @@
 		</div>
 
 		<div class="column col-sm-6 col-sm-pull-6 textbox">
-			<table>
-				<tr>
-					<td>
-						<h2 class="slide-title video-title"></h2>
-						<p class="slide-artist video-artist"></p><br>
-						<p class="slide-info video-info"></p>
-					</td>
-				</tr>
-			</table>
+			<div class="textbody">
+				<h2 class="slide-title video-title"></h2>
+				<p class="slide-artist video-artist"></p><br>
+				<p class="slide-info video-info"></p>
+			</div>
 		</div>
 	</section>
 
 	<!-- INFO section -->
 	<section class="info">
 		<div class="column col-sm-6 img-container">
-			<div id="bgreel2">
-
+			<div class="bgreel">
+				<div style="background-image: url('/img/bgreel/IMG_0576.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0650.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0670.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0688.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0750.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0485.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0506.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0550.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0785.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0786.JPG');"></div>
+				<div style="background-image: url('/img/bgreel/IMG_0792.JPG');"></div>
 			</div>
 		</div>
-		
+
 		<div class="column col-sm-6 textbox">
-			<table>
-				<tr>
-					<td><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum laboriosam omnis nisi cumque accusamus dolorem reiciendis modi, aliquid magnam quidem ipsam reprehenderit asperiores quos laudantium quas, eligendi aut numquam accusantium.</p></td>
-				</tr>
-			</table>
+			<div class="textbody">
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum laboriosam omnis nisi cumque accusamus dolorem reiciendis modi, aliquid magnam quidem ipsam reprehenderit asperiores quos laudantium quas, eligendi aut numquam accusantium.</p>
+			</div>
 		</div>
 	</section>
-	
+
 <% include partials/footer %>
