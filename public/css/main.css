@@ -78,6 +78,7 @@ header .menu-icon {
 	right: 0;
 	padding: 15px 18px;
 	transition: .4s;
+	z-index: 40;
 }
 
 header .menu-icon:hover,
@@ -104,7 +105,7 @@ header .menu-icon .hamburger-inner {
 
 
 header nav .link {
-	display: block;
+	padding: 0 10px;
 }
 
 header .inner-header.fixed {
@@ -128,19 +129,10 @@ header .inner-header.fixed .link-group {
 	display: none
 }
 
-header .inner-header.fixed a {
-	padding: 20px 0;
-}
-
-@media (max-width: 767px) {
-	header .inner-header.fixed .link-group {
-		margin: 60px 0;
-	}
-
-	header .inner-header.fixed .link {
-		width: 100%;
-		letter-spacing: 2.5px;
-	}
+header .inner-header.fixed .link {
+	display: inline-block;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
 footer {
