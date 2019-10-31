@@ -12,7 +12,7 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const config = require('./config/config');
 
-mongoose.connect(process.env.DB, {useNewUrlParser: true});
+mongoose.connect(process.env.BLKNICHE_DB, {useNewUrlParser: true});
 let conn = mongoose.connection;
 
 // Check connection

@@ -19,7 +19,7 @@ conn.once('open', function() {
 
 // Set The Storage Engine
 const storage = new GridFsStorage({
-	url: config.db,
+	url: process.env.BLKNICHE_DB,
 	file: (req, file) => {
 
 		var name = "i" + req.user._id.toString().slice(-5);
