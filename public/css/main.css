@@ -429,8 +429,10 @@ section .video-controls button {
 	display: table-cell;
 	width: 3em;
 	height: 3em;
+	border: none;
 	border-radius: 50%;
 	background-color: rgba(0, 0, 0, .5);
+	margin: 0 10px;
 }
 
 section .video-controls button i {
