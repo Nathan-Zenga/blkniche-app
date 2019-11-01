@@ -1,5 +1,5 @@
 @import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
-@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+@import url('https://kathirr007.github.io/FA-MD-Icons-Updated/css/pro.css');
 @import url('https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed|Oswald:700');
 
 html, body {
@@ -136,7 +136,6 @@ header .inner-header.fixed .link {
 }
 
 footer {
-	font-weight: bold;
 	text-align: center;
 	background-color: rgba(0, 0, 0, .5);
 }
@@ -146,6 +145,7 @@ footer .row {
 }
 
 footer .copyright {
+	font-weight: bold;
 	font-size: .75em;
 }
 
@@ -355,7 +355,7 @@ section .item {
 	height: 100%;
 }
 
-.carousel .carousel-control {
+section .carousel-control {
 	top: 50%;
 	-webkit-transform: translateY(-50%);
 	transform: translateY(-50%);
@@ -369,7 +369,14 @@ section .carousel-caption {
 }
 
 section .carousel-indicators {
-	bottom: 60px
+	bottom: 20px;
+}
+
+section .carousel-indicators li {
+	background-color: rgba(255, 255, 255, .3);
+	border: none;
+	margin-left: 2px;
+	margin-right: 2px;
 }
 
 section .img {
@@ -434,9 +441,7 @@ section .video-controls button {
 	width: 3em;
 	height: 3em;
 	border: none;
-	border-radius: 50%;
-	background-color: rgba(0, 0, 0, .5);
-	margin: 0 10px;
+	background-color: transparent;
 }
 
 section .video-controls button i {
