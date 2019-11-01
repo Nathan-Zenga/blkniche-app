@@ -60,30 +60,34 @@ $(function() {
 
 	// emphasize nav link text when scrolling to / past section with which it is associated (desktop view only)
 	function markLink() {
-		$("nav .link").css({
-			borderBottom: ""
-		});
+		try {
+			$("nav .link").css({
+				borderBottom: ""
+			});
 
-		$("section").each(function(i){
-			if ( $(window).scrollTop() >= $(this).offset().top - 100 ) {
+			$("section").each(function(i){
+				if ( $(window).scrollTop() >= $(this).offset().top - 100 ) {
 
-				var $lastVisitedSection = $(this);
+					var $lastVisitedSection = $(this);
 
-				$("nav .link")
-				.css({
-					borderBottom: ""
-				})
-				.each(function() {
-					if ( $lastVisitedSection.attr('class').includes($(this).attr('id')) ) {
+					$("nav .link")
+					.css({
+						borderBottom: ""
+					})
+					.each(function() {
+						if ( $lastVisitedSection.attr('class').includes($(this).attr('id')) ) {
 
-						$(this).css({
-							borderBottom: "2px solid white"
-						})
+							$(this).css({
+								borderBottom: "2px solid white"
+							})
 
-					}
-				})
-			}
-		});
+						}
+					})
+				}
+			});
+		} catch(e) {
+			return; // Section not found
+		}
 	}
 
 	toggleOnScroll(); markLink(); changeText( $("section") );
