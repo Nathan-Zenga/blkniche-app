@@ -126,13 +126,20 @@ header .inner-header.fixed .menu-icon {
 }
 
 header .inner-header.fixed .link-group {
-	display: none
+	display: none;
+	padding: 0 30px;
 }
 
 header .inner-header.fixed .link {
-	display: inline-block;
+	display: block;
 	padding-top: 20px;
 	padding-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+	header .inner-header.fixed .link {
+		display: inline-block;
+	}
 }
 
 footer {
