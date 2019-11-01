@@ -29,28 +29,20 @@ $(function() {
 	function toggleOnScroll(){
 
 		// toggle toTop button visibility
-		if ( window.pageYOffset > 40 ) {
-			$("#toTop").css({transform: "translateX(-100%)"});
-			if (location.pathname === '/') $(".socials").removeClass("fixed");
-		} else {
-			$("#toTop").css({transform: ""});
-			if (location.pathname === '/') $(".socials").addClass("fixed");
-		}
+		var state = window.pageYOffset > 40;
+		$("#toTop").css({transform: state ? "translateX(-100%)" : ""});
+		if (location.pathname === '/') $(".socials").toggleClass("fixed", !state);
 
 		// position toTop button on top of footer if they visually overlap
 		var windowOffsetBottom = window.pageYOffset + window.innerHeight;
 		var footerOffsetTop = $("footer").offset().top;
-		var bottom = windowOffsetBottom >= footerOffsetTop ? (window.innerHeight - ($("footer").offset().top - window.pageYOffset))+"px" : "";
+		var bottom = windowOffsetBottom >= footerOffsetTop ? (window.innerHeight - (footerOffsetTop - window.pageYOffset))+"px" : "";
 		$("#toTop").css("bottom", bottom);
 
 		try {
 			// fix header position to viewport when scrolling past second section
 			var top = $("section").length > 1 ? $("section").eq(1).offset().top - 100 : parseInt($("header").css("height"));
-			if ( window.pageYOffset > top ) {
-				$(".inner-header").addClass("fixed");
-			} else {
-				$(".inner-header").removeClass("fixed");
-			}
+			$(".inner-header").toggleClass("fixed", window.pageYOffset > top);
 		} catch(err) {
 			return 0
 		}
@@ -65,26 +57,28 @@ $(function() {
 				borderBottom: ""
 			});
 
-			$("section").each(function(i){
-				if ( $(window).scrollTop() >= $(this).offset().top - 100 ) {
+			if (window.innerWidth >= 768) {
+				$("section").each(function(i){
+					if ( $(window).scrollTop() >= $(this).offset().top - 100 ) {
 
-					var $lastVisitedSection = $(this);
+						var $lastVisitedSection = $(this);
 
-					$("nav .link")
-					.css({
-						borderBottom: ""
-					})
-					.each(function() {
-						if ( $lastVisitedSection.attr('class').includes($(this).attr('id')) ) {
+						$("nav .link")
+						.css({
+							borderBottom: ""
+						})
+						.each(function() {
+							if ( $lastVisitedSection.attr('class').includes($(this).attr('id')) ) {
 
-							$(this).css({
-								borderBottom: "2px solid white"
-							})
+								$(this).css({
+									borderBottom: "2px solid white"
+								})
 
-						}
-					})
-				}
-			});
+							}
+						})
+					}
+				});
+			}
 		} catch(e) {
 			return; // Section not found
 		}
@@ -96,11 +90,16 @@ $(function() {
 	$(window).scroll(toggleOnScroll);
 
 	$(document.body).click(function(e) {
-		// check if menu icon not hidden and if cursor is outside menu
-		if (!$("#menu").is(":hidden") && e.clientY > parseInt($("#menu.is-active").css("height"))) { // offset top not required because top position is already 0
-			var headerFixed = $(".inner-header").hasClass("fixed");
-			var menuOpen = $("#menu").hasClass("is-active");
-			if (headerFixed && menuOpen) $("#menu").click();
+		var $menu = $("#menu");
+		var navHeight = $(".inner-header.fixed nav").height();
+		// check cursor hovers outside nav boundary...
+		if (navHeight && e.clientY > navHeight) {
+			// ...and outside menu icon boundary
+			if ( !(e.clientX > $menu.offset().left && e.clientY < parseInt($menu.css("height"))) ) {
+				var headerFixed = $(".inner-header").hasClass("fixed");
+				var menuOpen = $menu.hasClass("is-active");
+				if (headerFixed && menuOpen) $menu.click();
+			}
 		}
 	})
 
@@ -153,7 +152,7 @@ $(function() {
 
 			$("section.videos")
 			.find(".carousel-indicators").append(
-				'<li id="cover'+ i +'" data-target="#videos-carousel" data-slide-to="'+ i +'" '+ (i < 1 ? ' class="active"' : '') +'></li>'
+				'<li id="video'+ i +'" data-target="#videos-carousel" data-slide-to="'+ i +'" '+ (i < 1 ? ' class="active"' : '') +'></li> '
 			)
 			.end().find(".carousel-inner").append(
 				'<div class="item'+ (i < 1 ? ' active' : '') +'">' +
