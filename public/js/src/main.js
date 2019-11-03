@@ -101,12 +101,16 @@ $(function() {
 				if (headerFixed && menuOpen) $menu.click();
 			}
 		}
-	})
+	});
 
 	// overriding default method actions when displaying a bootstrap modal
 	$(".modal").on('shown.bs.modal', function() {
 		$("body, .modal").css("padding-right", "");
 	});
+
+	var device = detect.parse(navigator.userAgent).device;
+	var prop = device.type == "Tablet" ? "initial" : "";
+	$(".bgreel > div").css("background-attachment", prop);
 
 	// bg auto-playing slideshow
 	$(".bgreel").each(function() {
