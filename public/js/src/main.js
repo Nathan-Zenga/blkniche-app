@@ -232,7 +232,7 @@ $(function() {
 	});
 
 	/* FORMS */
-	$("#signup_body").submit(function(e) {
+	$("#signup_form").submit(function(e) {
 		e.preventDefault();
 		var form = this;
 		var data = {};
@@ -246,15 +246,15 @@ $(function() {
 			$(".result").empty();
 
 			if (result.login_error) {
-				$("#signup_body .result").append("<p>"+result.login_error+"</p>");
+				$("#signup_form .result").append("<p>"+result.login_error+"</p>");
 			}
 			if (result.login_error_chars) {
 				result.login_error_chars.forEach(function(msg) {
-					$("#signup_body .result").append("<p>"+msg+"</p>");
+					$("#signup_form .result").append("<p>"+msg+"</p>");
 				});
 			}
 			if (result.success_msg) {
-				$("#signup_body .result").html("<p>"+result.success_msg+"</p>");
+				$("#signup_form .result").html("<p>"+result.success_msg+"</p>");
 				$(form).find(".details").val("");
 			}
 		});
@@ -293,7 +293,7 @@ $(function() {
 		});
 	});
 
-	$("#forgot_body").submit(function(e) {
+	$("#forgot_form").submit(function(e) {
 		e.preventDefault();
 		var form = this;
 		var data = {};
