@@ -234,9 +234,10 @@ $(function() {
 	/* FORMS */
 	$("#signup_body").submit(function(e) {
 		e.preventDefault();
+		var form = this;
 		var data = {};
 
-		$(this).serializeArray().forEach(function(field) {
+		$(form).serializeArray().forEach(function(field) {
 			var name = field.name;
 			data[name] = field.value;
 		});
@@ -254,16 +255,17 @@ $(function() {
 			}
 			if (result.success_msg) {
 				$("#signup_body .result").html("<p>"+result.success_msg+"</p>");
-				$details.val("");
+				$(form).find(".details").val("");
 			}
 		});
 	});
 
 	$("#update_form").submit(function(e) {
 		e.preventDefault();
+		var form = this;
 		var data = {};
 
-		$(this).serializeArray().forEach(function(field) {
+		$(form).serializeArray().forEach(function(field) {
 			var name = field.name;
 			data[name] = field.value;
 		});
@@ -285,17 +287,18 @@ $(function() {
 				$(".profile-info span").fadeOut(function(){
 					$(this).html(info).fadeIn();
 				});
-				$details.val("");
-				$details.closest(".modal").modal("hide");
+				$(form).find(".details").val("");
+				$(form).closest(".modal").modal("hide");
 			}
 		});
 	});
 
 	$("#forgot_body").submit(function(e) {
 		e.preventDefault();
+		var form = this;
 		var data = {};
 
-		$(this).serializeArray().forEach(function(field) {
+		$(form).serializeArray().forEach(function(field) {
 			var name = field.name;
 			data[name] = field.value;
 		});
@@ -314,9 +317,10 @@ $(function() {
 
 	$("#reset_password_form").submit(function(e) {
 		e.preventDefault();
+		var form = this;
 		var data = {};
 
-		$(this).serializeArray().forEach(function(field) {
+		$(form).serializeArray().forEach(function(field) {
 			var name = field.name;
 			data[name] = field.value;
 		});
@@ -331,7 +335,7 @@ $(function() {
 			}
 			else {
 				$(".result").html("<p>"+msg.success+"</p>");
-				$details.closest(".modal").modal("hide");
+				$(form).closest(".modal").modal("hide");
 			}
 		});
 	});
