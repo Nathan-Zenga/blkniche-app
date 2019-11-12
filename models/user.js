@@ -25,14 +25,11 @@ module.exports.createUser = function(newUser, callback){
 	});
 }
 
-module.exports.getByUsername = function(username, callback){
-	var query = {username: username};
+module.exports.getUser = function(username, callback){
+	var query = {$or: [{username}, {email: username}]};
 	User.findOne(query, callback);
 }
 
 module.exports.comparePassword = function(candidatePassword, hash, callback){
-	bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
-		if(err) throw err;
-		callback(null, isMatch);
-	});
+	bcrypt.compare(candidatePassword, hash, callback);
 }
