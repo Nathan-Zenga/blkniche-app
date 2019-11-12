@@ -10,8 +10,8 @@
 					<li>Date of birth: <%= user.DOB.getDate() + "/" + (user.DOB.getMonth()+1) + "/" + user.DOB.getFullYear() %></li>
 					<li>Nationality: <%= user.nationality %></li><br>
 				</span>
-				<button class="btn btn-default updateCustomer" role="button" data-toggle="modal" data-target="#update_form">UPDATE</button>
-				<button class="btn btn-danger deleteCustomer" data-toggle="modal" data-target="#delete_account">DELETE ACCOUNT</button>
+				<button class="btn btn-default updateCustomer" role="button" data-toggle="modal" data-target="#update_modal">UPDATE</button>
+				<button class="btn btn-danger deleteCustomer" data-toggle="modal" data-target="#delete_account_modal">DELETE ACCOUNT</button>
 				<br><br>
 				<button class="btn btn-default uploadIcon">CHANGE PROFILE PHOTO</button>
 				<%_ if( icon_src !== undefined ) { _%>
@@ -78,7 +78,7 @@
 								<%_ } _%>
 							</div>
 							<div class="post_footer">
-								<button class="footer-button edit" id="<%= post._id %>" data-toggle="modal" data-target="#edit_blogpost">&#128394;</button>&nbsp;
+								<button class="footer-button edit" id="<%= post._id %>" data-toggle="modal" data-target="#edit_blogpost_modal">&#128394;</button>&nbsp;
 								<button class="footer-button delete" id="<%= post._id %>">&times;</button>
 							</div>
 						</div>
